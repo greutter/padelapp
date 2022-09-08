@@ -1,0 +1,11 @@
+.container
+
+<% for attribute in attributes -%>
+  %p
+    %b <%= attribute.human_name %>:
+    = @<%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+  %p
+    = link_to 'Editar', edit_<%= singular_table_name %>_path(@<%= singular_table_name %>)
+    \|
+    = link_to '<- Atrás', <%= index_helper %>_path

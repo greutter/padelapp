@@ -11,13 +11,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">PadelApp</a>
-        <a class="nav-link" type="button" href="#">Iniciar Sesión</a> 
-        <a class="btn btn-primary" type="button" href="#?crear-cuenta=1">Crear Cuenta</a> 
-      </div>
-    </nav>  
+    <%= render "layouts/navbar" %>
     <div class=container>
       <%= yield %>
     </div>

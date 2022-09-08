@@ -1,0 +1,13 @@
+= form_for @court do |f|
+  - if @court.errors.any?
+    = render partial: "shared/error_messages", locals: {object: @court}
+
+  .form-group
+    = f.label :club_id, class: "control-label"
+    = f.number_field :club_id, class: "form-control"
+  .form-group
+    = f.label :number, class: "control-label"
+    = f.number_field :number, class: "form-control"
+  .actions
+    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+    = link_to "Cancelar", :back, class: "btn btn-info"

@@ -1,0 +1,16 @@
+= form_for @club do |f|
+  - if @club.errors.any?
+    = render partial: "shared/error_messages", locals: {object: @club}
+
+  .form-group
+    = f.label :name, class: "control-label"
+    = f.text_field :name, class: "form-control"
+  .form-group
+    = f.label :address, class: "control-label"
+    = f.text_field :address, class: "form-control"
+  .form-group
+    = f.label :google_maps_link, class: "control-label"
+    = f.text_field :google_maps_link, class: "form-control"
+  .actions
+    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+    = link_to "Cancelar", :back, class: "btn btn-info"

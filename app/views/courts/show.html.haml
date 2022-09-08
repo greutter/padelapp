@@ -1,0 +1,12 @@
+.container
+
+  %p
+    %b Club:
+    = @court.club_id
+  %p
+    %b Number:
+    = @court.number
+  %p
+    = link_to 'Editar', edit_court_path(@court)
+    \|
+    = link_to '<- Atrás', courts_path

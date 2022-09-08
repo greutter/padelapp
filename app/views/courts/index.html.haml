@@ -1,0 +1,25 @@
+.container
+  %h3 Courts
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Club
+          %th Number
+          %th
+          %th
+          %th
+
+      %tbody
+        - @courts.each do |court|
+          %tr
+            %td= court.club_id
+            %td= court.number
+            %td= link_to 'Show', court
+            %td= link_to 'Edit', edit_court_path(court)
+            %td= link_to 'Destroy', court, data: { "turbo-method": :delete, "turbo-confirm": "¿Confirmas que quieres borrar?" }
+
+    %br
+    %p
+      = link_to 'Nuevo Court', new_court_path

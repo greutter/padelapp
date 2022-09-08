@@ -1,0 +1,12 @@
+= form_for @<%= singular_table_name %> do |f|
+  - if @<%= singular_table_name %>.errors.any?
+    = render partial: "shared/error_messages", locals: {object: @<%= singular_table_name %>}
+
+<% for attribute in attributes -%>
+  .form-group
+    = f.label :<%= attribute.name %>, class: "control-label"
+    = f.<%= attribute.field_type %> :<%= attribute.name %>, class: "form-control"
+<% end -%>
+  .actions
+    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+    = link_to "Cancelar", :back, class: "btn btn-info"

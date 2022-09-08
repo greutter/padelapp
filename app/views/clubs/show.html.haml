@@ -1,0 +1,15 @@
+.container
+
+  %p
+    %b Name:
+    = @club.name
+  %p
+    %b Address:
+    = @club.address
+  %p
+    %b Google maps link:
+    = @club.google_maps_link
+  %p
+    = link_to 'Editar', edit_club_path(@club)
+    \|
+    = link_to '<- Atrás', clubs_path

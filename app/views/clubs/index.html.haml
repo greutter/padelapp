@@ -1,0 +1,27 @@
+.container
+  %h3 Clubs
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Name
+          %th Address
+          %th Google maps link
+          %th
+          %th
+          %th
+
+      %tbody
+        - @clubs.each do |club|
+          %tr
+            %td= club.name
+            %td= club.address
+            %td= club.google_maps_link
+            %td= link_to 'Show', club
+            %td= link_to 'Edit', edit_club_path(club)
+            %td= link_to 'Destroy', club, data: { "turbo-method": :delete, "turbo-confirm": 'Seguro que quieres borrar el Club?' }
+
+    %br
+    %p
+      = link_to 'Nuevo Club', new_club_path

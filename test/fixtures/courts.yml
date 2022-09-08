@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: courts
+#
+#  id         :bigint           not null, primary key
+#  number     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  club_id    :integer
+#
+
+one:
+  club_id: 1
+  number: 1
+
+two:
+  club_id: 1
+  number: 1
