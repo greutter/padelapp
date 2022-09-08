@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Padelapp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">PadelApp</a>
+        <a class="nav-link" type="button" href="#">Iniciar Sesión</a> 
+        <a class="btn btn-primary" type="button" href="#?crear-cuenta=1">Crear Cuenta</a> 
+      </div>
+    </nav>  
+    <div class=container>
+      <%= yield %>
+    </div>
+  </body>
+</html>
