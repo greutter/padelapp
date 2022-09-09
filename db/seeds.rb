@@ -1,5 +1,4 @@
 
-
 club = Club.create(name: "Country Club",
             address: "Las Arañas 1901, La Reina, Santiago",
             google_maps_link: "https://goo.gl/maps/dSWzJfoyJYHC7a6E6")

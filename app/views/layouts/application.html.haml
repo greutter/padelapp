@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %title Padelapp
+    %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
+  %body
+    = render "layouts/navbar"
+    .container
+      - if alert
+        .alert.alert-warning{:role => "alert"}
+          = alert
+      - if notice 
+        .alert.alert-primary
+          = notice
+      = yield
