@@ -8,3 +8,13 @@
 .turbo-progress-bar {
     background: linear-gradient(to right, var(--color-primary), var(--color-primary-rotate));
 }
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+
+  .card {
+    display: inline-block;
+  }
+}

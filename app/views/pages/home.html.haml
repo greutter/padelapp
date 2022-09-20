@@ -1,18 +1,34 @@
+%br
+%br
 .container
   .row
     .col-md-12
       %h2.section-title.text-center
-        Juega Más y Mejora tu Padel
-        .small
-          Reserva cancha y organiza tus partidos
-
-  -# - unless user_signed_in?
-  -#   .row
-  -#     .col-md-12
-  -#       .text-center
-  -#         =link_to "Comenzar", new_user_registration_path, class: "btn btn-fill btn-lg btn-primary"
+        Organiza tu Padel
+        .small.fw-lighter.lh-base
+          Encuentrar Rivales, Reservar Cancha y a Jugar
+%br
 .container
   .row
     .col-md-12
       .text-center
-        =link_to "RESERVAR CANCHA", "#", class: "btn btn-fill btn-secondary btn-lg"
+        =link_to "RESERVAR CANCHA", "#", style: "background-color: #E7EB70",class: "btn btn-fill btn-lg"
+%hr
+
+.container
+  %ul.nav.nav-pills.nav-fill
+    -(Date.today..(Date.today + 4.days)).each do |date|
+      %li.nav-item
+        %a.nav-link{"aria-current" => "page", |
+                    id: "#{Date.today}", |
+                    class: "#{'active' if date == Date.today}", |
+                    href: "#"}
+
+          - if date.today?
+            Hoy
+            %br
+            🔥
+          - else
+            = l(date, format: "%a").capitalize
+            %br
+            .text-center= l(date, format: "%d")
