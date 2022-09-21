@@ -4,7 +4,7 @@ class CreateSchedules < ActiveRecord::Migration[7.0]
       t.integer :club_id
       t.datetime :opens_at
       t.datetime :closes_at
-      t.string :type
+      t.string :tipo
       t.integer :day_of_week
       t.timestamps
     end

@@ -11,11 +11,7 @@
 #
 
 one:
-  name: MyString
-  address: MyString
-  google_maps_link: MyString
-
-two:
-  name: MyString
-  address: MyString
-  google_maps_link: MyString
+  id: 1
+  name: Country Club Test Suite
+  address: Los Aracnidos
+  google_maps_link: ""

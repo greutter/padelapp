@@ -16,20 +16,21 @@ class ClubTest < ActiveSupport::TestCase
     @club = Club.all.sample
   end
 
-  test "should default nicely on any given day" do
+  test "should default schedule nicely on any given date" do
     date = DateTime.now - 25.years
     opens_at = @club.opens_at(date)
-    assert_instance_of DateTime, opens_at, "Should have an opening hour for random day"
-    assert_equal opens_at.hour, Schedule::DEFAULTS[:opens_at], "Should open at default hour"
+    assert_instance_of DateTime, opens_at
+    assert_equal opens_at.hour, Schedule::DEFAULTS[:opens_at]
+
     closes_at = @club.closes_at(date)
-    assert_instance_of DateTime, closes_at, "Should have a closing hour for random day"
-    assert_equal closes_at.hour, Schedule::DEFAULTS[:closes_at], "Should close at default hour"
+    assert_instance_of DateTime, closes_at
+    assert_equal closes_at.hour, Schedule::DEFAULTS[:closes_at]
   end
 
-  test "should return club specific default opening hour if available" do
-    custom_default_schedule = @club.schedules.default(1)
-
-    assert_instance_of DateTime, custom_default_schedule.first
+  test "should default to custom default schedules if any" do
+    custom_default_schedule = @club.schedules.custom_default_for_day(1)
+    assert_instance_of ActiveSupport::TimeWithZone, custom_default_schedule.opens_at
+    assert_equal Schedule.first.opens_at.to_datetime, custom_default_schedule.opens_at.to_datetime
 
     # opens_at = @club.opens_at(date)
     # assert_equal opens_at, DateTime.new.change({hour: 9, minute: 30})

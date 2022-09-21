@@ -6,7 +6,7 @@
 #  closes_at   :datetime
 #  day_of_week :integer
 #  opens_at    :datetime
-#  type        :string
+#  tipo        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  club_id     :integer
@@ -18,5 +18,7 @@ class Schedule < ApplicationRecord
 
   DEFAULTS = { opens_at: 7, closes_at: 23}
 
-  scope :default, -> (day_of_week) { where("day_of_week = ?", 1)}
+  def self.custom_default_for_day day
+    self.find_by(tipo: "default", day_of_week: day)
+  end
 end

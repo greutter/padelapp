@@ -15,9 +15,10 @@ class Club < ApplicationRecord
   has_many :schedules
 
   def opens_at date
-    if self.schedules.default(date.day).any?
-      default = self.schedules.default(date.day).first
-      date.to_datetime.change({hour: default.opens_at, minute: default.closes_at})
+    if self.schedules.custom_default_for_day(date.day)
+      default = self.schedules.custom_default_for_day(date.day)
+      date.to_datetime.change({hour: default.opens_at.hour,
+                               minute: default.closes_at.minute}).to_datetime
     else
       date.to_datetime.change(hour: Schedule::DEFAULTS[:opens_at])
     end

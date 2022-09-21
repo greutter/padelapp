@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_21_134044) do
     t.integer "club_id"
     t.datetime "opens_at"
     t.datetime "closes_at"
-    t.string "type"
+    t.string "tipo"
     t.integer "day_of_week"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

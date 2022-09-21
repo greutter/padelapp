@@ -6,7 +6,7 @@
 #  closes_at   :datetime
 #  day_of_week :integer
 #  opens_at    :datetime
-#  type        :string
+#  tipo        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  club_id     :integer
@@ -14,7 +14,7 @@
 
 one:
   club_id: 1
-  opens_at: -4712-01-01T09:30:00+00:00
-  closes_at: -4712-01-01T23:30:00+00:00
-  type: default
+  opens_at: "1981-04-29 9:30"
+  closes_at: "1981-04-29 23:30"
+  tipo: default
   day_of_week: 1
