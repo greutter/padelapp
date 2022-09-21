@@ -1,0 +1,18 @@
+.container
+
+  %p
+    %b Club:
+    = @schedule.club_id
+  %p
+    %b Opens at:
+    = @schedule.opens_at
+  %p
+    %b Closes at:
+    = @schedule.closes_at
+  %p
+    %b Type:
+    = @schedule.type
+  %p
+    = link_to 'Editar', edit_schedule_path(@schedule)
+    \|
+    = link_to '<- Atrás', schedules_path

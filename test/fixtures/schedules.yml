@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: schedules
+#
+#  id          :bigint           not null, primary key
+#  closes_at   :datetime
+#  day_of_week :integer
+#  opens_at    :datetime
+#  type        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  club_id     :integer
+#
+
+one:
+  club_id: 1
+  opens_at: -4712-01-01T09:30:00+00:00
+  closes_at: -4712-01-01T23:30:00+00:00
+  type: default
+  day_of_week: 1

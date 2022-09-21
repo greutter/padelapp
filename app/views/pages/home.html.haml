@@ -13,6 +13,7 @@
     .col-md-12
       .text-center
         =link_to "RESERVAR CANCHA", "#", style: "background-color: #E7EB70",class: "btn btn-fill btn-lg"
+%br
 %hr
 
 .container
@@ -32,3 +33,8 @@
             = l(date, format: "%a").capitalize
             %br
             .text-center= l(date, format: "%d")
+  .row{style: "padding-top: 10px"}
+    .col-6
+      = link_to " <== ", "#", type: :button, class: "btn btn-outline-secondary"
+    .col-6.text-end
+      = link_to "==>", "#", type: :button, class: "btn btn-outline-secondary"

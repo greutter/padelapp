@@ -1,0 +1,19 @@
+= form_for @schedule do |f|
+  - if @schedule.errors.any?
+    = render partial: "shared/error_messages", locals: {object: @schedule}
+
+  .form-group
+    = f.label :club_id, class: "control-label"
+    = f.number_field :club_id, class: "form-control"
+  .form-group
+    = f.label :opens_at, class: "control-label"
+    = f.datetime_field :opens_at, class: "form-control"
+  .form-group
+    = f.label :closes_at, class: "control-label"
+    = f.datetime_field :closes_at, class: "form-control"
+  .form-group
+    = f.label :type, class: "control-label"
+    = f.text_field :type, class: "form-control"
+  .actions
+    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+    = link_to "Cancelar", :back, class: "btn btn-info"

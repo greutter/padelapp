@@ -1,0 +1,29 @@
+.container
+  %h3 Schedules
+
+  .table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Club
+          %th Opens at
+          %th Closes at
+          %th Type
+          %th
+          %th
+          %th
+
+      %tbody
+        - @schedules.each do |schedule|
+          %tr
+            %td= schedule.club_id
+            %td= schedule.opens_at
+            %td= schedule.closes_at
+            %td= schedule.type
+            %td= link_to 'Show', schedule
+            %td= link_to 'Edit', edit_schedule_path(schedule)
+            %td= link_to 'Destroy', schedule, data: { "turbo-method": :delete, "turbo-confirm": "¿Confirmas que quieres borrar?" }
+
+    %br
+    %p
+      = link_to 'Nuevo Schedule', new_schedule_path
