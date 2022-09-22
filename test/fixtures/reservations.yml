@@ -1,0 +1,24 @@
+# == Schema Information
+#
+# Table name: reservations
+#
+#  id         :bigint           not null, primary key
+#  ends_at    :datetime
+#  starts_at  :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  court_id   :integer
+#  user_id    :integer
+#
+
+one:
+  user_id: 1
+  court_id: 1
+  starts_at: 2022-09-21 15:33:21
+  ends_at: 2022-09-21 15:33:21
+
+two:
+  user_id: 1
+  court_id: 1
+  starts_at: 2022-09-21 15:33:21
+  ends_at: 2022-09-21 15:33:21

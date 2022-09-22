@@ -1,0 +1,18 @@
+.container
+
+  %p
+    %b User:
+    = @reservation.user_id
+  %p
+    %b Court:
+    = @reservation.court_id
+  %p
+    %b Starts at:
+    = @reservation.starts_at
+  %p
+    %b Ends at:
+    = @reservation.ends_at
+  %p
+    = link_to 'Editar', edit_reservation_path(@reservation)
+    \|
+    = link_to '<- Atrás', reservations_path

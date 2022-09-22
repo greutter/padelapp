@@ -1,0 +1,19 @@
+= form_for @reservation do |f|
+  - if @reservation.errors.any?
+    = render partial: "shared/error_messages", locals: {object: @reservation}
+
+  .form-group
+    = f.label :user_id, class: "control-label"
+    = f.number_field :user_id, class: "form-control"
+  .form-group
+    = f.label :court_id, class: "control-label"
+    = f.number_field :court_id, class: "form-control"
+  .form-group
+    = f.label :starts_at, class: "control-label"
+    = f.datetime_field :starts_at, class: "form-control"
+  .form-group
+    = f.label :ends_at, class: "control-label"
+    = f.datetime_field :ends_at, class: "form-control"
+  .actions
+    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+    = link_to "Cancelar", :back, class: "btn btn-info"
