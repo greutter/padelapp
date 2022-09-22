@@ -12,9 +12,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @date = Date.today
-    @club = Club.first
-    @reservation = Reservation.new()
+
   end
 
   # GET /reservations/1/edit
@@ -57,6 +55,10 @@ class ReservationsController < ApplicationController
       format.html { redirect_to reservations_url, notice: "Reservation was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def day_selector
+    Date.today + [1..4].sample
   end
 
   private

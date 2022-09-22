@@ -8,33 +8,19 @@
         .small.fw-lighter.lh-base
           Encuentrar Rivales, Reservar Cancha y a Jugar
 %br
-.container
-  .row
-    .col-md-12
-      .text-center
-        =link_to "RESERVAR CANCHA", "#", style: "background-color: #E7EB70",class: "btn btn-fill btn-lg"
-%br
-%hr
-
-.container
-  %ul.nav.nav-pills.nav-fill
-    -(Date.today..(Date.today + 4.days)).each do |date|
-      %li.nav-item
-        %a.nav-link{"aria-current" => "page", |
-                    id: "#{Date.today}", |
-                    class: "#{'active' if date == Date.today}", |
-                    href: "#"}
-
-          - if date.today?
-            Hoy
-            %br
-            🔥
-          - else
-            = l(date, format: "%a").capitalize
-            %br
-            .text-center= l(date, format: "%d")
-  .row{style: "padding-top: 10px"}
-    .col-6
-      = link_to " <== ", "#", type: :button, class: "btn btn-outline-secondary"
-    .col-6.text-end
-      = link_to "==>", "#", type: :button, class: "btn btn-outline-secondary"
+-# .container
+-#   .row
+-#     .col-md-12
+-#       .text-center
+        -# =link_to "RESERVAR CANCHA", "#", style: "background-color: #E7EB70",class: "btn btn-fill btn-lg"
+-# %hr
+-# .container
+-#   .row
+-#     %h2
+-#       = @club.name
+-#       .fs-5.fw-lighter= @club.address
+-#     %h4
+-#       #{l(@date, format: "%A %e de %B").capitalize}
+-# %br
+= turbo_frame_tag "day_selector" do
+  =render partial: "reservations/day_selector"

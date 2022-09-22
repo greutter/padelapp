@@ -1,16 +1,2 @@
-%br
-.container
-  .row
-    %h2
-      = @club.name
-      .fs-5.fw-lighter= @club.address
-    %h4
-      #{l(@date, format: "%A %e de %B").capitalize}
-  %hr
-
-  - @club.availabel_slots(@date).in_groups_of(4, "") do |slots|
-    .row.row{style: "padding-top: 8px"}
-      - slots.each do |slot|
-        .col-3
-          - if slot[0]
-            = link_to "#{slot[0].strftime("%H:%M")}", "#", type: :button, class: "btn btn-primary btn-block"
+.div
+  =render partial: 'shared/court_availability'

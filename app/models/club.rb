@@ -28,8 +28,8 @@ class Club < ApplicationRecord
     date.to_datetime.change(hour: Schedule::DEFAULTS[:closes_at])
   end
 
-  def availabel_slots date
-    courts.first.availabel_slots(date: date, duration: 90)
+  def availabel_slots(date: , duration: )
+    courts.first.availabel_slots(date: date, duration: duration)
   end
 
 end

@@ -1,0 +1,23 @@
+=turbo_frame_tag "day_selector" do
+  .container
+    %ul.nav.nav-pills.nav-fill
+      -(Date.today..(Date.today + 4.days)).each do |date|
+        %li.nav-item
+          %a.nav-link{"aria-current" => "page", |
+                      id: "#{Date.today}", |
+                      class: "#{'active' if date == @date}", |
+                      href: "#"}
+
+            - if date.today?
+              Hoy
+              %br
+              🔥
+            - else
+              = l(date, format: "%a").capitalize
+              %br
+              .text-center= l(date, format: "%d")
+    .row{style: "padding-top: 10px"}
+      .col-6
+        = link_to " <== ", "#", type: :button, class: "btn btn-outline-secondary"
+      .col-6.text-end
+        = link_to "==>", "#", type: :button, class: "btn btn-outline-secondary"
