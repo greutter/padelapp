@@ -17,7 +17,7 @@ class ClubsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create club" do
     assert_difference("Club.count") do
-      post clubs_url, params: { club: { address: @club.address, google_maps_link: @club.google_maps_link, name: @club.name } }
+      post clubs_url, params: { club: { address: @club.address, google_maps_link: @club.google_maps_link, name: "Espacio Padel" } }
     end
 
     assert_redirected_to club_url(Club.last)

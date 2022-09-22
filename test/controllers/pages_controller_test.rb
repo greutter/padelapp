@@ -6,10 +6,10 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should have a registration link" do
-    get root_url
-    assert_select "a", text: "Crear Cuenta"
-  end
+  # test "should have a registration link" do
+  #   get root_url
+  #   assert_select "a", text: "Crear Cuenta"
+  # end
 
   test "should have a sign-in link" do
     get root_url

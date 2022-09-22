@@ -23,8 +23,10 @@ class CourtTest < ActiveSupport::TestCase
     assert_instance_of Array, court.availabel_slots(date: date, duration: 90)
     available_time = (court.closes_at(date) - court.opens_at(date)) * 24 * 60
     assert_equal (23 - 7) * 60,  available_time
-    puts court.availabel_slots(date: date, duration: 90)
-    assert_equal available_time / 90, court.availabel_slots(date: date, duration: 90).count
+    # puts "opens:" + court.opens_at(date).to_s
+    # puts "closes:" + court.closes_at(date).strftime("%h:%m")
+    # puts court.availabel_slots(date: date, duration: 90)
+    assert_equal (available_time / 90).to_i + 1, court.availabel_slots(date: date, duration: 90).count
 
   end
 end

@@ -17,7 +17,7 @@ class CourtsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create court" do
     assert_difference("Court.count") do
-      post courts_url, params: { court: { club_id: @court.club_id, number: @court.number } }
+      post courts_url, params: { court: { club_id: @court.club_id, number: 10 } }
     end
 
     assert_redirected_to court_url(Court.last)

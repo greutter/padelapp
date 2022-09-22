@@ -13,7 +13,7 @@ require "test_helper"
 
 class ClubTest < ActiveSupport::TestCase
   def setup
-    @club = Club.all.sample
+    @club = Club.first
   end
 
   test "should default schedule nicely on any given date" do

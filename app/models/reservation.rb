@@ -16,4 +16,8 @@ class Reservation < ApplicationRecord
 
   belongs_to :court
   validates :court, presence: true
+
+  def club
+    court.club
+  end
 end

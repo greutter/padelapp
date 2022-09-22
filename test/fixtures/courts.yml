@@ -10,9 +10,11 @@
 #
 
 one:
+  id: 1
   club_id: 1
   number: 1
 
 two:
+  id: 2
   club_id: 1
-  number: 1
+  number: 2

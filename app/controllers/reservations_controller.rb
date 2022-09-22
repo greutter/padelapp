@@ -12,7 +12,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @reservation = Reservation.new
+    @date = Date.today
+    @club = Club.first
+    @reservation = Reservation.new()
   end
 
   # GET /reservations/1/edit

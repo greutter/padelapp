@@ -14,4 +14,10 @@ one:
   id: 1
   name: Country Club Test Suite
   address: Los Aracnidos
-  google_maps_link: ""
+  google_maps_link: "https://google.maps.com"
+
+two:
+  id: 2
+  name: Pangui Padel
+  address: El pubelo
+  google_maps_link: "https://google.maps.com/pangui"
