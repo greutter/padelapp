@@ -1,0 +1,39 @@
+=turbo_frame_tag "availability" do
+  .container
+    %ul.nav.nav-pills.nav-fill
+      -(Date.today..(Date.today + 4.days)).each do |date|
+        %li.nav-item
+          %a.nav-link{class: "#{'active' if date == @date}", |
+                      href: availability_reservations_path(date: date)}
+
+            - if date.today?
+              Hoy
+              %br
+              🔥
+            - else
+              = l(date, format: "%a").capitalize
+              %br
+              .text-center= l(date, format: "%d")
+    .row{style: "padding-top: 10px"}
+      .col-6
+        = link_to " <== ", availability_reservations_path, type: :button, class: "btn btn-outline-secondary"
+      .col-6.text-end
+        = link_to "==>", "#", type: :button, class: "btn btn-outline-secondary"
+
+    %br
+  #availableSlotsAccordion.accordion.accordion-flush
+    .accordion-item
+      - [90, 60].each do |duration|
+        %h2.accordion-header
+          %button.accordion-button{"data-bs-target" => "#collapse#{duration}", "data-bs-toggle" => "collapse", :type => "button"}
+            .fs-5.fw-bolder
+              #{duration} Minutos
+        .accordion-collapse.collapse{id: "collapse#{duration}", class: "#{'show' if duration == 90}"}
+          .accordion-body
+            - @club.availabel_slots(date: @date, duration: duration).in_groups_of(4, "") do |slots|
+              .row.row{style: "padding-top: 8px"}
+                - slots.each do |slot|
+                  .col-3
+                    - if slot[0]
+                      = link_to "#", type: :button, class: "btn btn-primary btn-block" do
+                        #{slot[0].strftime("%H:%M")}

@@ -12,7 +12,8 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-
+    @club = Club.first
+    @date = Date.today
   end
 
   # GET /reservations/1/edit
@@ -57,8 +58,9 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def day_selector
-    Date.today + [1..4].sample
+  def availability
+    @club = Club.first
+    @date = Date.parse(params[:date])
   end
 
   private

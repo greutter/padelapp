@@ -1,5 +1,12 @@
+# == Route Map
+#
+
 Rails.application.routes.draw do
-  resources :reservations
+  resources :reservations do
+    collection do
+      get "availability"
+    end
+  end
   resources :schedules
   devise_for :users
   resources :courts
