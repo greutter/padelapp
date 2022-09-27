@@ -15,17 +15,19 @@ class Club < ApplicationRecord
   has_many :schedules
 
   def opens_at date
+    #TODO: add specific defaults
     if self.schedules.custom_default_for_day(date.day)
       default = self.schedules.custom_default_for_day(date.day)
-      date.to_datetime.change({hour: default.opens_at.hour,
-                               minute: default.closes_at.minute}).to_datetime
+      date.beginning_of_day.in_time_zone.change({hour: default.opens_at.hour,
+                               minute: default.closes_at.minute})
     else
-      date.to_datetime.change(hour: Schedule::DEFAULTS[:opens_at])
+      date.beginning_of_day.change(hour: Schedule::DEFAULTS[:opens_at])
     end
   end
 
+  #TODO: add custom defaults
   def closes_at date
-    date.to_datetime.change(hour: Schedule::DEFAULTS[:closes_at])
+    date.beginning_of_day.in_time_zone.change(hour: Schedule::DEFAULTS[:closes_at])
   end
 
   def availabel_slots(date: , duration: )

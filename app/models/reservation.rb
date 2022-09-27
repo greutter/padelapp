@@ -17,6 +17,10 @@ class Reservation < ApplicationRecord
   belongs_to :court
   validates :court, presence: true
 
+  validates :starts_at, presence: true
+  validates :ends_at, presence: true
+  validates :ends_at, comparison: { greater_than: :starts_at }
+
   def club
     court.club
   end

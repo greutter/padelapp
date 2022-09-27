@@ -11,14 +11,20 @@
 #  user_id    :integer
 #
 
-one:
-  user_id: 1
-  court_id: 1
-  starts_at: "1981-04-29 9:30"
-  ends_at: "1981-04-29 9:30"
-
-two:
-  user_id: 1
-  court_id: 2
-  starts_at: "1981-04-29 9:30"
-  ends_at: "1981-04-29 9:30"
+# one:
+#   user_id: 1
+#   court_id: 1
+#   starts_at: "1981-04-29 9:30"
+#   ends_at: "1981-04-29 9:30"
+#
+# two:
+#   user_id: 1
+#   court_id: 2
+#   starts_at: "1981-04-29 9:30"
+#   ends_at: "1981-04-29 9:30"
+#
+# three:
+#   user_id: 1
+#   court_id: 1
+#   starts_at: "1981-04-29 7:00"
+#   ends_at: "1981-04-29 8:00"

@@ -82,3 +82,5 @@ gem "simple_form"
 gem "haml-rails", "~> 2.0"
 gem "devise-i18n", "~> 1.10"
 gem "rails-i18n", '~> 7.0.0'
+gem 'phonelib'
+gem 'local_time'

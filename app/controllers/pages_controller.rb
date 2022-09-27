@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   def home
     @club = Club.first
-    @date = Date.today + 3.days
+    @date = Date.today
+    @from_date = Date.today
   end
 end
