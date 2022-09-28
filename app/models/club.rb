@@ -30,8 +30,8 @@ class Club < ApplicationRecord
     date.beginning_of_day.in_time_zone.change(hour: Schedule::DEFAULTS[:closes_at])
   end
 
-  def availabel_slots(date: , duration: )
-    courts.first.availabel_slots(date: date, duration: duration)
+  def get_availabel_slots(date: , durations: [90])
+    courts.first.get_availabel_slots(date: date, durations: durations)
   end
 
 end

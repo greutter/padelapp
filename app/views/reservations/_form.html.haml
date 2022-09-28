@@ -1,19 +1,63 @@
-= form_for @reservation do |f|
-  - if @reservation.errors.any?
-    = render partial: "shared/error_messages", locals: {object: @reservation}
+.card
+  .card-header
+    %fs-3
+      -if "reservation.pending_payment?"
+        PAGO PENDIENTE
+      - else
+        RESERVA CONFIRMADA
+  .card-body
+    %h3.card-title
+      #{l(reservation.starts_at, format: "%A %e %b %k:%M").capitalize} -
+      #{reservation.ends_at.strftime(" %k:%M")}
+      .small
+        #{reservation.duration} minutos
+    %h4.card-subtitle
+      = reservation.club.name
+      %br
+      %small
+        Cancha #{reservation.court.number}
+    = p
+    = link_to reservation.club.google_maps_link, target: :blank do
+      %span.glyphicon.glyphicon-map-marker
+      = reservation.club.address
+  .card-footer
+    .row
+      - if "reservation.pending_payment?"
+        .col-6
+          .text-start.mp-cho-btn
+          =image_tag "mercado_pago.png", class: "mercado-pago-img", style: "max-width: 100px;"
+        .col-6.text-end
+          = link_to 'Cancelar', reservation, method: :delete, type: :button, |
+                    class: "btn", data: { confirm: '¿Estás seguro de cancelar la reserva?' }
+      - else
+        %td
+          = link_to wa_invitation_text(reservation), class: "btn btn-success",  target: :blank do
+            %i{class: "fa fa-whatsapp whatsapp-icon"}
+            Invitar jugadores
+        %td
 
-  .form-group
-    = f.label :user_id, class: "control-label"
-    = f.number_field :user_id, class: "form-control"
-  .form-group
-    = f.label :court_id, class: "control-label"
-    = f.number_field :court_id, class: "form-control"
-  .form-group
-    = f.label :starts_at, class: "control-label"
-    = f.datetime_field :starts_at, class: "form-control"
-  .form-group
-    = f.label :ends_at, class: "control-label"
-    = f.datetime_field :ends_at, class: "form-control"
-  .actions
-    = f.submit 'Guardar', class: "btn btn-primary btn-fill"
-    = link_to "Cancelar", :back, class: "btn btn-info"
+
+
+
+
+-# = form_for @reservation do |f|
+-#   - if @reservation.errors.any?
+-#     = render partial: "shared/error_messages", locals: {object: @reservation}
+-#
+-#   .form-group
+-#     = f.label :user_id, class: "control-label"
+-#     = f.number_field :user_id, class: "form-control"
+-#   .form-group
+-#     = f.label :court_id, class: "control-label"
+-#     = f.number_field :court_id, class: "form-control"
+-#   .form-group
+-#     = f.label :starts_at, class: "control-label"
+-#     = f.datetime_field :starts_at, class: "form-control"
+-#   .form-group
+-#     = f.label :ends_at, class: "control-label"
+-#     = f.datetime_field :ends_at, class: "form-control"
+-#   .actions
+-#     = f.submit 'Guardar', class: "btn btn-primary btn-fill"
+-#     = link_to "Cancelar", :back, class: "btn btn-info"
+-#
+-#

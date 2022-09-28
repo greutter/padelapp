@@ -43,10 +43,15 @@
               #{duration} Minutos
         .accordion-collapse.collapse{id: "collapse#{duration}", class: "#{'show' if duration == 90}"}
           .accordion-body
-            - @club.availabel_slots(date: @date, duration: duration).in_groups_of(4, nil) do |slots|
+            - @club.get_availabel_slots(date: @date, durations: [duration])[duration].in_groups_of(4, nil) do |slots|
               .row.row{style: "padding-top: 8px"}
                 - slots.each do |slot|
                   .col-3
                     - if slot
-                      = link_to "#", type: :button, class: "btn btn-primary btn-block" do
-                        #{slot.in_time_zone.strftime("%H:%M")}
+                      - reservation = Reservation.new(user: User.first, court: Court.first, starts_at: slot, ends_at: slot + duration.minutes)
+                      = form_with model: reservation, html: {data: {turbo: false}} do |form|
+                        = form.hidden_field :user_id
+                        = form.hidden_field :court_id
+                        = form.hidden_field :starts_at
+                        = form.hidden_field :ends_at
+                        = form.submit "#{slot.in_time_zone.strftime("%H:%M")}", class: "btn btn-primary btn-block"

@@ -24,4 +24,8 @@ class Reservation < ApplicationRecord
   def club
     court.club
   end
+
+  def duration
+    ((ends_at - starts_at) / 60).to_i
+  end
 end

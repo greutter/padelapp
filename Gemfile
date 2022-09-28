@@ -52,6 +52,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 
 group :development, :test do
+  gem 'dotenv-rails'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
@@ -69,11 +70,14 @@ group :development do
   gem "annotate"
 end
 
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem 'guard' # NOTE: this is necessary in newer versions
+  gem 'guard-minitest'
 end
 
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
@@ -84,3 +88,4 @@ gem "devise-i18n", "~> 1.10"
 gem "rails-i18n", '~> 7.0.0'
 gem 'phonelib'
 gem 'local_time'
+gem 'mercadopago-sdk'

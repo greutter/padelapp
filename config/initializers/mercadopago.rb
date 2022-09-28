@@ -1,0 +1,4 @@
+require "mercadopago"
+
+# Mercadopago::SDK.new(ENV['MERCADOPAGO_PROD_ACCESS_TOKEN'])
+Mercadopago::SDK.new("TEST-8102057992726527-071422-be44543a629ead313d465bae54a96f97-352189909")
