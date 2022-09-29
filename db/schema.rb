@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_22_212452) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_28_200602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_22_212452) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "collection_id"
+    t.string "collection_status"
+    t.bigint "payment_id"
+    t.string "status"
+    t.string "external_reference"
+    t.string "payment_type"
+    t.string "merchant_order_id"
+    t.string "preference_id"
+    t.string "site_id"
+    t.string "processing_mode"
+    t.string "merchant_account_id", limit: 8
+    t.bigint "payable_id"
+    t.string "payable_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payable_type", "payable_id"], name: "index_payments_on_payable_type_and_payable_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.integer "user_id"
     t.integer "court_id"
@@ -36,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_22_212452) do
     t.datetime "ends_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
   end
 
   create_table "schedules", force: :cascade do |t|

@@ -19,26 +19,25 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1/edit
   def edit
-    # Crea un objeto de preferencia
-    # preference_data = {
-    #   back_urls: {
-    #     success: "#{request.host_with_port}/mp_payment_success",
-    #     # failure: "http://localhost:3000/reservations/#{@reservation.id}/edit",
-    #     pending: 'http://localhost:3000/'
-    #   },
-    #   items: [
-    #     {
-    #       title: "reservation_id: #{@reservation.id}",
-    #       unit_price: 25,
-    #       quantity: 1
-    #     }
-    #   ]}
-    #   sdk = Mercadopago::SDK.new(ENV['MERCADOPAGO_TEST_ACCESS_TOKEN'])
-    #   preference_response = sdk.preference.create(preference_data)
-    #   preference = preference_response[:response]
-    #   # Este valor reemplazará el string "<%= @preference_id %>" en tu HTML
-    #   @preference_id = preference['id']
-    #   @reservation.update preference_id: @preference_id
+    preference_data = {
+      back_urls: {
+        success: "#{request.host_with_port}/mp_payment_success",
+        # failure: "http://localhost:3000/reservations/#{@reservation.id}/edit",
+        pending: 'http://localhost:3000/'
+      },
+      items: [
+        {
+          title: "payable_id: #{@reservation.id}",
+          unit_price: 25,
+          quantity: 1
+        }
+      ]}
+      sdk = Mercadopago::SDK.new(ENV['MERCADOPAGO_TEST_ACCESS_TOKEN'])
+      preference_response = sdk.preference.create(preference_data)
+      preference = preference_response[:response]
+      # Este valor reemplazará el string "<%= @preference_id %>" en tu HTML
+      @preference_id = preference['id']
+      @reservation.payments.create(preference_id: @preference_id)
   end
 
   # POST /reservations or /reservations.json

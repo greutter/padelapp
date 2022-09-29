@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   resources :clubs
 
   root "pages#home"
+
+  get 'mp_payment_success' => "payments#mp_payment_success"
+  post '/ipn' => 'payments#instant_payment_notifications'
 end

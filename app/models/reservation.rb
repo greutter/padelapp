@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  ends_at    :datetime
 #  starts_at  :datetime
+#  status     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  court_id   :integer
@@ -17,6 +18,7 @@ class Reservation < ApplicationRecord
   belongs_to :court
   validates :court, presence: true
 
+  has_many :payments, as: :payable
   validates :starts_at, presence: true
   validates :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }

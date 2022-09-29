@@ -1,5 +1,5 @@
-.card
-  .card-header
+.card.border-primary
+  .card-header.text-white.text-bg-primary
     %fs-3
       -if "reservation.pending_payment?"
         PAGO PENDIENTE
@@ -9,24 +9,27 @@
     %h3.card-title
       #{l(reservation.starts_at, format: "%A %e %b %k:%M").capitalize} -
       #{reservation.ends_at.strftime(" %k:%M")}
-      .small
+      .small.fw-light
         #{reservation.duration} minutos
     %h4.card-subtitle
       = reservation.club.name
       %br
-      %small
+      %small.fw-light
         Cancha #{reservation.court.number}
-    = p
-    = link_to reservation.club.google_maps_link, target: :blank do
-      %span.glyphicon.glyphicon-map-marker
+    = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
+      %span{class: "bi bi-geo-alt-fill"}
       = reservation.club.address
   .card-footer
     .row
       - if "reservation.pending_payment?"
-        .col-6
-          .text-start.mp-cho-btn
-          =image_tag "mercado_pago.png", class: "mercado-pago-img", style: "max-width: 100px;"
-        .col-6.text-end
+        .col-8
+          .row
+            .col-6
+              .span
+                .mp-cho-btn
+            .col-6.text-start
+              =image_tag "mercado_pago.png", class: "mercado-pago-img float-start float-middle", style: "max-width: 90px;"
+        .col-4.text-end
           = link_to 'Cancelar', reservation, method: :delete, type: :button, |
                     class: "btn", data: { confirm: '¿Estás seguro de cancelar la reserva?' }
       - else

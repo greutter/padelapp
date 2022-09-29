@@ -3,6 +3,7 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/utilities";
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import 'custom_padelapp';
 
 $utilities: map-merge(
   $utilities,
@@ -16,9 +17,7 @@ $utilities: map-merge(
   )
 );
 
-.container {
-    max-width: 640px;
-}
+
 
 
 
