@@ -30,10 +30,10 @@
           %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
 
   %h5.text-center
-    .fw-lighter #{l(@date, format: "%A %d de").capitalize}
-    #{l(@date, format: "%B").capitalize}
+    .fw-light #{l(@date, format: "%A %d de ").capitalize} <b> #{l(@date, format: "%B").capitalize} </b>
+
   %p.fw-lighter
-    -# .small.fw-lighter.texxt-center Disponibilidad actualizada a las: #{Time.now.strftime "%H:%M"}
+    -# .small.fw-lighter.texxt-center Disponibilidad actualizada a las: #{DateTime.now.strftime "%H:%M"}
   #availableSlotsAccordion.accordion.accordion-flush
     .accordion-item
       - [90, 60].each do |duration|

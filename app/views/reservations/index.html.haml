@@ -1,29 +1,7 @@
 .container
-  %h3 Reservations
-
-  .table-responsive
-    %table.table
-      %thead
-        %tr
-          %th User
-          %th Court
-          %th Starts at
-          %th Ends at
-          %th
-          %th
-          %th
-
-      %tbody
-        - @reservations.each do |reservation|
-          %tr
-            %td= reservation.user_id
-            %td= reservation.court_id
-            %td= reservation.starts_at
-            %td= reservation.ends_at
-            %td= link_to 'Show', reservation
-            %td= link_to 'Edit', edit_reservation_path(reservation)
-            %td= link_to 'Destroy', reservation, data: { "turbo-method": :delete, "turbo-confirm": "¿Confirmas que quieres borrar?" }
-
-    %br
-    %p
-      = link_to 'Nuevo Reservation', new_reservation_path
+  %h4.text-center{style: "padding: 24px 0 24px 0;"}
+    Mis reservas
+  - if @reservations.any?
+    - @reservations.each do |reservation|
+      .div{style: "padding: 0 0 24px 0;"}
+        =render partial: 'form', locals: {reservation: reservation}

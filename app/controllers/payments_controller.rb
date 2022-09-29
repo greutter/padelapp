@@ -13,7 +13,7 @@ class PaymentsController < ApplicationController
     end
     payment.update(hash_p)
     flash[:notice] = "Cancha lista ✔️. Ahora invita a los jugadores 👇🏼"
-    redirect_to payment.payable
+    redirect_to reservations_path
   end
 
   private

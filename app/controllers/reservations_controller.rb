@@ -27,8 +27,11 @@ class ReservationsController < ApplicationController
       },
       items: [
         {
-          title: "payable_id: #{@reservation.id}",
-          unit_price: 25,
+          payable_id: "#{@reservation.id}",
+          payable_type: "reservation",
+          title: "Reserva #{l(@reservation.starts_at, format: "%A %e %b %k:%M")}.
+                  {payable_id: #{@reservation.id}}",
+          # unit_price: @reservation.price,
           quantity: 1
         }
       ]}
@@ -37,7 +40,7 @@ class ReservationsController < ApplicationController
       preference = preference_response[:response]
       # Este valor reemplazará el string "<%= @preference_id %>" en tu HTML
       @preference_id = preference['id']
-      @reservation.payments.create(preference_id: @preference_id)
+      # @reservation.payments.create(preference_id: @preference_id, status: "pending")
   end
 
   # POST /reservations or /reservations.json
@@ -46,7 +49,7 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to reservation_url(@reservation), notice: "Reservation was successfully created." }
+        format.html { redirect_to edit_reservation_url(@reservation), notice: "Reserva creada con pago pendiente." }
         format.json { render :show, status: :created, location: @reservation }
       else
         format.html { render :new, status: :unprocessable_entity }

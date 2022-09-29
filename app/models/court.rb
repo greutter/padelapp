@@ -21,7 +21,7 @@ class Court < ApplicationRecord
       as = []
       while ends_at < closes_at(date)
         ends_at = starts_at + duration.minutes
-        if is_slot_available?(starts_at: starts_at, ends_at: ends_at) and starts_at >= DateTime.now.in_time_zone
+        if is_slot_available?(starts_at: starts_at, ends_at: ends_at) and starts_at >= DateTime.now.in_time_zone - 15.minutes
           as << starts_at
         end
         starts_at = starts_at + 30.minutes
@@ -32,20 +32,19 @@ class Court < ApplicationRecord
   end
 
   def is_slot_available?(starts_at: , ends_at: , verbose:  false)
-
-    if self.reservations.where("starts_at = ?", starts_at).any?
+    if self.reservations.find_by("starts_at = ?", starts_at)
       print_verbose(starts_at, ends_at, 1)
       return false
-    elsif self.reservations.where("ends_at = ?", ends_at).any?
+    elsif self.reservations.find_by("ends_at = ?", ends_at)
       print_verbose(starts_at, ends_at, 2)
       return false
-    elsif self.reservations.where(starts_at: (starts_at..ends_at - 0.1)).any?
+    elsif self.reservations.find_by(starts_at: (starts_at..ends_at - 0.1))
       print_verbose(starts_at, ends_at, 3)
       return false
-    elsif self.reservations.where(ends_at: ((starts_at + 0.1)..(ends_at - 0.1))).any?
+    elsif self.reservations.find_by(ends_at: ((starts_at + 0.1)..(ends_at - 0.1)))
       print_verbose(starts_at, ends_at, 4) if verbose
       return false
-    elsif self.reservations.where(ends_at: (starts_at - 30.minutes)).any?
+    elsif self.reservations.find_by(ends_at: (starts_at - 30.minutes))
       print_verbose(starts_at, ends_at, 5) if verbose
       return false
     end

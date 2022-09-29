@@ -1,4 +1,5 @@
 !!!
+=console
 %html
   %head
     %title Padelapp
@@ -10,11 +11,12 @@
     %script{:src => "https://sdk.mercadopago.com/js/v2"}
   %body
     = render "layouts/navbar"
-    .container
-      - if alert
-        .alert.alert-warning{:role => "alert"}
-          = alert
-      - if notice
-        .alert.alert-primary
-          = notice
+    .container{style: "padding-top: 24px;  padding-bottom: 96px"}
+      .row
+        - if alert
+          .alert.alert-warning{:role => "alert"}
+            = alert
+        - if notice
+          .alert.alert-primary{:role => "alert"}
+            = notice
       = yield
