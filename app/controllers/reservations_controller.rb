@@ -3,7 +3,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-      @reservations = current_user.reservations.all.order(:starts_at).select(&:paid?)
+      @reservations = current_user.reservations.all.order(:starts_at)
 
   end
 
@@ -13,14 +13,12 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    # @club = Club.first
-    # @date = Date.today
-    # @from_date = Date.today
+    @reservation = Reservation.new(params[:id])
   end
 
   # GET /reservations/1/edit
   def edit
-    preference_data = {
+    @preference_data = {
       back_urls: {
         success: "#{request.host_with_port}/mp_payment_success",
         # failure: "http://localhost:3000/reservations/#{@reservation.id}/edit",
@@ -28,19 +26,21 @@ class ReservationsController < ApplicationController
       },
       items: [
         {
-          payable_id: "#{@reservation.id}",
-          payable_type: "reservation",
+          id: "#{@reservation.id}",
+          category_id: "reservation",
           title: "Reserva #{l(@reservation.starts_at, format: "%A %e %b %k:%M")}.
-                  {payable_id: #{@reservation.id}}",
-          # unit_price: @reservation.price,
+                  id: #{@reservation.id}",
+          unit_price: @reservation.price,
           quantity: 1
         }
-      ]}
+      ],
+      external_reference: "Reservation/#{@reservation.id}"
+      }
       sdk = Mercadopago::SDK.new(ENV['MERCADOPAGO_TEST_ACCESS_TOKEN'])
-      preference_response = sdk.preference.create(preference_data)
-      preference = preference_response[:response]
+      preference_response = sdk.preference.create(@preference_data)
+      @preference = preference_response[:response]
       # Este valor reemplazará el string "<%= @preference_id %>" en tu HTML
-      @preference_id = preference['id']
+      @preference_id = @preference['id']
       # @reservation.payments.create(preference_id: @preference_id, status: "pending")
   end
 
@@ -84,7 +84,7 @@ class ReservationsController < ApplicationController
     @reservation.destroy
 
     respond_to do |format|
-      format.html { redirect_to reservations_url, notice: "Reservation was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Cancelamos tu reserva. " }
       format.json { head :no_content }
     end
   end

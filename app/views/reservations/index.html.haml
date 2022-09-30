@@ -1,7 +1,23 @@
 .container
-  %h4.text-center{style: "padding: 24px 0 24px 0;"}
-    Mis reservas
-  - if @reservations.any?
-    - @reservations.each do |reservation|
-      .div{style: "padding: 0 0 24px 0;"}
-        =render partial: 'form', locals: {reservation: reservation}
+  .row{style: "padding: 12px 0 24px 0;"}
+    .col-6.text-start
+      .fs-4
+        Mis Reservas
+    .col-6.text-end
+      %fs-4
+        =link_to root_path, type: :button, class: "btn btn-outline-dark" do
+          %i{class: "bi bi-plus"}
+          Nueva Reserva
+
+  .row
+    - pending_payment = @reservations.select{|r| not r.paid?}
+    - if pending_payment.any?
+      - pending_payment.each do |reservation|
+        = turbo_frame_tag "reservation_#{reservation.id}" do
+          =render partial: 'form', locals: {reservation: reservation}
+
+    - paid = @reservations.select{|r| r.paid?}
+    - if paid.any?
+      - paid.each do |reservation|
+        = turbo_frame_tag "reservation_#{reservation.id}" do
+          =render partial: 'form', locals: {reservation: reservation}
