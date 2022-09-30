@@ -1,22 +1,21 @@
-.container
-  %br
+.div-text-center
   = render partial: 'form', |
            locals: {reservation: @reservation}
-:javascript
 
-  const mp = new MercadoPago("#{ENV['MERCADOPAGO_TEST_PUBLIC_KEY']}", {
-        locale: 'es-CL'
-  });
-  // Inicializa el checkout
-  window.onload = load_mp_button;
-  function load_mp_button() {
-    mp.checkout({
-        preference: {
-            id: "#{@preference_id}"
-        },
-        render: {
-              container: '.mp-cho-btn', // Indica el nombre de la clase donde se mostrará el botón de pago
-              label: 'PAGAR', // Cambia el texto del botón de pago (opcional)
-        }
+  :javascript
+    const mp = new MercadoPago("#{ENV['MERCADOPAGO_TEST_PUBLIC_KEY']}", {
+          locale: 'es-CL'
     });
-  }
+    // Inicializa el checkout
+    window.onload = load_mp_button;
+    function load_mp_button() {
+      mp.checkout({
+          preference: {
+              id: "#{@preference_id}"
+          },
+          render: {
+                container: '.mp-cho-btn', // Indica el nombre de la clase donde se mostrará el botón de pago
+                label: 'PAGAR', // Cambia el texto del botón de pago (opcional)
+          }
+      });
+    }

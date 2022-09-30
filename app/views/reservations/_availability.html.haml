@@ -48,7 +48,8 @@
                 - slots.each do |slot|
                   .col-3
                     - if slot
-                      - reservation = Reservation.new(user: User.first, court: Court.first, starts_at: slot, ends_at: slot + duration.minutes)
+                      -# #TODO: Multi court club
+                      - reservation = Reservation.new(user: current_user, court: Court.first, starts_at: slot, ends_at: slot + duration.minutes)
                       = form_with model: reservation, html: {data: {turbo: false}} do |form|
                         = form.hidden_field :user_id
                         = form.hidden_field :court_id

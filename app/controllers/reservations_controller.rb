@@ -3,7 +3,8 @@ class ReservationsController < ApplicationController
 
   # GET /reservations or /reservations.json
   def index
-    @reservations = Reservation.all
+      @reservations = current_user.reservations.all.order(:starts_at).select(&:paid?)
+
   end
 
   # GET /reservations/1 or /reservations/1.json
@@ -12,9 +13,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @club = Club.first
-    @date = Date.today
-    @from_date = Date.today
+    # @club = Club.first
+    # @date = Date.today
+    # @from_date = Date.today
   end
 
   # GET /reservations/1/edit
@@ -45,6 +46,13 @@ class ReservationsController < ApplicationController
 
   # POST /reservations or /reservations.json
   def create
+    if current_user
+      @reservation = Reservation.new(reservation_params)
+    else
+      raise "do something with non logged users"
+    end
+
+
     @reservation = Reservation.new(reservation_params)
 
     respond_to do |format|
@@ -88,13 +96,13 @@ class ReservationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def reservation_params
-      params.require(:reservation).permit(:user_id, :court_id, :starts_at, :ends_at)
-    end
+  # Only allow a list of trusted parameters through.
+  def reservation_params
+    params.require(:reservation).permit(:user_id, :court_id, :starts_at, :ends_at)
+  end
 end

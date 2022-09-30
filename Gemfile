@@ -81,6 +81,11 @@ group :test do
 end
 
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"
+
+
 gem "html2haml", "~> 2.2"
 gem "simple_form"
 gem "haml-rails", "~> 2.0"

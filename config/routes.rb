@@ -2,15 +2,26 @@
 #
 
 Rails.application.routes.draw do
-  resources :reservations do
+
+  resources :schedules
+  resources :courts
+  resources :clubs
+
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+
+  resources :reservations, only: [] do
     collection do
       get "availability"
     end
   end
-  resources :schedules
-  devise_for :users
-  resources :courts
-  resources :clubs
+
+  authenticate :user do
+    resources :reservations
+  end
 
   root "pages#home"
 
