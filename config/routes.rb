@@ -13,14 +13,14 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :reservations, only: [] do
+  resources :reservations, only: [:new] do
     collection do
       get "availability"
     end
   end
 
   authenticate :user do
-    resources :reservations
+    resources :reservations, only: [:show, :edit, :create, :update, :destroy, :index]
   end
 
   root "pages#home"

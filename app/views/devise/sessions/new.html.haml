@@ -1,23 +1,23 @@
 .container{style: "max-width: 300px;"}
-  %h3.text-center
+  %h4.text-center
     Continua con
-    - resource_class.omniauth_providers.each do |provider|
-      = link_to t('.sign_in_with_provider', provider: OmniAuth::Utils.camelize(provider)), |
-                omniauth_authorize_path(resource_name, provider), method: :post, |
-                data: {turbo: false}
 
-  = simple_form_for(resource, as: resource_name, |
+  - resource_class.omniauth_providers.each do |provider|
+    %p= link_to t('.sign_in_with_provider', provider: OmniAuth::Utils.camelize(provider)), |
+              omniauth_authorize_path(resource_name, provider), method: :post, |
+              data: {turbo: false}
+
+  =form_for(resource, as: resource_name, |
         url: session_path(resource_name), |
-        data: {turbo: false}) do |f|
-    .form-inputs
-      = f.input :email,
-        required: false,
-        autofocus: true,
-        input_html: { autocomplete: "email" }
-      = f.input :password,
-        required: false,
-        input_html: { autocomplete: "current-password" }
-      = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-    .form-actions
-      = f.button :submit, t(".sign_in")
+        data: {turbo: false}) do |form|
+    .mb-3
+      = form.label :email, class: "form-label"
+      = form.email_field :email, class: "form-control"
+    .mb-3
+      = form.label :password, class: "form-label"
+      = form.password_field :password, class: "form-control", autocompete: true
+    .mb-3
+      = form.hidden_field :remember_me, value: true
+    .mb-3
+      = form.submit t(".sign_in"), class: "btn btn-block btn-secondary"
   = render "devise/shared/links"
