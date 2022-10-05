@@ -33,4 +33,12 @@ class ClubTest < ActiveSupport::TestCase
     # assert_equal opens_at, DateTime.new.change({hour: 9, minute: 30})
   end
 
+  test "should show correct availability for days with no reservation" do
+    date = Date.today + 120.days
+    puts @club.availability date: date
+
+  end
+
+  test "should "
+
 end

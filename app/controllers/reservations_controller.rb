@@ -13,8 +13,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @reservation = Reservation.new(params[:id])
-    
+
+    @reservation = Reservation.new(starts_at: params[:starts_at], ends_at: [:ends_at], court_id: params[:court_id])
+
   end
 
   # GET /reservations/1/edit
@@ -52,7 +53,6 @@ class ReservationsController < ApplicationController
     else
       raise "do something with non logged users"
     end
-
 
     @reservation = Reservation.new(reservation_params)
 

@@ -22,7 +22,7 @@ class Court < ApplicationRecord
       while ends_at < closes_at(date)
         ends_at = starts_at + duration.minutes
         if is_slot_available?(starts_at: starts_at, ends_at: ends_at) and starts_at >= DateTime.now.in_time_zone - 15.minutes
-          as << starts_at
+          as << [starts_at]
         end
         starts_at = starts_at + 30.minutes
       end
@@ -33,29 +33,29 @@ class Court < ApplicationRecord
 
   def is_slot_available?(starts_at: , ends_at: , verbose:  false)
     if self.reservations.find_by("starts_at = ?", starts_at)
-      print_verbose(starts_at, ends_at, 1)
+      print_verbose(starts_at, ends_at, "1 slot blocked because starts at same time as a reservation") if verbose
       return false
     elsif self.reservations.find_by("ends_at = ?", ends_at)
-      print_verbose(starts_at, ends_at, 2)
+      print_verbose(starts_at, ends_at, "2 slot blocked because ends at same time as a reservation") if verbose
       return false
-    elsif self.reservations.find_by(starts_at: (starts_at..ends_at - 0.1))
-      print_verbose(starts_at, ends_at, 3)
+    elsif self.reservations.find_by(starts_at: (starts_at...ends_at))
+      print_verbose(starts_at, ends_at, "3 slot blocked because a reservation starts inside the slot") if verbose
       return false
-    elsif self.reservations.find_by(ends_at: ((starts_at + 0.1)..(ends_at - 0.1)))
-      print_verbose(starts_at, ends_at, 4) if verbose
+    elsif self.reservations.find_by(ends_at: ((starts_at + 0.1.minutes)..ends_at))
+      print_verbose(starts_at, ends_at, "4 a reservation ends inside the slot") if verbose
       return false
     elsif self.reservations.find_by(ends_at: (starts_at - 30.minutes))
-      print_verbose(starts_at, ends_at, 5) if verbose
+      print_verbose(starts_at, ends_at, "5 starts after 30 minutes of a reservation" ) if verbose
       return false
     end
-
     return true
   end
 
-  def print_verbose(starts_at, ends_at, id)
+  def print_verbose(starts_at, ends_at, explanation)
     puts "strats at: #{starts_at.to_s}"
     puts "ends_at  : #{ends_at.to_s}"
-    puts "4"
+    puts "blocked because it: #{explanation}"
+    puts ""
   end
 
   def opens_at(date)

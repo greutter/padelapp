@@ -1,26 +1,10 @@
 @import 'bootstrap/scss/bootstrap';
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
 @import "bootstrap/scss/utilities";
 @import 'bootstrap-icons/font/bootstrap-icons';
+
 @import 'custom_padelapp';
-
-$utilities: map-merge(
-  $utilities,
-  (
-    "cursor": (
-      property: cursor,
-      class: cursor,
-      responsive: true,
-      values: auto pointer grab,
-    )
-  )
-);
-
-
-
-
-
-// .turbo-progress-bar {
-//     background: linear-gradient(to right, var(--color-primary), var(--color-primary-rotate));
-// }
+@import "bootstrap-social";

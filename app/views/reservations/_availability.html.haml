@@ -23,7 +23,7 @@
       .col-6.text-center
         -if @from_date != Date.today
           %span.align-middle
-            = link_to availability_reservations_path(from_date: Date.today, date: Date.today), type: :button, class: "btn btn-light" do
+            = link_to availability_reservations_path(from_date: Date.today, date: Date.today), type: :button, class: "btn btn-link" do
               Hoy
       .col-3.text-center
         = link_to availability_reservations_path(from_date: to_date + 1.day, date: to_date + 1.day), type: :button, class: "" do
@@ -43,18 +43,22 @@
               #{duration} Minutos
         .accordion-collapse.collapse{id: "collapse#{duration}", class: "#{'show' if duration == 90}"}
           .accordion-body
-            - @club.get_availabel_slots(date: @date, durations: [duration])[duration].in_groups_of(4, nil) do |slots|
+            - @club.availability(date: @date, durations: [duration])[duration].in_groups_of(4, nil) do |slots|
               .row.row{style: "padding-top: 8px"}
                 - slots.each do |slot|
                   .col-3
                     - if slot
                       -# #TODO: Multi court club
-                      = link_to new_reservation_path, data: { turbo: false, params: "starts_at: #{slot}, ends_at: #{slot + duration.minutes}" }, |
-                                    type: :button, class: "btn btn-primary btn-block" do
-                        =slot.in_time_zone.strftime("%H:%M")
-                      -# = form_with model: reservation, html: {data: {turbo: false}} do |form|
-                      -#   = form.hidden_field :user_id
-                      -#   = form.hidden_field :court_id
-                      -#   = form.hidden_field :starts_at
-                      -#   = form.hidden_field :ends_at
-                      -#   = form.submit "#{slot.in_time_zone.strftime("%H:%M")}", class: "btn btn-primary btn-block"
+                      - if current_user
+                        - reservation = Reservation.new(slot)
+                        - reservation.user = current_user
+                        = form_with model: reservation, html: {data: {turbo: false}} do |form|
+                          = form.hidden_field :user_id
+                          = form.hidden_field :court_id
+                          = form.hidden_field :starts_at
+                          = form.hidden_field :ends_at
+                          = form.submit "#{slot[:starts_at].in_time_zone.strftime("%H:%M")}", class: "btn btn-primary btn-block"
+                      - else
+                        = link_to new_reservation_path(starts_at: "#{slot[:starts_at]}", ends_at: "#{slot[:starts_at] + duration.minutes}"), data: { turbo: false }, |
+                                      type: :button, class: "btn btn-primary btn-block" do
+                          =slot[:starts_at].in_time_zone.strftime("%H:%M")
