@@ -1,0 +1,30 @@
+.row
+  - if current_user
+    - if reservation.paid?
+      .col-12.text-end
+        = link_to wa_invitation_text(reservation), class: "btn btn-success",  target: :blank do
+          %i{class: "bi bi-whatsapp"}
+          Invitar amigos
+    - else
+      .col-4.text-start
+        = button_to 'Anular', reservation, method: :delete, type: :button, |
+                  class: "btn btn-outline-secondary", |
+                  form: { data: { "turbo_confirm": '¿Estás seguro de cancelar la reserva?' }}
+
+      - if current_page?(reservations_path) and not(reservation.paid?)
+        .col-8.text-end
+          = link_to "Ir a Pagar", edit_reservation_path(reservation), type: :button, class: "btn btn-primary", data: {turbo: false}
+      - else
+        .col-3.text-end
+          = image_tag "mercado_pago.png", class: "mercado-pago-img float-start float-middle", style: "max-width: 90px;"
+        .col-5.text-end
+          .mp-cho-btn
+  - else
+    = form_with model: reservation do |form|
+      = form.hidden_field :starts_at
+      = form.hidden_field :ends_at
+      = form.hidden_field :court_id
+      = fields_for :user, reservation.user do |user_form|
+        = user_form.email_field :email
+        = user_form.number_field :phone
+      = form.submit "Crear Reserva"

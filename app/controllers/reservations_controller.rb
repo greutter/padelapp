@@ -14,7 +14,9 @@ class ReservationsController < ApplicationController
   # GET /reservations/new
   def new
 
-    @reservation = Reservation.new(starts_at: params[:starts_at], ends_at: [:ends_at], court_id: params[:court_id])
+    @reservation = Reservation.new(starts_at: params[:starts_at],
+                                    ends_at: params[:ends_at],
+                                    court_id: params[:court_id])
 
   end
 
@@ -50,11 +52,10 @@ class ReservationsController < ApplicationController
   def create
     if current_user
       @reservation = Reservation.new(reservation_params)
+      @reservation.user = current_user
     else
-      raise "do something with non logged users"
+      @user = User.new()
     end
-
-    @reservation = Reservation.new(reservation_params)
 
     respond_to do |format|
       if @reservation.save

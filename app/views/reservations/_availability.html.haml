@@ -50,6 +50,7 @@
                     - if slot
                       -# #TODO: Multi court club
                       - if current_user
+
                         - reservation = Reservation.new(slot)
                         - reservation.user = current_user
                         = form_with model: reservation, html: {data: {turbo: false}} do |form|
@@ -59,6 +60,6 @@
                           = form.hidden_field :ends_at
                           = form.submit "#{slot[:starts_at].in_time_zone.strftime("%H:%M")}", class: "btn btn-primary btn-block"
                       - else
-                        = link_to new_reservation_path(starts_at: "#{slot[:starts_at]}", ends_at: "#{slot[:starts_at] + duration.minutes}"), data: { turbo: false }, |
-                                      type: :button, class: "btn btn-primary btn-block" do
+                        = link_to new_reservation_path(starts_at: "#{slot[:starts_at]}", ends_at: "#{slot[:ends_at]}", court_id: "#{slot[:court_id]}"), |
+                                      data: { turbo: false }, type: :button, class: "btn btn-primary btn-block" do
                           =slot[:starts_at].in_time_zone.strftime("%H:%M")

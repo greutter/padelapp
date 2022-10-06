@@ -1,0 +1,30 @@
+- style = reservation.paid? ? 'success' : 'dark'
+.div{style: "padding: 0 0 12px 0;"}
+  .row
+    .col-12
+      .card{class: "border-#{style}"}
+        .card-header.text-white{class: "text-bg-#{style}"}
+          .row
+            .col-6.text-start
+              -if reservation.paid?
+                CONFIRMADA
+              - else
+                PAGO PENDIENTE
+            .col-6.text-end.fw-bolder
+              = number_to_currency reservation.price
+        .card-body
+          %h4.card-title
+            #{l(reservation.starts_at, format: "%A %e %b %k:%M").capitalize} -
+            #{reservation.ends_at.strftime(" %k:%M")}
+            .small.fw-light
+              #{reservation.duration} minutos
+          %h5.card-subtitle
+            = reservation.club.name
+            %br
+            %small.fw-light
+              Cancha #{reservation.court.number}
+          = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
+            %span{class: "bi bi-geo-alt-fill"}
+            = reservation.club.address
+        .card-footer
+          =render partial: 'card_footer', locals: {reservation: reservation}

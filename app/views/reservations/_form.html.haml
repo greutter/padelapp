@@ -1,77 +1,51 @@
-- style = reservation.paid? ? 'success' : 'dark'
-.div{style: "padding: 0 0 12px 0;"}
-  .row
-    .col-12
-      .card{class: "border-#{style}"}
-        .card-header.text-white{class: "text-bg-#{style}"}
-          .row
-            .col-6.text-start
-              -if reservation.paid?
-                CONFIRMADA
-              - else
-                PAGO PENDIENTE
-            .col-6.text-end.fw-bolder
-              = number_to_currency reservation.price
-        .card-body
-          %h4.card-title
-            #{l(reservation.starts_at, format: "%A %e %b %k:%M").capitalize} -
-            #{reservation.ends_at.strftime(" %k:%M")}
-            .small.fw-light
-              #{reservation.duration} minutos
-          %h5.card-subtitle
-            = reservation.club.name
-            %br
-            %small.fw-light
-              Cancha #{reservation.court.number}
-          = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
-            %span{class: "bi bi-geo-alt-fill"}
-            = reservation.club.address
-        .card-footer
-          .row
-            - if not(reservation.paid?)
-              .col-4.text-start
-                = button_to 'Cancelar', reservation, method: :delete, type: :button, |
-                          class: "btn btn-outline-secondary", data: { "turbo_confirm": '¿Estás seguro de cancelar la reserva?' }
-
-              - if current_page?(reservations_path) and not(reservation.paid?)
-                .col-8.text-end
-                  = link_to "Ir a Pagar", edit_reservation_path(reservation), type: :button, class: "btn btn-#{style}", data: {turbo: false}
-              - else
-                .col-3.text-end
-                  = image_tag "mercado_pago.png", class: "mercado-pago-img float-start float-middle", style: "max-width: 90px;"
-                .col-5.text-end
-                  .mp-cho-btn
-
-            - else
-              .col-12.text-end
-                = link_to wa_invitation_text(reservation), class: "btn btn-success",  target: :blank do
-                  %i{class: "bi bi-whatsapp"}
-                  Invitar amigos
-
-
-
-
-
-
-
-      -# = form_for @reservation do |f|
-      -#   - if @reservation.errors.any?
-      -#     = render partial: "shared/error_messages", locals: {object: @reservation}
-      -#
-      -#   .form-group
-      -#     = f.label :user_id, class: "control-label"
-      -#     = f.number_field :user_id, class: "form-control"
-      -#   .form-group
-      -#     = f.label :court_id, class: "control-label"
-      -#     = f.number_field :court_id, class: "form-control"
-      -#   .form-group
-      -#     = f.label :starts_at, class: "control-label"
-      -#     = f.datetime_field :starts_at, class: "form-control"
-      -#   .form-group
-      -#     = f.label :ends_at, class: "control-label"
-      -#     = f.datetime_field :ends_at, class: "form-control"
-      -#   .actions
-      -#     = f.submit 'Guardar', class: "btn btn-primary btn-fill"
-      -#     = link_to "Cancelar", :back, class: "btn btn-info"
-      -#
-      -#
+-# - style = reservation.paid? ? 'success' : 'dark'
+-# .div{style: "padding: 0 0 12px 0;"}
+-#   .row
+-#     .col-12
+-#       .card{class: "border-#{style}"}
+-#         .card-header.text-white{class: "text-bg-#{style}"}
+-#           .row
+-#             .col-6.text-start
+-#               -if reservation.paid?
+-#                 CONFIRMADA
+-#               - else
+-#                 PAGO PENDIENTE
+-#             .col-6.text-end.fw-bolder
+-#               = number_to_currency reservation.price
+-#         .card-body
+-#           %h4.card-title
+-#             #{l(reservation.starts_at, format: "%A %e %b %k:%M").capitalize} -
+-#             #{reservation.ends_at.strftime(" %k:%M")}
+-#             .small.fw-light
+-#               #{reservation.duration} minutos
+-#           %h5.card-subtitle
+-#             = reservation.club.name
+-#             %br
+-#             %small.fw-light
+-#               Cancha #{reservation.court.number}
+-#           = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
+-#             %span{class: "bi bi-geo-alt-fill"}
+-#             = reservation.club.address
+-#         .card-footer
+-#           .row
+-#             - if current_user
+-#               - if reservation.paid?
+-#                 .col-12.text-end
+-#                   = link_to wa_invitation_text(reservation), class: "btn btn-success",  target: :blank do
+-#                     %i{class: "bi bi-whatsapp"}
+-#                     Invitar amigos
+-#               - else
+-#                 .col-4.text-start
+-#                   = button_to 'Cancelar', reservation, method: :delete, type: :button, |
+-#                             class: "btn btn-outline-secondary", data: { "turbo_confirm": '¿Estás seguro de cancelar la reserva?' }
+-#
+-#                 - if current_page?(reservations_path) and not(reservation.paid?)
+-#                   .col-8.text-end
+-#                     = link_to "Ir a Pagar", edit_reservation_path(reservation), type: :button, class: "btn btn-#{style}", data: {turbo: false}
+-#                 - else
+-#                   .col-3.text-end
+-#                     = image_tag "mercado_pago.png", class: "mercado-pago-img float-start float-middle", style: "max-width: 90px;"
+-#                   .col-5.text-end
+-#                     .mp-cho-btn
+-#             - else
+-#               Ingresa estos datos v
