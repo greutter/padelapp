@@ -1,7 +1,7 @@
 %nav.navbar.navbar-expand-md.navbar-dark{style: "background-color: #EBEBEB;"}
   .container
     %a.navbar-brand.fw-bolder.text-dark{:href => root_path} PadelApp
-    - if not(current_page? reservations_path)
+    - if not(current_page? reservations_path) and current_user
       %a.nav-link{:href => reservations_path} Mis Reservas
     - if user_signed_in?
       %a.nav-link{:href => destroy_user_session_path, data: {"turbo-method": :delete}} Cerrar Sesión

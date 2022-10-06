@@ -26,6 +26,11 @@ class Reservation < ApplicationRecord
   validates :ends_at, presence: true
   validates :ends_at, comparison: { greater_than: :starts_at }
 
+  validates :court_id, uniqueness: { scope: :starts_at,
+  message: "Disculpa pero este horario parece ya no estar disponible." }
+  validates :court_id, uniqueness: { scope: :ends_at,
+  message: "Disculpa pero este horario parece ya no estar disponible." }
+
   def club
     court.club
   end

@@ -13,11 +13,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-
     @reservation = Reservation.new(starts_at: params[:starts_at],
                                     ends_at: params[:ends_at],
                                     court_id: params[:court_id])
-
   end
 
   # GET /reservations/1/edit
@@ -51,18 +49,25 @@ class ReservationsController < ApplicationController
   # POST /reservations or /reservations.json
   def create
     if current_user
-      @reservation = Reservation.new(reservation_params)
-      @reservation.user = current_user
+      user = current_user
+    elsif User.find_by(email: params[:user][:email])
+      user = User.find_by(email: params[:user][:email])
     else
-      @user = User.new()
+      user = User.new(email: params[:user][:email], phone: params[:user][:phone])
+      user.password = "1234"
+      user.save
     end
+    sign_in user
+    @reservation = Reservation.new(reservation_params)
+    @reservation.user = user
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to edit_reservation_url(@reservation), notice: "Reserva creada con pago pendiente." }
+        format.html { redirect_to reservations_path, notice: "Reserva creada con pago pendiente." }
         format.json { render :show, status: :created, location: @reservation }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:alert] = @reservation.errors.full_messages.first
+        format.html { redirect_to root_path }
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
     end

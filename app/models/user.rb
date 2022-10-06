@@ -44,15 +44,32 @@ class User < ApplicationRecord
        # for Google OmniAuth
        :omniauthable, omniauth_providers: [:google_oauth2]
 
-def self.from_omniauth(auth)
-  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-    user.email = auth.info.email
-    user.password = Devise.friendly_token[0, 20]
-    user.full_name = auth.info.name # assuming the user model has a name
-    user.avatar_url = auth.info.image # assuming the user model has an image
-    user.first_name = auth.info.first_name
-    user.last_name = auth.info.last_name
+  def self.from_omniauth(auth)
+    user = User.find_by(provider: auth.provider, uid: auth.uid)
+    return user unless user.nil?
+
+    user = User.find_by(email: auth.info.email)
+    if user
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.set_auth_info(auth)
+      return user
+    else
+      user = User.new(provider: auth.provider, uid: auth.uid) do |user|
+        user.set_auth_info(auth)
+      end
+      user.save
+      return user
+    end
   end
-end
+
+  def set_auth_info(auth)
+    self.email = auth.info.email
+    self.password = Devise.friendly_token[0, 20]
+    self.full_name = auth.info.name # assuming the user model has a name
+    self.avatar_url = auth.info.image # assuming the user model has an image
+    self.first_name = auth.info.first_name
+    self.last_name = auth.info.last_name
+  end
 
 end

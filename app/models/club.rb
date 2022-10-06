@@ -47,13 +47,15 @@ class Club < ApplicationRecord
       as = []
       while ends_at < closes_at(date)
         self.courts.each do |court|
-          if court.is_slot_available? starts_at: starts_at, ends_at: ends_at
+          if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at) and starts_at >= DateTime.now.in_time_zone - 15.minutes
             puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
             as << {starts_at: starts_at, ends_at: ends_at, court_id: court.id}
             starts_at += 30.minutes
             ends_at = starts_at + duration.minutes
             break
           else
+            starts_at += 30.minutes
+            ends_at = starts_at + duration.minutes
             next
           end
         end

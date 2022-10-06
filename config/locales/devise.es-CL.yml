@@ -75,8 +75,8 @@ es-CL:
         message: Su cuenta ha sido bloqueada debido a una cantidad excesiva de intentos infructuosos para ingresar.
         subject: Instrucciones para desbloquear
     omniauth_callbacks:
-      failure: No has sido autorizado en la cuenta %{kind} porque "%{reason}".
-      success: Has sido autorizado satisfactoriamente en la cuenta %{kind}.
+      failure: Algo falló al intentar iniciar sessión.
+      success: Has sido autorizado satisfactoriamente.
     passwords:
       edit:
         change_my_password: Cambiar mi contraseña

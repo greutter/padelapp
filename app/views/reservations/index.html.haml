@@ -13,12 +13,9 @@
     - pending_payment = @reservations.select{|r| not r.paid?}
     - if pending_payment.any?
       - pending_payment.each do |reservation|
-        = turbo_frame_tag "reservation_#{reservation.id}" do
-          =render partial: 'card', locals: {reservation: reservation}
+        =render partial: 'card', locals: {reservation: reservation}
 
     - paid = @reservations.select{|r| r.paid?}
     - if paid.any?
       - paid.each do |reservation|
-        = turbo_frame_tag "reservation_#{reservation.id}" do
-          =render partial: 'card', locals: {reservation: reservation}
-          -# =render partial: 'card_footer', {reservation: reservation}
+        =render partial: 'card', locals: {reservation: reservation}
