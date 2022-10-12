@@ -1,12 +1,14 @@
 .contaner
   %h4.text-center{style: "padding-bottom: 12px;"} Perfil
-  = form_with model: resource, url: registration_path(resource_name), method: :put, date: {turbo: false} do |form|
+  = form_with model: resource, url: registration_path(resource_name), method: :put, data: {turbo: false} do |form|
     .mb-3
       -# = form.label :email, class: "form-label"
       = form.email_field :email, disabled: true, class: "form-control"
     .mb-3
       = form.label :phone, "Teléfono", class: "form-label"
       = form.telephone_field :phone, class: "form-control text-end", required: true, pattern: '\d*'
+      - if resource.errors[:phone].any?
+        .text-danger= resource.errors[:phone][0] 
     .mb-3
       = form.label :first_name, "Nombre", class: "form-label"
       = form.text_field :first_name, required: true, class: "form-control"

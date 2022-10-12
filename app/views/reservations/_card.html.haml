@@ -6,7 +6,9 @@
         .card-header.text-white{class: "text-bg-#{style}"}
           .row
             .col-6.text-start
-              -if reservation.paid?
+              -if !reservation.persisted?
+
+              - elsif reservation.paid?
                 CONFIRMADA
               - else
                 PAGO PENDIENTE

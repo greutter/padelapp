@@ -13,7 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
   def after_update_path_for(resource)
-     edit_registration_path(resource)
+    reservations_path
   end
 
   def after_sign_up_path_for(resource)

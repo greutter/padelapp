@@ -37,12 +37,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
           :omniauthable, omniauth_providers: [:google_oauth2]
 
-  # validates :attribute, phone: { possible: true, types: [:mobile] }
+  validates :phone, phone: { possible: true, types: [:mobile], message: "No parece ser un teléfono movil válido"}
+  validates :first_name, presence: true
 
-  devise :database_authenticatable, :registerable,
-       :recoverable, :rememberable, :validatable,
-       # for Google OmniAuth
-       :omniauthable, omniauth_providers: [:google_oauth2]
+
 
   def self.from_omniauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)

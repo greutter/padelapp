@@ -63,7 +63,7 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to reservations_path, notice: "Reserva creada con pago pendiente." }
+        format.html { redirect_to edit_reservation_path @reservation, notice: "" }
         format.json { render :show, status: :created, location: @reservation }
       else
         flash[:alert] = @reservation.errors.full_messages.first
@@ -91,7 +91,7 @@ class ReservationsController < ApplicationController
     @reservation.destroy
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Cancelamos tu reserva. " }
+      format.html { redirect_to reservations_path, notice: "Cancelamos tu reserva. " }
       format.json { head :no_content }
     end
   end

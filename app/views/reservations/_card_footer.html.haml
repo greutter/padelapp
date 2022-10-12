@@ -20,11 +20,18 @@
         .col-5.text-end
           .mp-cho-btn
   - else
-    = form_with model: reservation do |form|
-      = form.hidden_field :starts_at
-      = form.hidden_field :ends_at
-      = form.hidden_field :court_id
-      = fields_for :user, reservation.user do |user_form|
-        = user_form.email_field :email
-        = user_form.number_field :phone
-      = form.submit "Crear Reserva"
+    .row
+      .col-12
+        = form_with model: reservation do |form|
+          = form.hidden_field :starts_at
+          = form.hidden_field :ends_at
+          = form.hidden_field :court_id
+          = fields_for :user, reservation.user do |user_form|
+            .mb-3
+              = user_form.label :email, "✉️ Email"
+              = user_form.email_field :email, required: true, class: "form-control"
+            .mb-3
+              = user_form.label :phone, "📞 Teléfono"
+              = user_form.number_field :phone, required: true, class: "form-control"
+          .d-
+          = form.submit "Crear Reserva", class: "btn btn-warning"
