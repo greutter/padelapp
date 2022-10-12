@@ -1,15 +1,17 @@
-.container{style: "max-width: 300px;"}
+.container{style: "max-width: 360px;"}
   .card
     .card-header
-      %fs-5.card-title
+      %fs-4.card-title
         ¡Aquí vamos!
     .card-body
+      -# .text-center{style: "padding: 12px 0 18px 0px;"}
 
-      .text-center{style: "padding: 12px 0 18px 0px;"}
-        = button_to user_google_oauth2_omniauth_authorize_path, class: "btn btn-social btn-google", |
-          method: :post, data: {turbo: false} do
-          %i.bi.bi-google.fs-6.align-middle
-          Ingresa con Google
+      .row{style: "padding: 12px 0 12px 0"}
+        = form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, data: {turbo: false} do |form|
+          .d-grid.gap-2
+            = form.button :button, type: :submit, class: "btn btn-social btn-google" do
+              %i.bi.bi-google.fs-6.align-middle
+              .text-center Continuar con Google
       .row.align-items-center
         .col-5
           %hr
@@ -30,5 +32,6 @@
         .mb-3
           = form.hidden_field :remember_me, value: true
         .mb-3
-          = form.submit t(".sign_in"), class: "btn btn-block btn-outline-secondary"
+          .d-grid.gap-2
+            = form.submit t(".sign_in"), class: "btn btn-outline-secondary"
       = render "devise/shared/links"
