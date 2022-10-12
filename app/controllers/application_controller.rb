@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     host = request.host
     path = path = request.fullpath.split("?")[0]
     if host == 'padelapp.cl' && path == "/"
-      redirect_to 'https://padelapp.cl'
+      # redirect_to 'https://padelapp.cl'
     end
   end
 end
