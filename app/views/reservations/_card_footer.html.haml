@@ -13,7 +13,8 @@
 
       - if current_page?(reservations_path) and not(reservation.paid?)
         .col-8.text-end
-          = link_to "Ir a Pagar", edit_reservation_path(reservation), type: :button, class: "btn btn-primary", data: {turbo: false}
+          = button_to "Ir a Pagar", edit_reservation_path(reservation), type: :button, |
+                      class: "btn btn-outline-secondary", method: :get, data: {turbo: false}
       - else
         .col-3.text-end
           = image_tag "mercado_pago.png", class: "mercado-pago-img float-start float-middle", style: "max-width: 90px;"

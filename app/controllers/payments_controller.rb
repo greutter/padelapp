@@ -10,9 +10,19 @@ class PaymentsController < ApplicationController
     hash_p[:payable_type] = hash_p[:external_reference].split("/")[0]
     hash_p[:payable_id] = hash_p[:external_reference].split("/")[1].to_i
     # payment = Payment.find_or_create_by(preference_id: params[:preference_id])
-    Payment.create(hash_p)
+    payment = Payment.create(hash_p)
     flash[:notice] = "Cancha lista ✔️. Ahora invita a los jugadores 👇🏼"
-    redirect_to reservations_path
+    redirect_to reservation_path payment.payable
+  end
+
+  def mp_payment_failiure
+    params.permit!
+    hash_p  = params.to_h.except! :controller, :action
+    hash_p[:payable_type] = hash_p[:external_reference].split("/")[0]
+    hash_p[:payable_id] = hash_p[:external_reference].split("/")[1].to_i
+    payment = Payment.create(hash_p)
+    flash[:notice] = "Algo falló en el pago. Por favor intentalo nuevamente."
+    redirect_to reservation_path payment.payable
   end
 
   private

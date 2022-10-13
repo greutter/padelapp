@@ -9,7 +9,7 @@
           %i{class: "bi bi-plus"}
           Nueva Reserva
 
-  .row
+  .div-text-center
     - pending_payment = @reservations.select{|r| not r.paid?}
     - if pending_payment.any?
       - pending_payment.each do |reservation|

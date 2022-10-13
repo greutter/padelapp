@@ -23,19 +23,22 @@ class ReservationsController < ApplicationController
     @preference_data = {
       back_urls: {
         success: "#{request.host_with_port}/mp_payment_success",
-        # failure: "http://localhost:3000/reservations/#{@reservation.id}/edit",
+        failure: "#{request.host_with_port}/mp_payment_failiure",
         pending: 'http://localhost:3000/'
       },
       items: [
         {
           id: "#{@reservation.id}",
           category_id: "reservation",
-          title: "Reserva #{l(@reservation.starts_at, format: "%A %e %b %k:%M")}.
-                  id: #{@reservation.id}",
+          title: "Reserva Padel #{l(@reservation.starts_at, format: "%A %e %b %k:%M")}.",
           unit_price: @reservation.price,
           quantity: 1
         }
       ],
+      payer: {
+        email: "#{@reservation.user.email}"
+      },
+      binary_mode: true,
       external_reference: "Reservation/#{@reservation.id}"
       }
       sdk = Mercadopago::SDK.new(ENV['MERCADOPAGO_TEST_ACCESS_TOKEN'])
@@ -55,7 +58,7 @@ class ReservationsController < ApplicationController
     else
       user = User.new(email: params[:user][:email], phone: params[:user][:phone])
       user.password = "1234"
-      user.save
+      user.save(validate: false)
     end
     sign_in user
     @reservation = Reservation.new(reservation_params)
@@ -63,7 +66,8 @@ class ReservationsController < ApplicationController
 
     respond_to do |format|
       if @reservation.save
-        format.html { redirect_to edit_reservation_path @reservation, notice: "" }
+        flash[:notice] = "Reserva creada pendiente de pago ;)"
+        format.html { redirect_to edit_reservation_path @reservation }
         format.json { render :show, status: :created, location: @reservation }
       else
         flash[:alert] = @reservation.errors.full_messages.first

@@ -11,7 +11,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect user, event: :authentication
     else
       flash[:alert] = "Algo falló al intentar iniciar sesión con Google :("
-
       redirect_to new_user_session_path
     end
   end

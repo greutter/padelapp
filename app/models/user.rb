@@ -56,7 +56,7 @@ class User < ApplicationRecord
       user = User.new(provider: auth.provider, uid: auth.uid) do |user|
         user.set_auth_info(auth)
       end
-      user.save
+      user.save(validate: false)
       return user
     end
   end

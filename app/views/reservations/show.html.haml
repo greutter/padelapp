@@ -1,18 +1,21 @@
 .container
+  .row{style: "padding: 12px 0 24px 0;"}
+    .col-6.text-start
+      .fs-4
+        - if @reservation.paid?
+          ¡Ya tienes la cancha!
+        - else
+          Solo falta pagar.
+    .col-6.text-end
+      %fs-4
+  .div-text-center
+    = render partial: 'card', |
+        locals: {reservation: @reservation}
 
-  %p
-    %b User:
-    = @reservation.user_id
-  %p
-    %b Court:
-    = @reservation.court_id
-  %p
-    %b Starts at:
-    = @reservation.starts_at
-  %p
-    %b Ends at:
-    = @reservation.ends_at
-  %p
-    = link_to 'Editar', edit_reservation_path(@reservation)
-    \|
-    = link_to '<- Atrás', reservations_path
+  .row{style: "padding: 12px 0 24px 0;"}
+    .col-6.text-start
+      = button_to "Ver todas mis reservas", reservations_path, method: :get, class: "btn btn-link"
+    .col-6.text-end
+      =button_to root_path, method: :get, type: :button, class: "btn btn-outline-dark btn-sm" do
+        %i{class: "bi bi-plus"}
+        Nueva Reserva
