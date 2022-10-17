@@ -1,5 +1,7 @@
 =turbo_frame_tag "availability" do
   .container
+    %h5.text-left
+      #{l(@date, format: "%B").capitalize}
     %ul.nav.nav-pills.nav-fill
       - to_date = @from_date + 4.days
       -(@from_date..to_date).each do |date|
@@ -28,9 +30,6 @@
       .col-3.text-center
         = link_to availability_reservations_path(from_date: to_date + 1.day, date: to_date + 1.day), type: :button, class: "" do
           %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
-
-  %h5.text-center
-    .fw-light #{l(@date, format: "%A %d de ").capitalize} <b> #{l(@date, format: "%B").capitalize} </b>
 
   %p.fw-lighter
     -# .small.fw-lighter.texxt-center Disponibilidad actualizada a las: #{DateTime.now.strftime "%H:%M"}
