@@ -6,7 +6,8 @@
     });
 
     // Inicializa el checkout
-    window.onload = load_mp_button;
+    window.onload = setTimeout(load_mp_button, 800);
+
     function load_mp_button() {
       mp_co.checkout({
           preference: {
@@ -18,7 +19,7 @@
           }
       });
     }
-    
+
 .div-text-center
   = render partial: 'card', |
            locals: {reservation: @reservation}
