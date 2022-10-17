@@ -1,25 +1,11 @@
 .container{style: "max-width: 360px;"}
   .card
     .card-header
-      %fs-4.card-title
+      %h4.card-title
         ¡Aquí vamos!
     .card-body
       -# .text-center{style: "padding: 12px 0 18px 0px;"}
-
-      .row{style: "padding: 12px 0 12px 0"}
-        = form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, data: {turbo: false} do |form|
-          .d-grid.gap-2
-            = form.button :button, type: :submit, class: "btn btn-social btn-google" do
-              %i.bi.bi-google.fs-6.align-middle
-              .text-center Continuar con Google
-      .row.align-items-center
-        .col-5
-          %hr
-        .col-2.text-center
-          %small.fw-lighter.fs-6
-            o
-        .col-5
-          %hr
+      = render partial: "devise/shared/social_login"
       =form_for(resource, as: resource_name, |
             url: session_path(resource_name), |
             data: {turbo: false}) do |form|
@@ -34,4 +20,5 @@
         .mb-3
           .d-grid.gap-2
             = form.submit t(".sign_in"), class: "btn btn-outline-secondary"
+    .card-footer
       = render "devise/shared/links"

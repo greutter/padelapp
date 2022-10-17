@@ -1,23 +1,40 @@
-.container
-  %h2= t(".sign_up")
-  = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f|
-    = f.error_notification
-    .form-inputs
-      = f.input :email,
-        required: true,
-        autofocus: true ,
-        input_html: { autocomplete: "email" }
-      = f.input :phone,
-        required: true,
-        hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
-        input_html: { autocomplete: "new-password" }
-      = f.input :password,
-        required: true,
-        hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
-        input_html: { autocomplete: "new-password" }
-      = f.input :password_confirmation,
-        required: true,
-        input_html: { autocomplete: "new-password" }
-    .form-actions
-      = f.button :submit, t(".sign_up")
-  = render "devise/shared/links"
+.container{style: "max-width: 360px;"}
+  .card
+    .card-header
+      %h4.card-title
+        Crear una cuenta
+    .card-body
+      = render partial: "devise/shared/social_login"
+      = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f|
+        .form-inputs
+          = f.input :email,
+            required: true,
+            autofocus: true ,
+            input_html: { autocomplete: "email" }
+          = f.input :phone,
+            label: "Teléfono",
+            required: true,
+            hint: "Numero de celular",
+            input_html: { autocomplete: "phone" }
+          = f.input :first_name,
+            label: "Nombre",
+            required: true,
+            input_html: { autocomplete: "first_name"}
+          = f.input :last_name,
+            label: "Apellido",
+            required: true,
+            input_html: { autocomplete: "last_name"}
+          %hr
+          = f.input :password,
+            required: true,
+            hint: (t('devise.shared.minimum_password_length', count: @minimum_password_length) if @minimum_password_length),
+            input_html: { autocomplete: "new-password" }
+          = f.input :password_confirmation,
+            required: true,
+            input_html: { autocomplete: "new-password" }
+          %br
+          .d-grid.gap-2
+            = f.button :submit, t(".sign_up"),
+              class: "btn btn-outline-secondary"
+    .card-footer
+      = render "devise/shared/links"

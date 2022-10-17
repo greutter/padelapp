@@ -1,0 +1,14 @@
+.row{style: "padding: 12px 0 12px 0"}
+  = form_with url: user_google_oauth2_omniauth_authorize_path, method: :post, data: {turbo: false} do |form|
+    .d-grid.gap-2
+      = form.button :button, type: :submit, class: "btn btn-social btn-google" do
+        %i.bi.bi-google.fs-6.align-middle
+        .text-center Continuar con Google
+.row.align-items-center
+  .col-5
+    %hr
+  .col-2.text-center
+    %small.fw-lighter.fs-6
+      o
+  .col-5
+    %hr

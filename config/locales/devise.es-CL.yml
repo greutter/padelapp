@@ -84,7 +84,7 @@ es-CL:
         confirm_new_password: Confirme la nueva contraseña
         new_password: Nueva contraseña
       new:
-        forgot_your_password: "¿Ha olvidado su contraseña?"
+        forgot_your_password: "Olvidé mi contraseña"
         send_me_reset_password_instructions: Envíeme las instrucciones para resetear mi contraseña
       no_token: No puedes acceder a esta página si no es a través de un enlace para resetear tu contraseña. Si has llegado hasta aquí desde el email para resetear tu contraseña, por favor asegúrate de que la URL introducida está completa.
       send_instructions: Recibirás un correo con instrucciones sobre cómo resetear tu contraseña en unos pocos minutos.
@@ -122,10 +122,10 @@ es-CL:
         back: Atrás
         didn_t_receive_confirmation_instructions: "¿No ha recibido las instrucciones de confirmación?"
         didn_t_receive_unlock_instructions: "¿No ha recibido instrucciones para desbloquear?"
-        forgot_your_password: "¿Ha olvidado su contraseña?"
+        forgot_your_password: "Olvidé mi contraseña"
         sign_in: Iniciar sesión
         sign_in_with_provider: Iniciar sesión con %{provider}
-        sign_up: Registrarse
+        sign_up: Crea una cuenta.
       minimum_password_length:
         one: "(%{count} caracter como mínimo)"
         other: "(%{count} caracteres como mínimo)"

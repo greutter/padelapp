@@ -37,10 +37,12 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable,
           :omniauthable, omniauth_providers: [:google_oauth2]
 
-  validates :phone, phone: { possible: true, types: [:mobile], message: "No parece ser un teléfono movil válido"}
+  validates :phone, phone: true
+  before_create :parse_phone
+  before_save :parse_phone
+  before_update :parse_phone
+
   validates :first_name, presence: true
-
-
 
   def self.from_omniauth(auth)
     user = User.find_by(provider: auth.provider, uid: auth.uid)
@@ -68,6 +70,14 @@ class User < ApplicationRecord
     self.avatar_url = auth.info.image # assuming the user model has an image
     self.first_name = auth.info.first_name
     self.last_name = auth.info.last_name
+  end
+
+  def parse_phone
+    if self.phone
+      self.phone = self.phone.chars.last(9).join
+      self.phone = "56#{self.phone}"
+      self.phone = Phonelib.parse(self.phone).sanitized
+    end
   end
 
 end
