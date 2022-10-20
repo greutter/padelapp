@@ -1,6 +1,7 @@
 %nav.navbar.navbar-expand-md.navbar-dark{style: "background-color: #EBEBEB;"}
   .container
-    %a.navbar-brand.fw-bolder.text-dark{:href => root_path} PanguiPadel
+    %a.navbar-brand.fw-bolder.text-dark{:href => root_path}
+      = @club.name.gsub(" ", "_").camelize
     - if not(current_page? reservations_path) and current_user
       %a.nav-link{:href => reservations_path} Mis Reservas
     - if user_signed_in?

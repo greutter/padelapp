@@ -13,7 +13,7 @@
         = link_to "https://api.whatsapp.com/send?phone=#{@club.phone}&text=Hola!", |
                     class: "text-decoration-none link-primary", target: :blank do
           %i{class: "bi bi-whatsapp"}
-            = @club.phone
+            = number_to_phone_cl(@club.phone)
 .container
   .row
     .col-12

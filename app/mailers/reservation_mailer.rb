@@ -4,7 +4,7 @@ class ReservationMailer < ApplicationMailer
     def new_reservation_email()
         @reservation = params[:reservation]
         @user = @reservation.user 
-        mail(
+        bootstrap_mail(
             to: @user.email,
             subject: "Lista la Cancha! #{@reservation.club.name}"
         )

@@ -1,1 +1,23 @@
-= p @reservation.inspect
+%body.bg-light
+    .container
+        - begin
+            = image_tag "#{@reservation.club.name.gsub(" ", "_")}_logo".downcase, class: "ax-center my-10 w-24"
+        - rescue
+            %h2.text-align-center.ax-center.my-10.w-full
+                = @reservation.club.name
+        .card.p-6.p-lg-10.space-y-4
+            %h1.h3.fw-700
+                Simple Card
+            %p
+                = @reservation.starts_at
+            = link_to wa_invitation_text(@reservation), class: "btn btn-success",  target: :blank do
+                %i{class: "bi bi-whatsapp"}
+                Confirma Jugadores
+        -# %img.ax-center.mt-10.w-40{:src => "https://assets.bootstrapemail.com/logos/light/text.png"}/
+        .text-muted.text-center.my-6
+            = @reservation.club.name
+            %br/
+            = @reservation.club.address
+            %br/
+            = number_to_phone_cl(@reservation.club.phone)
+            %br/

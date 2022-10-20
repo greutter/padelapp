@@ -1,4 +1,8 @@
 class ApplicationMailer < ActionMailer::Base
+  layout 'bootstrap-mailer'
   default from: "hello@padelapp.cl"
-  layout "mailer"
+
+  helper :reservations
+  helper :application  
+
 end

@@ -1,15 +1,11 @@
 class ApplicationController < ActionController::Base
   # console
 
-  before_action :redirect_to_domain
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_club
 
-  def redirect_to_domain
-    host = request.host
-    path = path = request.fullpath.split("?")[0]
-    if host == 'padelapp.cl' && path == "/"
-      # redirect_to 'https://padelapp.cl'
-    end
+  def set_club
+    @club = Club.second
   end
 
   protected

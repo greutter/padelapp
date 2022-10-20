@@ -97,3 +97,4 @@ gem 'local_time'
 gem 'mercadopago-sdk'
 
 gem "ruby-lsp", "~> 0.3.4", :group => :development
+gem 'bootstrap-email'
