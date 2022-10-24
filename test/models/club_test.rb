@@ -27,19 +27,13 @@ class ClubTest < ActiveSupport::TestCase
   end
 
   test "should default to custom default schedules if any" do
-    custom_default_schedule = @club.schedules.custom_default_for_day(1)
-    assert_equal Schedule.first.opens_at.to_datetime, custom_default_schedule.opens_at.to_datetime
+    date = Date.new(2022, 10, 23) # Domingo .wday is 0.
+    # assert_equal date.in_time_zone.change(hour: 9, min: 30),
+    #              @club.opens_at(date),
+    #              "Testing opens_at"
 
-    # opens_at = @club.opens_at(date)
-    # assert_equal opens_at, DateTime.new.change({hour: 9, minute: 30})
+    assert_equal date.in_time_zone.change(hour: 20, min: 30),
+                 @club.closes_at(date),
+                 "Testing closes_at"
   end
-
-  test "should show correct availability for days with no reservation" do
-    date = Date.today + 120.days
-    puts @club.availability date: date
-
-  end
-
-  test "should "
-
 end

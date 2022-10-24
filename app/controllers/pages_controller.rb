@@ -4,4 +4,8 @@ class PagesController < ApplicationController
     @date = Date.today
     @from_date = Date.today
   end
+
+  def privio
+    
+  end
 end

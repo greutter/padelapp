@@ -14,7 +14,14 @@
 
 one:
   club_id: 1
-  opens_at: "1981-04-29 9:30"
-  closes_at: "1981-04-29 23:30"
+  opens_at: "1981-04-29 6:00 -3"
+  closes_at: "1981-04-29 24:00 -3"
   tipo: default
   day_of_week: 1
+
+two:
+  club_id: 1
+  opens_at: "1981-05-03 9:30 -3"
+  closes_at: "1981-05-03 20:30 -3"
+  tipo: default
+  day_of_week: 0

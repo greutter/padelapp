@@ -20,7 +20,8 @@
     .row{style: "padding-top: 10px"}
       .col-3.text-center
         - if @from_date != Date.today
-          = link_to availability_reservations_path(from_date: @from_date - 5.day, date: @from_date - 5.days), type: :button, class: "" do
+          - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
+          = link_to availability_reservations_path(params), type: :button, class: "" do
             %i.fs-2{class: "bi bi-arrow-left"}
       .col-6.text-center
         -if @from_date != Date.today

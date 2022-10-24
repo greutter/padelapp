@@ -2,31 +2,29 @@
 #
 
 Rails.application.routes.draw do
-
   resources :schedules
   resources :courts
   resources :clubs
 
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+  devise_for :users,
+             controllers: {
+               omniauth_callbacks: "users/omniauth_callbacks",
+               sessions: "users/sessions",
+               registrations: "users/registrations"
+             }
 
-  resources :reservations, only: [:new, :create] do
-    collection do
-      get "availability"
-    end
+  resources :reservations, only: %i[new create] do
+    collection { get "availability" }
   end
 
-
   authenticate :user do
-    resources :reservations, only: [:show, :edit, :update, :destroy, :index]
+    resources :reservations, only: %i[show edit update destroy index]
   end
 
   root "pages#home"
 
-  get 'mp_payment_success' => "payments#mp_payment_success"
-  get 'mp_payment_failiure' => "payments#mp_payment_failiure"
-  # post '/ipn' => 'payments#instant_payment_notifications'
+  get "mp_payment_success" => "payments#mp_payment_success"
+  get "mp_payment_failiure" => "payments#mp_payment_failiure"
+
+  get "privio" => "pages#privio"
 end
