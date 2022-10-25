@@ -1,9 +1,19 @@
 class ClubsController < ApplicationController
-  before_action :set_club, only: %i[ show edit update destroy ]
+  before_action :set_club, only: %i[show edit update destroy]
 
   # GET /clubs or /clubs.json
   def index
-    @clubs = Club.all
+    @region = "Metropolitana"
+    @comunas =
+      (Club.where("region like ?", "%#{@region}%").group(:comuna).count(:id))
+        .sort_by { |k, v| k }
+        .to_h
+
+    if params[:comunas].present?
+      @clubs = Club.where("comuna IN (?)", params[:comunas])
+    else
+      @clubs = Club.where("region like ?", "%#{@region}%").order("comuna")
+    end
   end
 
   # GET /clubs/1 or /clubs/1.json
@@ -25,7 +35,9 @@ class ClubsController < ApplicationController
 
     respond_to do |format|
       if @club.save
-        format.html { redirect_to club_url(@club), notice: "Club was successfully created." }
+        format.html do
+          redirect_to club_url(@club), notice: "Club was successfully created."
+        end
         format.json { render :show, status: :created, location: @club }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +50,9 @@ class ClubsController < ApplicationController
   def update
     respond_to do |format|
       if @club.update(club_params)
-        format.html { redirect_to club_url(@club), notice: "Club was successfully updated." }
+        format.html do
+          redirect_to club_url(@club), notice: "Club was successfully updated."
+        end
         format.json { render :show, status: :ok, location: @club }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +66,22 @@ class ClubsController < ApplicationController
     @club.destroy
 
     respond_to do |format|
-      format.html { redirect_to clubs_url, notice: "Club was successfully destroyed." }
+      format.html do
+        redirect_to clubs_url, notice: "Club was successfully destroyed."
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_club
-      @club = Club.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def club_params
-      params.require(:club).permit(:name, :address, :google_maps_link, :phone)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_club
+    @club = Club.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def club_params
+    params.require(:club).permit(:name, :address, :google_maps_link, :phone)
+  end
 end

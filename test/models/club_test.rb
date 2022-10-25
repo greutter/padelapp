@@ -2,13 +2,21 @@
 #
 # Table name: clubs
 #
-#  id               :bigint           not null, primary key
-#  address          :string
-#  google_maps_link :string
-#  name             :string
-#  phone            :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                   :bigint           not null, primary key
+#  address              :string
+#  city                 :string
+#  comuna               :string
+#  google_maps_link     :string
+#  latitude             :integer
+#  longitude            :integer
+#  name                 :string
+#  phone                :string
+#  region               :string
+#  third_party_software :string
+#  website              :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  third_party_id       :integer
 #
 require "test_helper"
 
@@ -33,7 +41,6 @@ class ClubTest < ActiveSupport::TestCase
     #              "Testing opens_at"
 
     assert_equal date.in_time_zone.change(hour: 20, min: 30),
-                 @club.closes_at(date),
-                 "Testing closes_at"
+                 @club.closes_at(date), "Testing closes_at"
   end
 end

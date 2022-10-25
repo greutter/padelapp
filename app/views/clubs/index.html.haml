@@ -1,27 +1,26 @@
 .container
-  %h3 Clubs
+  %h3 ¡Los clubes en un solo lugar!
 
-  .table-responsive
-    %table.table
-      %thead
-        %tr
-          %th Name
-          %th Address
-          %th Google maps link
-          %th
-          %th
-          %th
+  .div.py-3
+    = form_with(url: clubs_path, method: :get, data: {turbo_frame: "clubs"}) do |form|
+      = form.label :query, "Busca por comuna:", class: ""
+      .flex.space-x-3
+        = form.collection_check_boxes :comunas, @comunas, :first, :first do |b|
+          .form-check
+            = b.check_box class: "form-check-input", checked: params[:comunas].include?(b.value)
+            = b.label class: "form-check-label" 
+            (#{@comunas[b.value]})
+        = form.submit 'Search', class: "btn btn-secondary"
 
-      %tbody
-        - @clubs.each do |club|
-          %tr
-            %td= club.name
-            %td= club.address
-            %td= club.google_maps_link
-            %td= link_to 'Show', club
-            %td= link_to 'Edit', edit_club_path(club)
-            %td= link_to 'Destroy', club, data: { "turbo-method": :delete, "turbo-confirm": 'Seguro que quieres borrar el Club?' }
-
-    %br
-    %p
-      = link_to 'Nuevo Club', new_club_path
+  - @clubs.each do |club|
+    .div.py-1
+      .card
+        %h5.card-header
+          = club.name
+          %small= club.third_party_id
+        .card-body
+          #{club.address}
+          %br
+          #{club.comuna}
+          %br
+          = number_to_phone_cl club.phone if club.phone.length > 8

@@ -2,13 +2,21 @@
 #
 # Table name: clubs
 #
-#  id               :bigint           not null, primary key
-#  address          :string
-#  google_maps_link :string
-#  name             :string
-#  phone            :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                   :bigint           not null, primary key
+#  address              :string
+#  city                 :string
+#  comuna               :string
+#  google_maps_link     :string
+#  latitude             :integer
+#  longitude            :integer
+#  name                 :string
+#  phone                :string
+#  region               :string
+#  third_party_software :string
+#  website              :string
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  third_party_id       :integer
 #
 
 one:
