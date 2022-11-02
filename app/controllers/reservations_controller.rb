@@ -105,7 +105,7 @@ class ReservationsController < ApplicationController
   end
 
   def availability
-    @club = Club.first
+    @club = Club.find(475)
     @from_date = Date.parse(params[:from_date])
     @date = Date.parse(params[:date])
   end

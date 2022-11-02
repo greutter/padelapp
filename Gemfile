@@ -75,8 +75,7 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  
   gem 'guard' # NOTE: this is necessary in newer versions
   gem 'guard-minitest'
 end
@@ -98,3 +97,7 @@ gem 'mercadopago-sdk'
 
 gem "ruby-lsp", "~> 0.3.4", :group => :development
 gem 'bootstrap-email'
+
+gem 'mechanize'
+gem "selenium-webdriver"
+gem "webdrivers"

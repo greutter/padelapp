@@ -26,7 +26,6 @@ class ReservationsTest < ApplicationSystemTestCase
   #   current_path.should == new_registration_path
   # end
 
-
   # test "visiting the index" do
   #   visit reservations_url
   #   assert_selector "h1", text: "Reservations"

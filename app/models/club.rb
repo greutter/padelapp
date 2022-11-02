@@ -40,7 +40,7 @@ class Club < ApplicationRecord
   end
 
   def closes_at(date)
-    if self.schedules.custom_default_for(date)
+    if false #self.schedules.custom_default_for(date)
       default = self.schedules.custom_default_for(date)
       date.beginning_of_day.in_time_zone.change(
         { hour: default.closes_at.hour, min: default.closes_at.min }
@@ -52,27 +52,27 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, durations: [90])
+  def third_party_availability(date:, durations: [90])
+    if self.third_party_software.nil? 
+      not_third_party_availability(date, durations)
+    else
+      EasycanchaBot.availability(self.third_party_id, date, duration.first)
+    end
+  end
+
+  def availability(date, durations)
     available_slots = {}
+    as = []
     durations.each do |duration|
-      starts_at = opens_at(date)
-      ends_at = starts_at + duration.minutes
-      as = []
-      while ends_at < closes_at(date)
+      (opens_at(date).to_i..(closes_at(date) - duration.minutes).to_i).step(30.minutes).each do |time|
+        starts_at = Time.at time
+        # break if starts_at <= DateTime.now.in_time_zone - 15.minutes    
         self.courts.each do |court|
-          if court.is_slot_available?(
-               starts_at: starts_at,
-               ends_at: ends_at
-             ) and starts_at >= DateTime.now.in_time_zone - 15.minutes
+          ends_at = starts_at + duration.minutes
+          if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at)  
             puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
             as << { starts_at: starts_at, ends_at: ends_at, court_id: court.id }
-            starts_at += 30.minutes
-            ends_at = starts_at + duration.minutes
             break
-          else
-            starts_at += 30.minutes
-            ends_at = starts_at + duration.minutes
-            next
           end
         end
       end

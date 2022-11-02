@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_club
 
   def set_club
-    @club = Club.second
+    @club = Club.last
   end
 
   protected
