@@ -24,6 +24,7 @@
 #
 class Club < ApplicationRecord
   validates :name, presence: true, uniqueness: true
+  validates :third_party_id, uniqueness: true
   has_many :courts
   has_many :schedules
 

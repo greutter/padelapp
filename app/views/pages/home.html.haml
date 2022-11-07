@@ -7,7 +7,7 @@
       %h2= @club.name
       = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
         %span{class: "bi bi-geo-alt-fill"}
-        = @club.address
+        #{@club.address}, #{@club.comuna}
         %br
         = link_to "https://api.whatsapp.com/send?phone=#{@club.phone}&text=Hola!", |
                     class: "text-decoration-none link-primary", target: :blank do

@@ -35,4 +35,7 @@
 
 /node_modules
 
+/app/assets/images/screenshots/*
+/test/screenshots/*
+*.DS_Store
 .env

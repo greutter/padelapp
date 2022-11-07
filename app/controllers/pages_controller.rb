@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   end
 
   def privio
-    
+    # @timestamp = Time.now.strftime("%H-%M-%S_")
+    # EasycanchaBot.reserve
   end
 end
