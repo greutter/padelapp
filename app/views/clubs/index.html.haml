@@ -1,15 +1,14 @@
 .container
-  %h3 ¡Los clubes en un solo lugar!
+  %h3 ¡Todos los Clubes!
 
   .div.py-3
     = form_with(url: clubs_path, method: :get, data: {turbo_frame: "clubs"}) do |form|
       = form.label :query, "Busca por comuna:", class: ""
       .flex.space-x-3
-        = form.collection_check_boxes :comunas, @comunas, :first, :first do |b|
+        = form.collection_check_boxes :comunas, @comunas, :itself, :itself do |b|
           .form-check
-            = b.check_box class: "form-check-input", checked: params[:comunas].include?(b.value)
+            = b.check_box class: "form-check-input", checked: @selected_comunas.include?(b)
             = b.label class: "form-check-label" 
-            (#{@comunas[b.value]})
         = form.submit 'Search', class: "btn btn-secondary"
 
   - @clubs.each do |club|

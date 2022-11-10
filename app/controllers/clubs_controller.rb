@@ -5,19 +5,19 @@ class ClubsController < ApplicationController
   def index
     @region = "Metropolitana"
     @comunas =
-      (Club.where("region like ?", "%#{@region}%").group(:comuna).count(:id))
-        .sort_by { |k, v| k }
-        .to_h
-
-    if params[:comunas].present?
-      @clubs = Club.where("comuna IN (?)", params[:comunas])
-    else
-      @clubs = Club.where("region like ?", "%#{@region}%").order("comuna")
-    end
+      Club
+        .where("region like ?", "%#{"Metropolitana"}%")
+        .map { |c| c.comuna }
+        .uniq
+        .sort
+    @selected_comunas = (params[:comunas] or ["Las Condes"])
+    @clubs = Club.where("comuna IN (?)", @selected_comunas)
   end
 
   # GET /clubs/1 or /clubs/1.json
   def show
+    @date = Date.today
+    @from_date = Date.today
   end
 
   # GET /clubs/new

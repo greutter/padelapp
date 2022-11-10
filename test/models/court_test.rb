@@ -27,14 +27,12 @@ class CourtTest < ActiveSupport::TestCase
                                                     ends_at: starts_at + duration.minutes,
                                                     court: court)
 
-    available_slots = court.get_availabel_slots(date: date, durations: [60, 90])
+    available_slots = court.get_availabel_slots(date: date, duration: 90)
 
     puts "Slots #{duration} min"
     puts reservation.inspect
-    puts available_slots[duration]
+    puts available_slots
     # puts "Slots 90 min"
-
-
 
     assert not(court.is_slot_available?(starts_at: reservation.starts_at, ends_at: reservation.ends_at + 105.hours, verbose: true)),
           "Slot should be blocked if any reservation starts at same time"
@@ -77,19 +75,6 @@ class CourtTest < ActiveSupport::TestCase
     puts "ends_at: #{(reservation.ends_at - 5.minutes).strftime("%H:%M")}"      
     assert not(court.is_slot_available?(starts_at: reservation.starts_at + 5.minutes, ends_at: reservation.ends_at - 5.minutes, verbose: true)),
           "Slot inside a reservation should be blocked"
-
-
-
-
-    # slot_duration = [60, 90].sample
-    #
-    # available_slots = court.get_availabel_slots(date: date, durations: [slot_duration])
-    # puts "available_slots:"
-    # puts available_slots[slot_duration]
-    #
-    #
-    # assert_equal court.opens_at(date) + slot_duration * 60,
-    #             available_slots[0]
 
   end
 

@@ -41,10 +41,18 @@ class EasycanchaBot
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
     begin
       create_driver
-      # login
       @driver.get(url)
       body = @driver.find_element(tag_name: "pre").text
-      parse_available_timeslots(body, date: date, duration: duration)
+      available_timeslots =
+        parse_available_timeslots(body, date: date, duration: duration)
+      if available_timeslots.nil?
+        login
+        @driver.get(url)
+        body = @driver.find_element(tag_name: "pre").text
+        available_timeslots =
+          parse_available_timeslots(body, date: date, duration: duration)
+      end
+      return available_timeslots
     rescue Exception => e
       puts e.message
     ensure
@@ -71,46 +79,55 @@ class EasycanchaBot
             { starts_at: starts_at, ends_at: ends_at, courts: courts }
           end
     end
-    return { duration => available_timeslots }
+    return available_timeslots
   end
 
   def create_clubs
-    create_driver
-    login
-    @driver.get("https://www.easycancha.com/api/clubs/")
-    clubs = JSON.parse!(@driver.page_source)["clubs"]
+    begin
+      puts "Fetching and creating Easycancha Clubs"
+      create_driver
+      login
+      @driver.get("https://www.easycancha.com/api/clubs/")
+      body = @driver.find_element(tag_name: "pre").text
+      clubs = JSON.parse!(body)["clubs"]
 
-    clubs.select! do |club|
-      club["sports"].select { |sport| sport["id"] == 7 }.any?
-    end
-    p Club.count
-    p clubs.count
-    clubs.each do |club_hash|
-      club =
-        Club.find_or_create_by(
-          third_party_id: club_hash["id"],
-          third_party_software: "easycancha"
-        )
-      club.name = club_hash["name"]
-      club.third_party_software = "easycancha"
-      club.third_party_id = club_hash["id"]
-      club.website = club_hash["website"]
-      club.address = club_hash["address"]
-      club.comuna = club_hash["locality"]
-      club.region = club_hash["region"]
-      club.phone = club_hash["phone"]
-      club.latitude = club_hash["latitude"]
-      club.longitude = club_hash["longitude"]
-      p club.save!
+      clubs.select! do |club|
+        club["sports"].select { |sport| sport["id"] == 7 }.any?
+      end
+      p Club.count
+      p clubs.count
+      clubs.each do |club_hash|
+        club =
+          Club.find_or_create_by(
+            third_party_id: club_hash["id"],
+            third_party_software: "easycancha"
+          )
+        club.name = club_hash["name"]
+        club.third_party_software = "easycancha"
+        club.third_party_id = club_hash["id"]
+        club.website = club_hash["website"]
+        club.address = club_hash["address"]
+        club.latitude = club_hash["latitude"]
+        club.comuna = club_hash["locality"]
+        club.region = club_hash["region"]
+        club.phone = club_hash["phone"]
+        club.longitude = club_hash["longitude"]
+        club.save!
+      end
+    rescue Exception => e
+      puts "Error: #{e.message}"
+    ensure
+      @driver.close()
+      @driver.quit()
     end
   end
 
-  def get_driver
+  def get_driver(logged_in = false)
     if @driver.nil?
       create_driver
-      login
+      login if logged_in
     end
-    return @driver  
+    return @driver
   end
 
   def quit_driver

@@ -42,25 +42,25 @@
             #{duration} Minutos
         .accordion-collapse.collapse{id: "collapse#{duration}", class: "#{'show' if duration == 90}"}
           .accordion-body
-            - availability = club.availability(date: @date, duration: duration)[duration]
-            - availability.in_groups_of(4, nil) do |slots|
-              .row.row{style: "padding-top: 8px"}
-                - slots.each do |slot|
-                  .col-3
-                    - if slot
-                      -# #TODO: Multi court club
-                      - if current_user
-                        .d-grid.gap-2
-                          - reservation = Reservation.new(slot)
-                          - reservation.user = current_user
-                          = form_with model: reservation, html: {data: {turbo: false}} do |form|
-                            = form.hidden_field :user_id
-                            = form.hidden_field :court_id
-                            = form.hidden_field :starts_at
-                            = form.hidden_field :ends_at
-                            = form.submit "#{slot[:starts_at].in_time_zone.strftime("%H:%M")}", class: "btn btn-outline-secondary btn-block"
-                      - else
-                        .d-grid.gap-2
-                          = link_to new_reservation_path(starts_at: "#{slot[:starts_at]}", ends_at: "#{slot[:ends_at]}", court_id: "#{slot[:court_id]}"), |
-                                      data: { turbo: false }, type: :button, class: "btn btn-outline-secondary btn-block" do
-                            =slot[:starts_at].in_time_zone.strftime("%H:%M")
+            - availability = club.availability(date: @date, duration: duration)
+            - unless availability.nil?
+              - availability.in_groups_of(4, nil) do |slots|
+                .row.row{style: "padding-top: 8px"}
+                  - slots.each do |slot|
+                    .col-3
+                      - if slot
+                        - if current_user
+                          .d-grid.gap-2
+                            - reservation = Reservation.new(starts_at: slot[:starts_at], ends_at: slot[:ends_at], court_id: slot[:courts].first[:id])
+                            - reservation.user = current_user
+                            = form_with model: reservation, html: {data: {turbo: false}} do |form|
+                              = form.hidden_field :user_id
+                              = form.hidden_field :court_id
+                              = form.hidden_field :starts_at
+                              = form.hidden_field :ends_at
+                              = form.submit "#{slot[:starts_at].in_time_zone.strftime("%H:%M")}", class: "btn btn-outline-secondary btn-block"
+                        - else
+                          .d-grid.gap-2
+                            = link_to new_reservation_path(starts_at: "#{slot[:starts_at]}", ends_at: "#{slot[:ends_at]}", court_id: "#{slot[:courts].first[:id]}"), |
+                                        data: { turbo: false }, type: :button, class: "btn btn-outline-secondary btn-block" do
+                              =slot[:starts_at].in_time_zone.strftime("%H:%M")
