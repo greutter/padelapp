@@ -16,7 +16,7 @@ module EasycanchaReservationService
       add_players
       sleep(4)
       complete_reservation
-      sleep(12)
+      sleep(2)
       screenshot
     rescue Exception => e
       puts e.message

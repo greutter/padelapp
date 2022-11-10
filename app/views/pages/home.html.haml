@@ -5,14 +5,18 @@
       =image_tag "handsome_boy.jpeg", class: "img-fluid"
     .col-md-7
       %h2= @club.name
-      = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
-        %span{class: "bi bi-geo-alt-fill"}
-        #{@club.address}, #{@club.comuna}
-        %br
-        = link_to "https://api.whatsapp.com/send?phone=#{@club.phone}&text=Hola!", |
-                    class: "text-decoration-none link-primary", target: :blank do
-          %i{class: "bi bi-whatsapp"}
-            = number_to_phone_cl(@club.phone)
+      .mt-3
+        = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
+          %span{class: "bi bi-geo-alt-fill"}
+          #{@club.address}, #{@club.comuna}
+      .mt-1
+        - if number_to_phone_cl(@club.phone)[4] == "9"
+          = link_to "https://api.whatsapp.com/send?phone=#{@club.phone}&text=Hola!", |
+                      class: "text-decoration-none link-primary", target: :blank do
+            %i{class: "bi bi-whatsapp"}
+              = number_to_phone_cl(@club.phone)
+        - else
+          = link_to number_to_phone_cl(@club.phone), "tel:#{number_to_phone_cl(@club.phone)}"
 .container
   .row
     .col-12
@@ -35,4 +39,4 @@
 -#       #{l(@date, format: "%A %e de %B").capitalize}
 -# %br
 = turbo_frame_tag "availability" do
-  =render partial: "reservations/availability"
+  =render partial: "reservations/availability", locals: {club: @club}

@@ -54,32 +54,46 @@ class Club < ApplicationRecord
   end
 
   def third_party_availability(date:, durations: [90])
-    if self.third_party_software.nil? 
+    if self.third_party_software.nil?
       not_third_party_availability(date, durations)
     else
       EasycanchaBot.availability(self.third_party_id, date, duration.first)
     end
   end
 
-  def availability(date, durations)
-    available_slots = {}
-    as = []
-    durations.each do |duration|
-      (opens_at(date).to_i..(closes_at(date) - duration.minutes).to_i).step(30.minutes).each do |time|
-        starts_at = Time.at time
-        # break if starts_at <= DateTime.now.in_time_zone - 15.minutes    
-        self.courts.each do |court|
-          ends_at = starts_at + duration.minutes
-          if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at)  
-            puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
-            as << { starts_at: starts_at, ends_at: ends_at, court_id: court.id }
-            break
+  def availability(date:, duration: 90)
+    if third_party_software == "easycancha"
+      return(
+        EasycanchaBot.new.availability(
+          club_id: self.id,
+          date: date,
+          duration: 90
+        )
+      )
+    else
+      available_slots = {}
+      as = []
+      (opens_at(date).to_i..(closes_at(date) - duration.minutes).to_i)
+        .step(30.minutes)
+        .each do |time|
+          starts_at = Time.at time
+          # break if starts_at <= DateTime.now.in_time_zone - 15.minutes
+          self.courts.each do |court|
+            ends_at = starts_at + duration.minutes
+            if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at)
+              puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
+              as << {
+                starts_at: starts_at,
+                ends_at: ends_at,
+                court_id: court.id
+              }
+              break
+            end
           end
         end
-      end
       available_slots[duration] = as
+      return available_slots
     end
-    return available_slots
   end
 
   # def get_availabel_slots(date: , durations: [90])

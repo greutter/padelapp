@@ -7,7 +7,6 @@
       %li.nav-item
         %a.nav-link.rounded-0{class: "#{'active' if date == @date}", |
                     href: availability_reservations_path(date: date, from_date: @from_date)}
-
           - if date.today?
             Hoy
             %br
@@ -35,14 +34,16 @@
     -# .small.fw-lighter.texxt-center Disponibilidad actualizada a las: #{DateTime.now.strftime "%H:%M"}
   #availableSlotsAccordion.accordion.accordion-flush
     .accordion-item
-      - [90, 60].each do |duration|
-        %h2.accordion-header
-          %button.accordion-button{"data-bs-target" => "#collapse#{duration}", "data-bs-toggle" => "collapse", :type => "button"}
-            .fs-5.fw-bolder
-              #{duration} Minutos
+      - [90].each do |duration|
+        -# %h2.accordion-header
+        -#   %button.accordion-button{"data-bs-target" => "#collapse#{duration}", "data-bs-toggle" => "collapse", :type => "button"}
+        .div
+          .div.fs-4.fw-lighter.lh-base.text-center.text-bg-primary.fw-normal
+            #{duration} Minutos
         .accordion-collapse.collapse{id: "collapse#{duration}", class: "#{'show' if duration == 90}"}
           .accordion-body
-            - @club.availability(@date, [duration])[duration].in_groups_of(4, nil) do |slots|
+            - availability = club.availability(date: @date, duration: duration)[duration]
+            - availability.in_groups_of(4, nil) do |slots|
               .row.row{style: "padding-top: 8px"}
                 - slots.each do |slot|
                   .col-3

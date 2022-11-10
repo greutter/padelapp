@@ -3,7 +3,7 @@ class EasycanchaBot
   def create_driver
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =
@@ -13,7 +13,6 @@ class EasycanchaBot
   end
 
   def login(username: "reutter.carvajal@gmail.com", password: "ec1234")
-    create_driver
     @driver.get "https://www.easycancha.com/book/search?lang=es-CL&country=CL"
     button =
       wait.until do
@@ -36,30 +35,16 @@ class EasycanchaBot
     return @driver
   end
 
-  def get_availability(club_id: 502, date: Time.now + 1.days, timespan: 90)
+  def availability(club_id:, date:, duration: 90)
+    club = Club.find(club_id)
     url =
-      "https://www.easycancha.com/api/sports/7/clubs/#{club_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{timespan}"
-    create_driver
+      "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
     begin
-      login
-      # agent = Mechanize.new
-      # page = agent.get(url)
+      create_driver
+      # login
       @driver.get(url)
       body = @driver.find_element(tag_name: "pre").text
-
-      json = JSON.parse(body)
-      if not(json["alternative_timeslots"].nil?) and
-           json["alternative_timeslots"].any?
-        hours =
-          available_timeslots =
-            json["alternative_timeslots"].map do |ats|
-              a = ats["hour"].split(":")
-              starts_at = date.to_time.change(hour: a[0], min: a[1])
-              ends_at = starts_at + timespan.minutes
-              { starts_at: starts_at, ends_at: ends_at }
-            end
-      end
-      return { club_id => available_timeslots }
+      parse_available_timeslots(body, date: date, duration: duration)
     rescue Exception => e
       puts e.message
     ensure
@@ -68,9 +53,32 @@ class EasycanchaBot
     end
   end
 
+  def parse_available_timeslots(json, date:, duration:)
+    # json["alternative_timeslots"][0]["timeslots"][0]["priceInfo"]["amount"]
+    json = JSON.parse(json)
+    if not(json["alternative_timeslots"].nil?) and
+         json["alternative_timeslots"].any?
+      hours =
+        available_timeslots =
+          json["alternative_timeslots"].map do |ats|
+            a = ats["hour"].split(":")
+            starts_at = date.to_time.change(hour: a[0], min: a[1])
+            ends_at = starts_at + duration.minutes
+            courts =
+              ats["timeslots"].map do |ts|
+                { number: ts["courtNumber"], price: ts["priceInfo"]["amount"] }
+              end
+            { starts_at: starts_at, ends_at: ends_at, courts: courts }
+          end
+    end
+    return { duration => available_timeslots }
+  end
+
   def create_clubs
-    file = File.read("./app/bots/easy_cancha_clubs.json")
-    clubs = JSON.parse!(file)["clubs"]
+    create_driver
+    login
+    @driver.get("https://www.easycancha.com/api/clubs/")
+    clubs = JSON.parse!(@driver.page_source)["clubs"]
 
     clubs.select! do |club|
       club["sports"].select { |sport| sport["id"] == 7 }.any?
@@ -95,6 +103,18 @@ class EasycanchaBot
       club.longitude = club_hash["longitude"]
       p club.save!
     end
+  end
+
+  def get_driver
+    if @driver.nil?
+      create_driver
+      login
+    end
+    return @driver  
+  end
+
+  def quit_driver
+    @driver.quit if @driver
   end
 
   private
