@@ -33,3 +33,6 @@ Club.all.each do |club|
     )
   end
 end
+
+#Comunas
+

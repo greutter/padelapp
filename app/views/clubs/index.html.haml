@@ -5,10 +5,10 @@
     = form_with(url: clubs_path, method: :get, data: {turbo_frame: "clubs"}) do |form|
       = form.label :query, "Busca por comuna:", class: ""
       .flex.space-x-3
-        = form.collection_check_boxes :comunas, @comunas, :itself, :itself do |b|
+        = form.collection_check_boxes :comunas, @comunas, :itself, :itself do |cb|
           .form-check
-            = b.check_box class: "form-check-input", checked: @selected_comunas.include?(b)
-            = b.label class: "form-check-label" 
+            = cb.check_box class: "form-check-input", checked: @selected_comunas.include?(cb.value)
+            = cb.label class: "form-check-label" 
         = form.submit 'Search', class: "btn btn-secondary"
 
   - @clubs.each do |club|
