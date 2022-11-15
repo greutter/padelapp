@@ -52,6 +52,7 @@ class EasycanchaBot
         available_timeslots =
           parse_available_timeslots(body, date: date, duration: duration)
       end
+      screenshot
       return available_timeslots
     rescue Exception => e
       puts e.message

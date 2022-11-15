@@ -22,11 +22,6 @@ module Padelapp
     config.i18n.default_locale = "es-CL"
     config.time_zone = "America/Santiago"
 
-    config.assets.paths << Rails.root.join(
-      "app",
-      "assets",
-      "images",
-      "screenshots"
-    )
+    config.assets.paths << Rails.root.join("app", "assets", "images")
   end
 end
