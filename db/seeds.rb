@@ -11,11 +11,14 @@
 club =
   Club.create(
     name: "Espacio Padel",
-    address: "Nueva Bilbao #9495, Las Condes.",
+    address: "Nueva Bilbao #9495",
+    comuna: "Las Condes",
     google_maps_link:
       "https://www.google.com/maps/place/Nueva+Bilbao+9495,+Las+Condes,+Regi%C3%B3n+Metropolitana/@-33.4292111,-70.5402009,15z/data=!4m5!3m4!1s0x9662ce7e626e986d:0x8ee7239893901862!8m2!3d-33.4292111!4d-70.5314462",
     phone: "56962949825"
   )
+
+EasycanchaBot.create_clubs
 
 begin
   Club.find_by(third_party_id: 336).update(members_only: true)

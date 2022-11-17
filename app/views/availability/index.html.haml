@@ -1,0 +1,67 @@
+.container
+  %h3 Encuentra tu Cancha 
+  -# ---------------------------------------------------------------
+  .py-3
+    %h4.py-2 ¿Dónde quieres jugar?
+    = form_with(url: availability_path, method: :get, data: {turbo: false}) do |form|
+      .mb-3
+        = form.collection_check_boxes :sectors, @sectors.keys, :itself, :itself do |cb|
+          .form-check
+            = cb.check_box class: "form-check-input", checked: @selected_sectors.include?(cb.text)
+            = cb.label class: "form-check-label"
+            %span.badge.text-bg-primary
+              #{@sectors[cb.text].count} clubes
+            .mt-0.form-text= @sectors[cb.text].join(", ")
+      .d-grid.gap-2.d-md-flex.justify-content-md-end
+        = form.submit 'Filtrar', class: "btn btn-outline-primary"
+  
+  -# ---------------------------------------------------------------
+  %h4.py-2 ¿Cúando?
+  %h5.text-left
+    #{l(@selected_date, format: "%B").capitalize}
+  %ul.nav.nav-pills.nav-fill
+    - to_date = @from_date + 4.days
+    -(@from_date.to_date..to_date).each do |date|
+      %li.nav-item
+        %a.nav-link.rounded-0{class: "#{'active' if date == @selected_date}", |
+                    href: availability_reservations_path(date: date, from_date: @from_date, club: @club)}
+          - if date.today?
+            Hoy
+            %br
+            🔥
+          - else
+            = l(date, format: "%a").capitalize
+            %br
+            .text-center= l(date, format: "%d")
+  .row
+    .col-3.text-center
+      - if @from_date != Date.today
+        - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
+        = link_to availability_reservations_path(params), type: :button, class: "" do
+          %i.fs-2{class: "bi bi-arrow-left"}
+    .col-6.text-center
+      -if @from_date != Date.today
+        %span.align-middle
+          = link_to availability_reservations_path(from_date: Date.today, date: Date.today, club: @club), type: :button, class: "btn btn-link" do
+            Hoy
+    .col-3.text-center
+      = link_to availability_reservations_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club), type: :button, class: "" do
+        %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
+  
+  -# ----------------------------------------------------------------
+  .row
+    - (@selected_date.to_time.change(hour: 7).to_i...@selected_date.to_time.change(hour: 23).to_i).step(30.minutes).each do |t|
+      - time = Time.at t
+      .card.mb-3
+        .card-header
+          #{l(time, format: "%l:%M %p")}
+        .list-group.list-group-flush 
+          - @availability.each do |key, value|
+            .list-group-item
+              = Club.find(key).name
+              %small
+                - if  @availability[key][time].nil?
+                  No hay canchas
+                - else 
+                  #{@availability[key][time][:courts].count} #{"cancha".pluralize @availability[key][time][:courts].count} disponibles
+                  Desde: $#{@availability[key][time][:courts].map{|c| c[:price]}.min}

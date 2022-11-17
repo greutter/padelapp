@@ -2,6 +2,7 @@
 #
 
 Rails.application.routes.draw do
+  
   resources :schedules
   resources :courts
   resources :clubs
@@ -22,10 +23,10 @@ Rails.application.routes.draw do
   end
 
   root "pages#home"
+  get 'availability' => "availability#index"
 
   get "mp_payment_success" => "payments#mp_payment_success"
   get "mp_payment_failiure" => "payments#mp_payment_failiure"
 
   get "privio" => "pages#privio"
-  get "findcourt" => "pages#findcourt"
 end
