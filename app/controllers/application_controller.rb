@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_club
 
   def set_club
-    @club = Club.find_by(third_party_id: 336)
+    # @club = Club.find_by(third_party_id: 336)
   end
 
   protected

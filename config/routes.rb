@@ -27,4 +27,5 @@ Rails.application.routes.draw do
   get "mp_payment_failiure" => "payments#mp_payment_failiure"
 
   get "privio" => "pages#privio"
+  get "findcourt" => "pages#findcourt"
 end

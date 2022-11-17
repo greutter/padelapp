@@ -9,6 +9,7 @@
 #  google_maps_link     :string
 #  latitude             :integer
 #  longitude            :integer
+#  members_only         :boolean
 #  name                 :string
 #  phone                :string
 #  region               :string

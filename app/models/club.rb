@@ -9,6 +9,7 @@
 #  google_maps_link     :string
 #  latitude             :integer
 #  longitude            :integer
+#  members_only         :boolean
 #  name                 :string
 #  phone                :string
 #  region               :string
@@ -63,7 +64,7 @@ class Club < ApplicationRecord
         )
       )
     else
-      available_slots = []
+      available_slots = {}
       from = [opens_at(date), Time.now.round_off(30.minutes)].max
       to = closes_at(date) - duration.minutes
       (from.to_i...to.to_i)
@@ -75,7 +76,7 @@ class Club < ApplicationRecord
             ends_at = starts_at + duration.minutes
             if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at)
               puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
-              available_slots << {
+              available_slots[starts_at] = {
                 starts_at: starts_at,
                 ends_at: ends_at,
                 courts: [

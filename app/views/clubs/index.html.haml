@@ -1,18 +1,22 @@
 .container
-  %h3 ¡Todos los Clubes!
-
+  %h3 Encuentra Clubes
   .div.py-3
     = form_with(url: clubs_path, method: :get, data: {turbo_frame: "clubs"}) do |form|
-      = form.label :query, "Busca por comuna:", class: ""
-      .flex.space-x-3
-        = form.collection_check_boxes :comunas, @comunas, :itself, :itself do |cb|
+      %p ¿En que sector quisieras jugar?
+      .mb-3
+        = form.collection_check_boxes :sectors, @sectors.keys, :itself, :itself do |cb|
           .form-check
-            = cb.check_box class: "form-check-input", checked: @selected_comunas.include?(cb.value)
-            = cb.label class: "form-check-label" 
-        = form.submit 'Search', class: "btn btn-secondary"
+            = cb.check_box class: "form-check-input", checked: @selected_sectors.include?(cb.text)
+            = cb.label class: "form-check-label"
+            -# %span.badge.text-bg-primary
+            -#   #{@sectors[cb.text].count} clubes
+            %br
+            -# %small.fw-lighter{style: "font-size: 0.75em;"}
+            .mt-0.form-text= @sectors[cb.text].join(", ")
+      = form.submit 'Buscar', class: "btn btn-primary"
 
   - @clubs.each do |club|
-    .div.py-1
+    .div.py-2
       .card
         %h5.card-header
           = club.name

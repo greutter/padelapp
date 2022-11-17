@@ -4,7 +4,7 @@ class CreateComunas < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :region
       t.integer :region_north_to_south_ordering
-      t.string :grouping
+      t.string :sector
       t.timestamps
     end
   end

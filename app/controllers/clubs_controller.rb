@@ -4,19 +4,17 @@ class ClubsController < ApplicationController
   # GET /clubs or /clubs.json
   def index
     @region = "Metropolitana"
-    @comunas =
-      Club
-        .where("region like ?", "%#{"Metropolitana"}%")
-        .map { |c| c.comuna }
-        .uniq
-        .sort
-    @selected_comunas = (params[:comunas] or ["Las Condes"])
-    @clubs = Club.where("comuna IN (?)", @selected_comunas)
+    @comunas = Comuna.where("region like ?", "%#{@region}%").order(:sector)
+    @sectors = Comuna.sectors
+    @selected_sectors = (params[:sectors] or ["Santiago Oriente"])
+    selected_comunas =
+      Comuna.where("sector IN (?)", @selected_sectors).map { |c| c.name }
+    @clubs = Club.where("comuna IN (?)", selected_comunas).order(:comuna)
   end
 
   # GET /clubs/1 or /clubs/1.json
   def show
-    @date = Date.today
+    @selected_date = Date.today
     @from_date = Date.today
   end
 

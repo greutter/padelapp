@@ -3,7 +3,7 @@ class EasycanchaBot
   def create_driver
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    # options.add_argument("--headless")
+    options.add_argument("--headless")
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =
@@ -40,19 +40,19 @@ class EasycanchaBot
     url =
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
     begin
+      return "members_only" if club.members_only?
       create_driver
       @driver.get(url)
       body = @driver.find_element(tag_name: "pre").text
       available_timeslots =
         parse_available_timeslots(body, date: date, duration: duration)
       if available_timeslots.nil?
-        login
-        @driver.get(url)
-        body = @driver.find_element(tag_name: "pre").text
-        available_timeslots =
-          parse_available_timeslots(body, date: date, duration: duration)
+        # login
+        # @driver.get(url)
+        # body = @driver.find_element(tag_name: "pre").text
+        # available_timeslots =
+        # parse_available_timeslots(body, date: date, duration: duration)
       end
-      screenshot
       return available_timeslots
     rescue Exception => e
       puts e.message
@@ -77,10 +77,13 @@ class EasycanchaBot
               ats["timeslots"].map do |ts|
                 { number: ts["courtNumber"], price: ts["priceInfo"]["amount"] }
               end
-            { starts_at: starts_at, ends_at: ends_at, courts: courts }
+            [
+              starts_at,
+              { starts_at: starts_at, ends_at: ends_at, courts: courts }
+            ]
           end
     end
-    return available_timeslots
+    return available_timeslots.to_h
   end
 
   def create_clubs

@@ -1,0 +1,31 @@
+.div 
+  %h5.text-left
+    #{l(@selected_date, format: "%B").capitalize}
+  %ul.nav.nav-pills.nav-fill
+    - to_date = @from_date + 4.days
+    -(@from_date..to_date).each do |date|
+      %li.nav-item
+        %a.nav-link.rounded-0{class: "#{'active' if date == @selected_date}", |
+                    href: availability_reservations_path(date: date, from_date: @from_date, club: @club)}
+          - if date.today?
+            Hoy
+            %br
+            🔥
+          - else
+            = l(date, format: "%a").capitalize
+            %br
+            .text-center= l(date, format: "%d")
+  .row{style: "padding-top: 10px"}
+    .col-3.text-center
+      - if @from_date != Date.today
+        - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
+        = link_to availability_reservations_path(params), type: :button, class: "" do
+          %i.fs-2{class: "bi bi-arrow-left"}
+    .col-6.text-center
+      -if @from_date != Date.today
+        %span.align-middle
+          = link_to availability_reservations_path(from_date: Date.today, date: Date.today, club: @club), type: :button, class: "btn btn-link" do
+            Hoy
+    .col-3.text-center
+      = link_to availability_reservations_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club), type: :button, class: "" do
+        %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
