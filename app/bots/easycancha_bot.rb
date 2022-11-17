@@ -3,7 +3,7 @@ class EasycanchaBot
   def create_driver
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =
@@ -62,7 +62,7 @@ class EasycanchaBot
     end
   end
 
-  def parse_available_timeslots(json, date:, duration:)
+  def parse_available_timeslots(json, date: , duration: )
     # json["alternative_timeslots"][0]["timeslots"][0]["priceInfo"]["amount"]
     json = JSON.parse(json)
     if not(json["alternative_timeslots"].nil?) and
@@ -75,11 +75,11 @@ class EasycanchaBot
             ends_at = starts_at + duration.minutes
             courts =
               ats["timeslots"].map do |ts|
-                { number: ts["courtNumber"], price: ts["priceInfo"]["amount"] }
+                { number: ts["courtNumber"], price: ts["priceInfo"]["amount"] }.stringify_keys
               end
             [
               starts_at,
-              { starts_at: starts_at, ends_at: ends_at, courts: courts }
+              { starts_at: starts_at, duration: duration, ends_at: ends_at, courts: courts }.stringify_keys
             ]
           end
     end

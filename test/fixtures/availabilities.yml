@@ -3,10 +3,12 @@
 # Table name: availabilities
 #
 #  id         :bigint           not null, primary key
-#  query      :string
-#  results    :json
+#  date       :string
+#  duration   :integer
+#  slots      :json
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  club_id    :string
 #
 
 one:

@@ -15,8 +15,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_175905) do
   enable_extension "plpgsql"
 
   create_table "availabilities", force: :cascade do |t|
-    t.string "query"
-    t.json "results", default: {}
+    t.string "date"
+    t.string "club_id"
+    t.integer "duration"
+    t.json "slots", default: {}
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
