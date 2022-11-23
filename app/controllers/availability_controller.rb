@@ -1,23 +1,32 @@
 class AvailabilityController < ApplicationController
   def index
     @region = "Metropolitana"
+    @sectors_names = Sector.all.map(&:name).uniq.reject(&:blank?)
     @comunas = Comuna.where("region like ?", "%#{@region}%").order(:sector)
-    @sectors = Comuna.sectors
-    @selected_sectors = (params[:sectors] or ["Santiago Oriente"])
-    selected_comunas =
-      Comuna.where("sector IN (?)", @selected_sectors).map { |c| c.name }
+  
+    @selected_sectors_names = (params[:selected_sectors_names] or ["Santiago Oriente"])
+    @selected_comunas =
+      Comuna.where("sector IN (?)", @selected_sectors_names)
+    
     @clubs =
       Club
-        .where("comuna IN (?)", selected_comunas)
+        .where("comuna IN (?)", @selected_comunas.map(&:name))
         .where(members_only: nil)
-        .order(:comuna).last(2)
+        .order(:name)
 
     @from_date =
-      params[:from_date].blank? ? Date.tomorrow : Date.parse(params[:from_date])
+      params[:from_date].blank? ? Date.today  : Date.parse(params[:from_date])
     @selected_date =
-      params[:from_date].blank? ? @from_date : Date.parse(params[:date])
+      params[:selected_date].blank? ? @from_date : Date.parse(params[:selected_date])
+    @duration = params[:duration].blank? ? 90 : params[:duration].to_i
     
-    
-    # @availability = Availability.find_or_create_by(query))
+    @availabilities = Availability.availabilities(clubs: @clubs, date: @selected_date)
+
+    @parameters = {
+      selected_sectors_names: @selected_sectors_names,
+      from_date: @from_date,
+      selected_date: @selected_date,
+      duration: @duration
+    }
   end
 end

@@ -30,8 +30,22 @@ class Comuna < ApplicationRecord
     { name: "Región de Los Lagos", ns_order: 13 }
   ]
 
-  def self.sectors
-    s = Comuna.all.map { |c| c.sector }.uniq.reject(&:blank?)
-    s.map { |sector| [sector, Comuna.where(sector: sector).map(&:name)] }.to_h
+ 
+end
+
+
+class Sector
+  attr_accessor :name, :comunas, :clubs
+
+  def initialize(name)
+    @name = name
+    @comunas = Comuna.where(sector: self.name)
+    @clubs = Club.where("comuna IN (?)",  @comunas.map(&:name))
   end
+
+  def self.all
+    sectors_names = Comuna.all.map(&:sector).uniq.reject(&:blank?)
+    sectors = sectors_names.map{|sector_name|self.new(sector_name) }
+  end
+
 end

@@ -11,10 +11,10 @@
 #  club_id    :string
 #
 
-one:
-  query: MyString
-  results: 
+# one:
+#   query: MyString
+#   results: 
 
-two:
-  query: MyString
-  results: 
+# two:
+#   query: MyString
+#   results: 

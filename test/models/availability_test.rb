@@ -13,7 +13,15 @@
 require "test_helper"
 
 class AvailabilityTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
+  def setup
+    @clubs = Club.first(2)
+    @date = Date.tomorrow
+    @availbilities = Availability.availabilities(date: @date, clubs: @clubs)
+  end
+
+  test "each availability should contain club id as key" do
+    assert_equal(@availbilities.map{|a| a.keys}.flatten, @clubs.map{|c| c.id})
+  end
+
 end

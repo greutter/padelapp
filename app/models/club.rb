@@ -56,6 +56,7 @@ class Club < ApplicationRecord
   end
   
   def availability(date: , duration: 90)
+    date = date.to_date unless date.is_a? Date
     updated_availability = self.availabilities
     .updated_within_5_min
     .find_by(date: date, duration: duration)
@@ -88,13 +89,13 @@ class Club < ApplicationRecord
       self.courts.each do |court|
         ends_at = starts_at + duration.minutes
         if court.is_slot_available?(starts_at: starts_at, ends_at: ends_at)
-          puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
+          # puts "{starts_at: #{starts_at}, ends_at: #{ends_at}, court_id: #{court.id}}"
           available_slots[starts_at] = {
-            starts_at: starts_at,
-            duration: duration,
-            ends_at: ends_at,
-            courts: [
-              { id: court.id, number: court.number, price: "to_be_defined" }.stringify_keys
+            "starts_at" => starts_at,
+            "duration" => duration,
+            "ends_at" => ends_at,
+            "courts" => [
+              { "id" => court.id, "number" => court.number, "price" => "to_be_defined" }.stringify_keys
             ]
           }.stringify_keys
           #falta modificar aquí para que devuelva todos los courts.
@@ -117,3 +118,4 @@ class Club < ApplicationRecord
   #   courts.first.get_availabel_slots(date: date, durations: durations)
   # end
 end
+

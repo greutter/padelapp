@@ -75,7 +75,7 @@ class EasycanchaBot
             ends_at = starts_at + duration.minutes
             courts =
               ats["timeslots"].map do |ts|
-                { number: ts["courtNumber"], price: ts["priceInfo"]["amount"] }.stringify_keys
+                { "number" => ts["courtNumber"], "price" => ts["priceInfo"]["amount"] }.stringify_keys
               end
             [
               starts_at,
@@ -83,7 +83,7 @@ class EasycanchaBot
             ]
           end
     end
-    return available_timeslots.to_h
+    return available_timeslots.to_h.stringify_keys
   end
 
   def create_clubs
