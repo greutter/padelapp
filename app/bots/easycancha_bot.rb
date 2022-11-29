@@ -10,6 +10,7 @@ class EasycanchaBot
       Selenium::WebDriver.for :chrome, capabilities: caps, options: options
     @driver.manage.timeouts.implicit_wait = 5000
     return @driver
+      
   end
 
   def login(username: "reutter.carvajal@gmail.com", password: "ec1234")
