@@ -3,7 +3,7 @@ class EasycanchaBot
   def create_driver
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless") if Rails.env.production?
+    options.add_argument("--headless") if Rails.env.production? or true
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =

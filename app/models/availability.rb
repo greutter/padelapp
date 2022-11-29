@@ -11,15 +11,18 @@
 #  club_id    :string
 #
 class Availability < ApplicationRecord
-   belongs_to :club
+  belongs_to :club
 
-   scope :updated_within_5_min, -> { where('created_at > ?', 1000.minutes.ago) }
-   
-   def self.availabilities(date: , clubs: , duration: 90)
-      availabilities = {}
-      clubs.each do |club|
-         availabilities[club] = club.availability(date: date.to_date, duration: duration)
-      end
-      return availabilities
-   end
+  scope :updated_within_5_min, -> { where("created_at > ?", 60.minutes.ago) }
+
+  def self.availabilities(date:, clubs:, duration: 90)
+    availabilities = {}
+    clubs.each do |club|
+      availabilities[club] = club.availability(
+        date: date.to_date,
+        duration: duration
+      )
+    end
+    return availabilities
+  end
 end

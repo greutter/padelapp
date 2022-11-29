@@ -23,11 +23,18 @@ class AvailabilityController < ApplicationController
     @availabilities =
       Availability.availabilities(clubs: @clubs, date: @selected_date)
 
-    @parameters = {
-      selected_sectors_names: @selected_sectors_names,
-      from_date: @from_date,
-      selected_date: @selected_date,
-      duration: @duration
-    }
+    @updated_at =
+      @clubs
+        .map do |club|
+          club.availabilities.where(date: @selected_date).maximum(:updated_at)
+        end
+        .min
+
+    # @parameters = {
+    #   selected_sectors_names: @selected_sectors_names,
+    #   from_date: @from_date,
+    #   selected_date: @selected_date,
+    #   duration: @duration
+    # }
   end
 end
