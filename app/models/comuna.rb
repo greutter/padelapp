@@ -29,8 +29,6 @@ class Comuna < ApplicationRecord
     { name: "Región de Los Ríos", ns_order: 12 },
     { name: "Región de Los Lagos", ns_order: 13 }
   ]
-
- 
 end
 
 

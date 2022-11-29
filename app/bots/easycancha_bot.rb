@@ -10,7 +10,6 @@ class EasycanchaBot
       Selenium::WebDriver.for :chrome, capabilities: caps, options: options
     @driver.manage.timeouts.implicit_wait = 5000
     return @driver
-      
   end
 
   def login(username: "reutter.carvajal@gmail.com", password: "ec1234")
@@ -117,6 +116,7 @@ class EasycanchaBot
       login
       @driver.get("https://www.easycancha.com/api/clubs/")
       body = @driver.find_element(tag_name: "pre").text
+      puts body
       clubs = JSON.parse!(body)["clubs"]
 
       clubs.select! do |club|
@@ -140,7 +140,7 @@ class EasycanchaBot
         club.region = club_hash["region"]
         club.phone = club_hash["phone"]
         club.longitude = club_hash["longitude"]
-        club.save!
+        club.save
       end
     rescue Exception => e
       puts "Error: #{e.message}"
