@@ -137,7 +137,8 @@ class ReservationsController < ApplicationController
       :user_id,
       :court_id,
       :starts_at,
-      :ends_at
+      :ends_at,
+      :court_number
     )
   end
 end

@@ -40,29 +40,32 @@ class EasycanchaBot
     url =
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
     begin
-      return "members_only" if club.members_only?
       create_driver
-      @driver.get(url)
-      body = @driver.find_element(tag_name: "pre").text
-      available_timeslots =
-        parse_available_timeslots(body, date: date, duration: duration)
-      if available_timeslots.nil?
-        # login
-        # @driver.get(url)
-        # body = @driver.find_element(tag_name: "pre").text
-        # available_timeslots =
-        # parse_available_timeslots(body, date: date, duration: duration)
+      if club.members_only?
+        login
+        @driver.get(url)
+        body = @driver.find_element(tag_name: "pre").text
+        available_timeslots =
+          parse_available_timeslots(body, date: date, duration: duration, club: club)
+      else
+        @driver.get(url)
+        body = @driver.find_element(tag_name: "pre").text
+        available_timeslots =
+          parse_available_timeslots(body, date: date, duration: duration, club: club)
       end
+
       return available_timeslots
     rescue Exception => e
       puts e.message
     ensure
-      @driver.close()
-      @driver.quit()
+      if @driver
+        @driver.close()
+        @driver.quit()
+      end
     end
   end
 
-  def parse_available_timeslots(json, date: , duration: )
+  def parse_available_timeslots(json, date:, duration:, club:)
     # json["alternative_timeslots"][0]["timeslots"][0]["priceInfo"]["amount"]
     json = JSON.parse(json)
     if not(json["alternative_timeslots"].nil?) and
@@ -75,18 +78,28 @@ class EasycanchaBot
             ends_at = starts_at + duration.minutes
             courts =
               ats["timeslots"].map do |ts|
-                { "number" => ts["courtNumber"], "price" => ts["priceInfo"]["amount"] }.stringify_keys
+                court = club.courts.find_or_create_by(number: ts["courtNumber"])
+                {
+                  "court_id" => court.id,
+                  "number" => ts["courtNumber"],
+                  "price" => ts["priceInfo"]["amount"]
+                }.stringify_keys
               end
             [
               starts_at,
-              { starts_at: starts_at, duration: duration, ends_at: ends_at, courts: courts }.stringify_keys
+              {
+                starts_at: starts_at,
+                duration: duration,
+                ends_at: ends_at,
+                courts: courts
+              }.stringify_keys
             ]
           end
     end
     return available_timeslots.to_h.stringify_keys
   end
 
-  def create_clubs
+  def self.create_clubs
     begin
       puts "Fetching and creating Easycancha Clubs"
       create_driver

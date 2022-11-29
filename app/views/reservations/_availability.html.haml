@@ -31,6 +31,6 @@
                               = form.submit "#{slot[:starts_at].in_time_zone.strftime("%H:%M")}", class: "btn btn-outline-secondary btn-block"
                         - else
                           .d-grid.gap-2
-                            = link_to new_reservation_path(starts_at: "#{slot["starts_at"]}", ends_at: "#{slot["ends_at"]}", court_id: "#{slot["courts"].first["id"]}"), |
+                            = link_to new_reservation_path(starts_at: "#{slot["starts_at"]}", ends_at: "#{slot["ends_at"]}", court_id: "#{slot["courts"].first["court_id"]}"), |
                                         data: { turbo: false }, type: :button, class: "btn btn-outline-secondary btn-block" do
                               =slot["starts_at"].in_time_zone.strftime("%H:%M")

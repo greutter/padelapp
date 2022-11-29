@@ -11,7 +11,7 @@
 class Court < ApplicationRecord
   belongs_to :club
   has_many :reservations
-  validates :number, uniqueness: { scope: :club }
+  validates :number, presence: true, uniqueness: { scope: :club }
 
   def get_availabel_slots(date:, duration: 90)
     available_slots = []

@@ -66,9 +66,15 @@
         - @availabilities.each do |club, availability|
           - slot = availability[time.to_s] if availability
           
-          - if  not slot.nil?
-            .list-group-item  
-              = club.name
-              %small.fw-lighter
-                #{slot["courts"].count} #{"cancha".pluralize  slot["courts"].count} disponibles
-                -# Desde: $#{availability[time]["courts"].map{|c| c[:price]}.min}
+          - if not slot.nil?
+            .list-group-item 
+              .row 
+                .col-8
+                  = club.name
+                  %small
+                    #{club.comuna}
+                  %small.fw-lighter
+                    #{slot["courts"].count} #{"cancha".pluralize  slot["courts"].count} disponibles
+                .col-4.text-end
+                  %small.fw-lighter Desde
+                  #{number_to_currency(slot["courts"].map{|c| c["price"]}.min)}
