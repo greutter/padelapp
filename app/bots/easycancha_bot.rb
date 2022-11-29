@@ -46,12 +46,22 @@ class EasycanchaBot
         @driver.get(url)
         body = @driver.find_element(tag_name: "pre").text
         available_timeslots =
-          parse_available_timeslots(body, date: date, duration: duration, club: club)
+          parse_available_timeslots(
+            body,
+            date: date,
+            duration: duration,
+            club: club
+          )
       else
         @driver.get(url)
         body = @driver.find_element(tag_name: "pre").text
         available_timeslots =
-          parse_available_timeslots(body, date: date, duration: duration, club: club)
+          parse_available_timeslots(
+            body,
+            date: date,
+            duration: duration,
+            club: club
+          )
       end
 
       return available_timeslots
@@ -99,7 +109,7 @@ class EasycanchaBot
     return available_timeslots.to_h.stringify_keys
   end
 
-  def self.create_clubs
+  def create_clubs
     begin
       puts "Fetching and creating Easycancha Clubs"
       create_driver
