@@ -9,5 +9,7 @@
       %p.font-monospace
         Encuentra la cancha que estás buscando.
 
-%div{"data-controller" => "spinner"}
-  =button_tag "¡Load it!", class: "btn btn-primary"
+%div#spinnerDiv{"data-controller" => "spinner", "data-spinner-target"=> "spinnerDiv"}
+  ¿Eres un Padelico?
+  .spinner-border
+  =button_tag "¡Load it!", class: "btn btn-primary", "data-action" =>"spinner#show"
