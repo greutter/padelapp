@@ -1,21 +1,12 @@
 %div{"data-controller" => "spinner"}
   .container    
     .row
-      %h3 Encuentra tu Cancha 
+      %h3.text-center.pt-4 Encuentra tu Cancha 
       -# ---------------------------------------------------------------
-      .py-3
-        %h4.py-2 ¿Dónde quieres jugar?
-        = form_with(url: availability_path, method: :get, data: {turbo: false}) do |form|
-          .mb-3
-            = form.collection_check_boxes :selected_sectors_names, @sectors_names, :itself, :itself do |cb|
-              .form-check
-                = cb.check_box class: "form-check-input", checked: @selected_sectors_names.include?(cb.text)
-                = cb.label class: "form-check-label"
-                %span.badge.text-bg-primary
-                  #{Sector.new(cb.text).clubs.count} clubes
-                -# .mt-0.form-text= @sectors[cb.text]
-          .d-grid.gap-2.d-md-flex.justify-content-md-end
-            = form.submit 'Filtrar', class: "btn btn-outline-primary"
+      .pt-2
+        %h4.pt-2 ¿Dónde quieres jugar?
+        .pt-1
+          =render partial: "shared/clubs_selector", locals: {url: availability_path}
       
     -# -# ---------------------------------------------------------------
     %h5.text-left#cuando
@@ -50,11 +41,12 @@
         = link_to availability_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club, anchor: "cuando"), type: :button, class: "" do
           %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
       
-      .alert.alert-secondary
-        Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+      
       -# #################################################
       = render "layouts/spinner"
       #contentDiv{"data-spinner-target"=> "contentDiv"}
+        .alert.alert-secondary
+          Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
         - availabilities_start_times(@availabilities).each do |time|
           - time = Time.parse time if time.is_a? String
           .card.mb-3

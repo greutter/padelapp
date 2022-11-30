@@ -21,7 +21,11 @@ class AvailabilityController < ApplicationController
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
     @availabilities =
-      Availability.availabilities(clubs: @clubs, date: @selected_date)
+      Availability.availabilities(
+        clubs: @clubs,
+        date: @selected_date,
+        default_to: :any
+      )
 
     @updated_at =
       @clubs

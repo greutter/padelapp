@@ -15,7 +15,7 @@ class Availability < ApplicationRecord
 
   scope :updated_within_5_min, -> { where("created_at > ?", 60.minutes.ago) }
 
-  def self.availabilities(date:, clubs:, duration: 90)
+  def self.availabilities(date:, clubs:, duration: 90, default_to: :any)
     availabilities = {}
     clubs.each do |club|
       availabilities[club] = club.availability(

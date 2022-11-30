@@ -35,7 +35,7 @@ class EasycanchaBot
     return @driver
   end
 
-  def availability(club_id:, date:, duration: 90)
+  def availability(club_id: , date:, duration: 90, force_update: false)
     club = Club.find(club_id)
     url =
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
