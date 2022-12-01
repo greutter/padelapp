@@ -31,19 +31,25 @@ class Comuna < ApplicationRecord
   ]
 end
 
-
 class Sector
   attr_accessor :name, :comunas, :clubs
 
-  def initialize(name)
-    @name = name
-    @comunas = Comuna.where(sector: self.name)
-    @clubs = Club.where("comuna IN (?)",  @comunas.map(&:name))
+  def initialize(name = nil)
+    self.name = name
+  end
+
+  def comunas
+    Comuna.where(sector: self.name) unless self.name.blank?
+  end
+
+  def clubs
+    unless self.name.blank?
+      Club.where("comuna IN (?)", self.comunas.map(&:name))
+    end
   end
 
   def self.all
     sectors_names = Comuna.all.map(&:sector).uniq.reject(&:blank?)
-    sectors = sectors_names.map{|sector_name|self.new(sector_name) }
+    sectors = sectors_names.map { |sector_name| self.new(sector_name) }
   end
-
 end

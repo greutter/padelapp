@@ -30,15 +30,15 @@
       .col-3.text-center
         - if @from_date != Date.today
           - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
-          = link_to availability_path(params, anchor: "cuando"), type: :button, class: "", "data-action" => "spinner#hidde" do
+          = link_to availability_path(params, anchor: "cuando"), type: :button, class: "", "data-action" => "spinner#show" do
             %i.fs-2{class: "bi bi-arrow-left"}
       .col-6.text-center
         -if @from_date != Date.today
           %span.align-middle
-            = link_to availability_path(from_date: Date.today, date: Date.today, club: @club, anchor: "cuando"), type: :button, class: "btn btn-link" do
+            = link_to availability_path(from_date: Date.today, date: Date.today, club: @club, anchor: "cuando"), type: :button, class: "btn btn-link", "data-action" => "spinner#show" do
               Hoy
       .col-3.text-center
-        = link_to availability_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club, anchor: "cuando"), type: :button, class: "" do
+        = link_to availability_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club, anchor: "cuando"), type: :button, class: "", "data-action" => "spinner#show" do
           %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
       
       

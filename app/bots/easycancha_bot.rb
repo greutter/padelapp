@@ -1,16 +1,6 @@
 class EasycanchaBot
   include EasycanchaReservationService
-  def create_driver
-    options = Selenium::WebDriver::Chrome::Options.new
-    options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless") if Rails.env.production? or true
-    caps = Selenium::WebDriver::Remote::Capabilities.chrome
-    caps.accept_insecure_certs = true
-    @driver =
-      Selenium::WebDriver.for :chrome, capabilities: caps, options: options
-    @driver.manage.timeouts.implicit_wait = 5000
-    return @driver
-  end
+  include SeleniumDriver
 
   def login(username: "reutter.carvajal@gmail.com", password: "ec1234")
     @driver.get "https://www.easycancha.com/book/search?lang=es-CL&country=CL"
@@ -35,7 +25,7 @@ class EasycanchaBot
     return @driver
   end
 
-  def availability(club_id: , date:, duration: 90, force_update: false)
+  def availability(club_id:, date:, duration: 90, force_update: false)
     club = Club.find(club_id)
     url =
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
