@@ -1,4 +1,4 @@
-= form_with(url: url, method: :get, data: {turbo: false}) do |form|
+= form_with(url: path, method: :get, data: {turbo: false}) do |form|
   .mb-3
     = form.collection_check_boxes :selected_sectors_names, @sectors_names, :itself, :itself do |cb|
       .form-check

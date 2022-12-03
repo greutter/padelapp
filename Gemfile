@@ -101,3 +101,5 @@ gem 'bootstrap-email'
 gem 'mechanize'
 gem "selenium-webdriver"
 gem "webdrivers"
+
+gem "administrate"

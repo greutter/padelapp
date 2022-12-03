@@ -5,8 +5,11 @@
     - to_date = @from_date + 4.days
     -(@from_date..to_date).each do |date|
       %li.nav-item
-        %a.nav-link.rounded-0{class: "#{'active' if date == @selected_date}", |
-                    href: availability_reservations_path(date: date, from_date: @from_date, club: @club)}
+        - par = @params
+        - par[:date] = date
+        - c = "nav-link rounded-0 #{'active' if date == @selected_date}"
+        - html_options = {"data-action" =>"spinner#show"}
+        = link_to url_for("#{path}?#{par.to_query}#cuando"), class: c, html_options: html_options do
           - if date.today?
             Hoy
             %br
@@ -15,17 +18,26 @@
             = l(date, format: "%a").capitalize
             %br
             .text-center= l(date, format: "%d")
-  .row{style: "padding-top: 10px"}
+  .row.pt-10
     .col-3.text-center
       - if @from_date != Date.today
-        - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
-        = link_to availability_reservations_path(params), type: :button, class: "" do
+        - par = @params 
+        - par[:from_date] = @from_date - 5.day
+        - par[:date] = @from_date - 5.days
+        - html_options = { class: "btn btn-link", "data-action" =>"spinner#show"}
+        = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
           %i.fs-2{class: "bi bi-arrow-left"}
     .col-6.text-center
       -if @from_date != Date.today
         %span.align-middle
-          = link_to availability_reservations_path(from_date: Date.today, date: Date.today, club: @club), type: :button, class: "btn btn-link" do
+          - par = @params 
+          - par[:from_date] = Date.today
+          - par[:date] = Date.today
+          = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
             Hoy
     .col-3.text-center
-      = link_to availability_reservations_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club), type: :button, class: "" do
+      - par = @params 
+      - par[:from_date] = to_date + 1.day
+      - par[:date] = to_date + 1.day
+      = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
         %i.fs-2.fw-bold{class: "bi bi-arrow-right"}

@@ -2,76 +2,44 @@
   .container    
     .row
       %h3.text-center.pt-4 Encuentra tu Cancha 
-      -# ---------------------------------------------------------------
       .pt-2
         %h4.pt-2 ¿Dónde quieres jugar?
         .pt-1
-          =render partial: "shared/clubs_selector", locals: {url: availability_path}
+          =render partial: "shared/clubs_selector", locals: {path: availability_path}
+    
+    #cuando
+    =render partial: "shared/date_selector", locals: {path: availability_path}
       
-    -# -# ---------------------------------------------------------------
-    %h5.text-left#cuando
-      #{l(@selected_date, format: "%B").capitalize}
-    %ul.nav.nav-pills.nav-fill
-      - to_date = @from_date + 4.days
-      -(@from_date.to_date..to_date).each do |date|
-        %li.nav-item
-          - c = "nav-link rounded-0 #{'active' if date == @selected_date}"
-          - html_options = {class: c, "data-action" =>"spinner#show"}
-          = link_to availability_path(from_date: @from_date, date: date, anchor: "cuando"), html_options = html_options do
-            - if date.today?
-              Hoy
-              %br
-              🔥
-            - else
-              = l(date, format: "%a").capitalize
-              %br
-              .text-center= l(date, format: "%d")
-    .row
-      .col-3.text-center
-        - if @from_date != Date.today
-          - params = {from_date: @from_date - 5.day, date: @from_date - 5.days}
-          = link_to availability_path(params, anchor: "cuando"), type: :button, class: "", "data-action" => "spinner#show" do
-            %i.fs-2{class: "bi bi-arrow-left"}
-      .col-6.text-center
-        -if @from_date != Date.today
-          %span.align-middle
-            = link_to availability_path(from_date: Date.today, date: Date.today, club: @club, anchor: "cuando"), type: :button, class: "btn btn-link", "data-action" => "spinner#show" do
-              Hoy
-      .col-3.text-center
-        = link_to availability_path(from_date: to_date + 1.day, date: to_date + 1.day, club: @club, anchor: "cuando"), type: :button, class: "", "data-action" => "spinner#show" do
-          %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
-      
-      
-      -# #################################################
-      = render "layouts/spinner"
-      #contentDiv{"data-spinner-target"=> "contentDiv"}
-        .alert.alert-secondary
-          Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
-        - availabilities_start_times(@availabilities).each do |time|
-          - time = Time.parse time if time.is_a? String
-          .card.mb-3
-            .card-header
-              #{l(time, format: "%l:%M %p")} 
-            .list-group.list-group-flush
-              - @availabilities.each do |club, availability|
-                - slot = availability[time.to_s] if availability
-                
-                - if not slot.nil?
-                  .list-group-item 
-                    .row 
-                      .col-8
-                        = club.name
-                        %small
-                          #{club.comuna}
-                        %br
-                        %small.fw-lighter
-                          #{slot["courts"].count} 
-                          #{"cancha".pluralize  slot["courts"].count} 
-                          #{"disponible".pluralize  slot["courts"].count}
-                      .col-4.text-end
-                        %small.fw-lighter 
-                          Desde 
-                        #{number_to_currency(slot["courts"].map{|c| c["price"]}.min, unit: "")}
+    -# #################################################
+    = render "layouts/spinner"
+    #contentDiv{"data-spinner-target"=> "contentDiv"}
+      .alert.alert-secondary
+        Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+      - availabilities_start_times(@availabilities).each do |time|
+        - time = Time.parse time if time.is_a? String
+        .card.mb-3
+          .card-header
+            #{l(time, format: "%l:%M %p")} 
+          .list-group.list-group-flush
+            - @availabilities.each do |club, availability|
+              - slot = availability[time.to_s] if availability
+              
+              - if not slot.nil?
+                .list-group-item 
+                  .row 
+                    .col-8
+                      = club.name
+                      %small
+                        #{club.comuna}
+                      %br
+                      %small.fw-lighter
+                        #{slot["courts"].count} 
+                        #{"cancha".pluralize  slot["courts"].count} 
+                        #{"disponible".pluralize  slot["courts"].count}
+                    .col-4.text-end
+                      %small.fw-lighter 
+                        Desde 
+                      #{number_to_currency(slot["courts"].map{|c| c["price"]}.min, unit: "")}
 -# #################################################
 -# - first_slot = [@selected_date.to_time.change(hour: 7).to_i, Time.now.round_off(30.minutes).to_i].max
 -# - last_slot = @selected_date.to_time.change(hour: 23).to_i

@@ -1,7 +1,7 @@
 .container
 
   %h3.text-center.py-4 Encuentra Clubes
-  =render partial: "shared/clubs_selector", locals: {url: clubs_path}
+  =render partial: "shared/clubs_selector", locals: {path: clubs_path}
 
   - @clubs.each do |club|
     .div.py-2

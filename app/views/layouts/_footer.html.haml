@@ -1,13 +1,9 @@
 %footer.py-3.my-4
   %ul.nav.justify-content-center.border-bottom.pb-3.mb-3
     %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"} Home
+      %a.nav-link.px-2.text-muted{:href => "#"}
+         
     %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"} Features
+      = link_to "Clubes", clubs_path, class: "nav-link px-2 text-muted"
     %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"} Pricing
-    %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"} FAQs
-    %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"} About
-  %p.text-center.text-muted © 2022 Company, Inc
+  %p.text-center.text-muted © 2022 Unpickle, Inc

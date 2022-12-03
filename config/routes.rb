@@ -2,7 +2,19 @@
 #
 
 Rails.application.routes.draw do
-  
+  namespace :admin do
+    # resources :schedules
+    # resources :reservations
+    # resources :payments
+    # resources :courts
+    # resources :comunas
+    resources :clubs
+    # resources :availabilities
+    resources :users
+
+    root to: "clubs#index"
+  end
+
   resources :schedules
   resources :courts
   resources :clubs
@@ -23,7 +35,7 @@ Rails.application.routes.draw do
   end
 
   root "pages#home"
-  get 'availability' => "availability#index"
+  get "availability" => "availability#index"
 
   get "mp_payment_success" => "payments#mp_payment_success"
   get "mp_payment_failiure" => "payments#mp_payment_failiure"

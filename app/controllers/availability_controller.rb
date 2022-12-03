@@ -34,11 +34,6 @@ class AvailabilityController < ApplicationController
         end
         .min
 
-    # @parameters = {
-    #   selected_sectors_names: @selected_sectors_names,
-    #   from_date: @from_date,
-    #   selected_date: @selected_date,
-    #   duration: @duration
-    # }
+      @params = request.parameters.merge
   end
 end
