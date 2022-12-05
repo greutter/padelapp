@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   end
 
   root "pages#home"
+  get "debug" => "pages#debug"
   get "availability" => "availability#index"
 
   get "mp_payment_success" => "payments#mp_payment_success"

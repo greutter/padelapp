@@ -35,7 +35,6 @@ class Club < ApplicationRecord
   def opens_at(date)
     if self.schedules.custom_default_for(date)
       custom_default = self.schedules.custom_default_for(date)
-      p custom_default
       date.beginning_of_day.change(
         { hour: custom_default.opens_at.hour, min: custom_default.opens_at.min }
       )
@@ -69,6 +68,8 @@ class Club < ApplicationRecord
     else
       if third_party_software == "easycancha"
         available_slots = easycancha_available_slots(date, duration)
+      elsif third_party_software == "tpc_matchpoint"
+        available_slots = tpc_matchpoint_available_slots(date)
       else
         available_slots = reservio_available_slots(date, duration)
       end
@@ -136,6 +137,10 @@ class Club < ApplicationRecord
       date: date,
       duration: duration
     )
+  end
+
+  def tpc_matchpoint_available_slots(date)
+    TpcBot.new(self).availability(date: date)
   end
 
   # def get_availabel_slots(date: , durations: [90])

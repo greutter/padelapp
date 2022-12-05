@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   def home
+
   end
 
   def privio
@@ -7,4 +8,7 @@ class PagesController < ApplicationController
     # EasycanchaBot.reserve
   end
 
+  def debug 
+    #Put code here.
+  end
 end
