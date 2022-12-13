@@ -11,7 +11,7 @@ module AvailabilityHelper
         end.flatten.uniq.sort
 
         return start_times.select do |start_time|
-            Time.parse(start_time) > Time.now
+            Time.parse(start_time) > Time.now.in_time_zone
         end
     end
 
