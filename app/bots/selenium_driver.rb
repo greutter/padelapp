@@ -17,7 +17,7 @@ module SeleniumDriver
     Selenium::WebDriver::Wait.new(timeout: timeout)
   end
 
-  def screenshot
-    @driver.save_screenshot("./app/assets/images/screenshots/screenshot.png") if Rails.env.development?
-  end
+  # def screenshot
+  #   @driver.save_screenshot("./app/assets/images/screenshots/screenshot.png") if Rails.env.development?
+  # end
 end

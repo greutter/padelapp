@@ -29,7 +29,7 @@ class TpcBot
 
   def login
     begin
-      initialize_driver if @driver.nil?
+      initialize_driver
       @driver.get "https://www.clubconecta.cl/Login.aspx"
       sleep 1
       login_input =
@@ -54,7 +54,7 @@ class TpcBot
   end
 
   def availability(date, duration: 90)
-    initialize_driver if @driver.nil?
+    initialize_driver
     begin      
       select_date(date)
       sleep 2
