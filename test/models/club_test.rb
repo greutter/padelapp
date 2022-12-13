@@ -3,6 +3,7 @@
 # Table name: clubs
 #
 #  id                   :bigint           not null, primary key
+#  active               :boolean
 #  address              :string
 #  city                 :string
 #  comuna               :string

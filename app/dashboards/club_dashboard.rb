@@ -17,6 +17,7 @@ class ClubDashboard < Administrate::BaseDashboard
     google_maps_link: Field::String,
     latitude: Field::Number,
     longitude: Field::Number,
+    active: Field::Boolean,
     members_only: Field::Boolean,
     name: Field::String,
     phone: Field::String,
@@ -34,7 +35,7 @@ class ClubDashboard < Administrate::BaseDashboard
   #
   # By default, it's limited to four items to reduce clutter on index pages.
   # Feel free to add, remove, or rearrange items.
-  COLLECTION_ATTRIBUTES = %i[id name comuna region].freeze
+  COLLECTION_ATTRIBUTES = %i[id name comuna region active].freeze
 
   # SHOW_PAGE_ATTRIBUTES
   # an array of attributes that will be displayed on the model's show page.
@@ -50,6 +51,7 @@ class ClubDashboard < Administrate::BaseDashboard
     website
     google_maps_link
     members_only
+    active
     third_party_software
     created_at
   ].freeze
@@ -64,6 +66,7 @@ class ClubDashboard < Administrate::BaseDashboard
     comuna
     city
     region
+    active
     google_maps_link
     website
     members_only

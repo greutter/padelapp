@@ -3,6 +3,7 @@
 # Table name: clubs
 #
 #  id                   :bigint           not null, primary key
+#  active               :boolean
 #  address              :string
 #  city                 :string
 #  comuna               :string
@@ -31,6 +32,8 @@ class Club < ApplicationRecord
   has_many :courts
   has_many :schedules
   has_many :availabilities
+
+  scope :active, -> { where("active") }
 
   def opens_at(date)
     if self.schedules.custom_default_for(date)

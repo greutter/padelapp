@@ -12,6 +12,7 @@
 #
 class Availability < ApplicationRecord
   belongs_to :club
+  validates :slots, presence: true
 
   scope :updated_within, -> { where("created_at > ?", 1.hour.ago) }
 

@@ -13,6 +13,7 @@ class AvailabilityController < ApplicationController
         .where("comuna IN (?)", @selected_comunas.map(&:name))
         .where(members_only: nil)
         .order(:name)
+        .active
 
     @from_date =
       params[:from_date].blank? ? Date.today : Date.parse(params[:from_date])
@@ -28,11 +29,9 @@ class AvailabilityController < ApplicationController
       )
 
     @updated_at =
-      @clubs
-        .map do |club|
-          club.availabilities.where(date: @selected_date).maximum(:updated_at)
-        end
-        .min
+      @clubs.map do |club|
+        club.availabilities.where(date: @selected_date).maximum(:updated_at)
+      end.compact.min
 
       @params = request.parameters.merge
   end
