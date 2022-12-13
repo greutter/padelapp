@@ -69,7 +69,7 @@ class Club < ApplicationRecord
       if third_party_software == "easycancha"
         available_slots = easycancha_available_slots(date, duration)
       elsif third_party_software == "tpc_matchpoint"
-        available_slots = tpc_matchpoint_available_slots(date)
+        available_slots = TpcBot.new(self).availability(date)
       else
         available_slots = reservio_available_slots(date, duration)
       end
@@ -140,7 +140,7 @@ class Club < ApplicationRecord
   end
 
   def tpc_matchpoint_available_slots(date)
-    TpcBot.new(self).availability(date: date)
+    
   end
 
   # def get_availabel_slots(date: , durations: [90])

@@ -1,4 +1,4 @@
-.div 
+.div
   %h5.text-left
     #{l(@selected_date, format: "%B").capitalize}
   %ul.nav.nav-pills.nav-fill
@@ -8,8 +8,7 @@
         - par = @params
         - par[:date] = date
         - c = "nav-link rounded-0 #{'active' if date == @selected_date}"
-        - html_options = {"data-action" =>"spinner#show"}
-        = link_to url_for("#{path}?#{par.to_query}#cuando"), class: c, html_options: html_options do
+        = link_to url_for("#{path}?#{par.to_query}#cuando"), class: c, "data-action" => "spinner#show" do
           - if date.today?
             Hoy
             %br
@@ -18,26 +17,30 @@
             = l(date, format: "%a").capitalize
             %br
             .text-center= l(date, format: "%d")
-  .row.pt-10
-    .col-3.text-center
-      - if @from_date != Date.today
-        - par = @params 
-        - par[:from_date] = @from_date - 5.day
-        - par[:date] = @from_date - 5.days
-        - html_options = { class: "btn btn-link", "data-action" =>"spinner#show"}
-        = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
-          %i.fs-2{class: "bi bi-arrow-left"}
-    .col-6.text-center
-      -if @from_date != Date.today
-        %span.align-middle
+  .mt-2
+    .row
+      .col-3.text-center
+        - if @from_date != Date.today
           - par = @params 
-          - par[:from_date] = Date.today
-          - par[:date] = Date.today
-          = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
-            Hoy
-    .col-3.text-center
-      - par = @params 
-      - par[:from_date] = to_date + 1.day
-      - par[:date] = to_date + 1.day
-      = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, html_options => html_options do
-        %i.fs-2.fw-bold{class: "bi bi-arrow-right"}
+          - par[:from_date] = @from_date - 5.day
+          - par[:date] = @from_date - 5.days
+      
+          = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, class: "btn", "data-action" =>"spinner#show" do
+            %i.fs-3.fw-bold{class: "bi bi-arrow-left"}
+            %br
+            Anterior
+      .col-6.text-center
+        -if @from_date != Date.today
+          %span.align-middle
+            - par = @params 
+            - par[:from_date] = Date.today
+            - par[:date] = Date.today
+            = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, class: "btn btn", "data-action" =>"spinner#show" do
+              Hoy
+      .col-3.text-center
+        - par = @params 
+        - par[:from_date] = to_date + 1.day
+        - par[:date] = to_date + 1.day 
+        = link_to url_for("#{path}?#{par.to_query}#cuando"), type: :button, class: "btn", "data-action" =>"spinner#show" do
+          %i.fs-3.fw-bold{class: "bi bi-arrow-right"}
+          Siguiente

@@ -160,11 +160,5 @@ class EasycanchaBot
     puts "****************"
   end
 
-  def wait(timeout = 5000)
-    @wait = Selenium::WebDriver::Wait.new(timeout: timeout)
-  end
-
-  def screenshot
-    @driver.save_screenshot("./app/assets/images/screenshots/screenshot.png")
-  end
+  
 end
