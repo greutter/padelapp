@@ -17,7 +17,7 @@ module EasycanchaReservationService
       sleep(4)
       complete_reservation
       sleep(2)
-      screenshot
+      screenshot if Rails.env.development?
     rescue Exception => e
       puts e.message
     ensure

@@ -3,7 +3,7 @@ module SeleniumDriver
     @club = club unless club.nil?
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless") if Rails.env.production? or false
+    options.add_argument("--headless") if Rails.env.production? or true
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =
@@ -17,6 +17,6 @@ module SeleniumDriver
   end
 
   def screenshot
-    @driver.save_screenshot("./app/assets/images/screenshots/screenshot.png")
+    @driver.save_screenshot("./app/assets/images/screenshots/screenshot.png") if Rails.env.development?
   end
 end
