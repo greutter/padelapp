@@ -9,12 +9,12 @@
       =form_for(resource, as: resource_name, |
             url: session_path(resource_name), |
             data: {turbo: false}) do |form|
-        .mb-3
-          = form.label :email, class: "form-label"
-          = form.email_field :email, class: "form-control"
-        .mb-3
-          = form.label :password, class: "form-label"
-          = form.password_field :password, class: "form-control", autocompete: true
+        .mb-3.form-floating
+          = form.email_field :email, class: "form-control", placeholder: ""
+          = form.label :email, class: "form-label fw-lighter"
+        .mb-3.form-floating
+          = form.password_field :password, class: "form-control", autocompete: true, placeholder: ""
+          = form.label :password, class: "form-label fw-lighter"
         .mb-3
           = form.hidden_field :remember_me, value: true
         .mb-3
