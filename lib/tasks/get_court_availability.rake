@@ -9,11 +9,13 @@ namespace :get_court_availability do
   end
 
   desc "Scap availability near future"
-  task next_two_weeks: :environment do
+  task two_weeks_easycancha: :environment do |task, args|
     comunas = Comuna.where(sector: "Santiago Oriente").pluck("name")
-    clubs = Club.where("comuna in (?)", comunas).active
+    clubs = Club
+            .where("comuna in (?) and third_party_software = 'easycancha'", comunas)
+            .active
     clubs.each do |club|
-      (Date.tomorrow...(Date.tomorrow + 6.days)).each do |date|
+      (Date.tomorrow...(Date.today + 14.days)).each do |date|
         p "Scraping #{club.name} on #{date}"
         club.availability(date: date, duration: 90, force_update: false)
       end
