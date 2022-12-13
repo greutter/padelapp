@@ -2,6 +2,12 @@ class EasycanchaBot
   include EasycanchaReservationService
   include SeleniumDriver
 
+  attr_accessor :club
+
+  def initialize(club)
+    self.club = club
+  end
+
   def login(username: "reutter.carvajal@gmail.com", password: "ec1234")
     @driver.get "https://www.easycancha.com/book/search?lang=es-CL&country=CL"
     button =
@@ -25,8 +31,8 @@ class EasycanchaBot
     return @driver
   end
 
-  def availability(club_id:, date:, duration: 90, force_update: false)
-    club = Club.find(club_id)
+  def availability(date, duration: 90)
+    
     url =
       "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
     begin
@@ -140,18 +146,6 @@ class EasycanchaBot
     end
   end
 
-  def get_driver(logged_in = false)
-    if @driver.nil?
-      create_driver
-      login if logged_in
-    end
-    return @driver
-  end
-
-  def quit_driver
-    @driver.quit if @driver
-  end
-
   private
 
   def put_separator
@@ -160,5 +154,4 @@ class EasycanchaBot
     puts "****************"
   end
 
-  
 end

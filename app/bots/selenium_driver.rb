@@ -1,6 +1,5 @@
 module SeleniumDriver
   def create_driver(club: nil)
-    @club = club unless club.nil?
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument('--no-sandbox') 
     options.add_argument("--window-size=600,1200")
@@ -11,6 +10,14 @@ module SeleniumDriver
       Selenium::WebDriver.for :chrome, capabilities: caps, options: options
     @driver.manage.timeouts.implicit_wait = 5
     return @driver
+  end
+
+  def driver 
+    @driver 
+  end
+
+  def quit 
+    @driver.quit if @driver 
   end
 
   def wait(timeout = 10)

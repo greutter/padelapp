@@ -19,14 +19,6 @@ class TpcBot
     return @driver
   end
 
-  def driver 
-    @driver 
-  end
-
-  def quit 
-    @driver.quit if @driver 
-  end
-
   def login
     begin
       initialize_driver
