@@ -3,7 +3,7 @@ class TpcBot
 
   attr_accessor :club
 
-  def initialize(club)
+  def initialize(club)bot.
     self.club = club
   end
 
@@ -17,6 +17,20 @@ class TpcBot
       sleep 2
     end
     return @driver
+  end
+
+  def availability(date, duration: 90)
+    initialize_driver
+    begin      
+      select_date(date)
+      sleep 2
+      return parse_available_timeslots(date: date, duration: duration)
+    rescue Exception => e
+      p e
+    ensure
+      @driver.quit if @driver 
+    end
+    return nil
   end
 
   def login
@@ -43,20 +57,6 @@ class TpcBot
     rescue Exception => e
       p e
     end
-  end
-
-  def availability(date, duration: 90)
-    initialize_driver
-    begin      
-      select_date(date)
-      sleep 2
-      return parse_available_timeslots(date: date, duration: duration)
-    rescue Exception => e
-      p e
-    ensure
-      @driver.quit if @driver 
-    end
-    return nil
   end
 
   def start_times_of(ats)
