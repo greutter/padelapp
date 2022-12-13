@@ -3,7 +3,7 @@ module SeleniumDriver
     @club = club unless club.nil?
     options = Selenium::WebDriver::Chrome::Options.new
     options.add_argument("--window-size=600,1200")
-    options.add_argument("--headless") if Rails.env.production? or true
+    options.add_argument("--headless") if Rails.env.production? or false
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =

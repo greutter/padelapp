@@ -6,9 +6,13 @@ module AvailabilityHelper
     # end
 
     def availabilities_start_times(availabilities)
-        availabilities.values.map  do |availability| 
+        start_times = availabilities.values.map  do |availability| 
             availability.keys 
         end.flatten.uniq.sort
+
+        return start_times.select do |start_time|
+            Time.parse(start_time) > Time.now
+        end
     end
 
     def availabilities_clubs(availabilities)

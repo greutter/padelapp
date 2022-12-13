@@ -13,7 +13,7 @@
 class Availability < ApplicationRecord
   belongs_to :club
 
-  scope :updated_within_5_min, -> { where("created_at > ?", 1000.minutes.ago) }
+  scope :updated_within, -> { where("created_at > ?", 1.hour.ago) }
 
   def self.availabilities(date:, clubs:, duration: 90, default_to: :any)
     availabilities = {}

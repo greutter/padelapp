@@ -15,6 +15,7 @@
     #contentDiv{"data-spinner-target"=> "contentDiv"}
       .alert.alert-secondary
         Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+        
       - availabilities_start_times(@availabilities).each do |time|
         - time = Time.parse time if time.is_a? String
         .card.mb-3
@@ -24,7 +25,7 @@
             - @availabilities.each do |club, availability|
               - slot = availability[time.to_s] if availability
               
-              - if not slot.nil?
+              - unless slot.nil?
                 .list-group-item 
                   .row 
                     .col-8

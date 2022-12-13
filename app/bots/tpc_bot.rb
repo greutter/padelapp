@@ -12,9 +12,9 @@ class TpcBot
       create_driver
       url = self.club.website
       @driver.get url
-      sleep 3
-      @driver.find_element(css: "#ctl00_ButtonPermitirNecesarios").click
-      sleep 3
+      accept_cokies = wait.until {@driver.find_element(css: "#ctl00_ButtonPermitirNecesarios")}
+      accept_cokies.click unless accept_cokies.nil?
+  
     end
     return @driver
   end
@@ -57,7 +57,6 @@ class TpcBot
     initialize_driver if @driver.nil?
     begin      
       select_date(date)
-      sleep 2
       return parse_available_timeslots(date: date, duration: duration)
     rescue Exception => e
       p e
