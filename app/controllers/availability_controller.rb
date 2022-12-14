@@ -20,15 +20,17 @@ class AvailabilityController < ApplicationController
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
+    updated_within = Rails.env.production? ? 15.minutes : 1.hour
     @availabilities =
       Availability.availabilities(
         date: @selected_date,
-        clubs: @clubs
+        clubs: @clubs,
+        updated_within: updated_within
       )
 
     @updated_at =
-      @clubs.map do |club|
-        club.availabilities.where(date: @selected_date).maximum(:updated_at)
+      @availabilities.values.map do |availability|
+        availability.created_at
       end.compact.min
 
       @params = request.parameters.merge

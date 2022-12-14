@@ -59,54 +59,62 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date: ,duration: 90, force_update: false, default_to: :any)
+  def availability(date: ,duration: 90, updated_within: :if_old)
     date = date.to_date unless date.is_a? Date
-    t = case self.third_party_software
+    if updated_within.is_a? ActiveSupport::Duration
+      self.availabilities.updated_within(updated_within).where(
+        date: date,
+        duration: duration
+      ).last
+    else
+      case updated_within
+      when :force 
+        return update_availability(date: date)
+      when :if_old
+        persisted_availability =
+          self.availabilities.updated_within(availability_ttl).where(
+            date: date,
+            duration: duration
+          ).last
+        if persisted_availability.present?
+          return persisted_availability
+        else
+          return update_availability(date: date)
+        end
+      end
+    end
+  end
+
+  def availability_ttl
+    case self.third_party_software
     when "easycancha"
       10.minutes
     when "tpc_matchpoint"
-      1.hour
+      30.minutes
     else
       10.minutes
     end
-    updated_availability =
-      self.availabilities.updated_within(t).find_by(
-        date: date,
-        duration: duration
-      )
-    if updated_availability
-      available_slots = updated_availability.slots
-    else
-      if third_party_software == "easycancha"
-        available_slots = EasycanchaBot.new(self).availability(date)
-      elsif third_party_software == "tpc_matchpoint" and force_update
-        available_slots = TpcBot.new(self).availability(date)
-      else
-        available_slots = reservio_available_slots(date, duration)
-      end
-      persist_available_slots(date, duration, available_slots)
-    end
+  end
 
-    if available_slots.nil? and default_to == :any
-      available_slots =
-        self
-          .availabilities
-          .where(date: date, duration: duration)
-          .order(created_at: :desc)
-          .last
+  def update_availability(date: , duration: 90)
+    if third_party_software == "easycancha"
+      available_slots = EasycanchaBot.new(self).availability(date)
+    elsif third_party_software == "tpc_matchpoint"
+      available_slots = TpcBot.new(self).availability(date)
+    else
+      available_slots = reservio_available_slots(date, duration)
     end
-    return available_slots
+    return persist_available_slots(date, duration, available_slots)
   end
 
   def persist_available_slots(date, duration, available_slots)
-    unless available_slots.nil?
-      Availability.create(
-        club_id: self.id,
-        date: date,
-        duration: duration,
-        slots: available_slots
-      )
-    end
+    availability = Availability.create(
+      club_id: self.id,
+      date: date,
+      duration: duration,
+      slots: available_slots
+    )
+    availability.persisted? ? availability : nil
   end
 
   def reservio_available_slots(date, duration)
@@ -141,12 +149,4 @@ class Club < ApplicationRecord
       end
     return available_slots
   end
-
-  def tpc_matchpoint_available_slots(date)
-    
-  end
-
-  # def get_availabel_slots(date: , durations: [90])
-  #   courts.first.get_availabel_slots(date: date, durations: durations)
-  # end
 end

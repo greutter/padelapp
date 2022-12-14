@@ -15,7 +15,20 @@ namespace :get_court_availability do
             .where("comuna in (?) and third_party_software = 'easycancha'", comunas)
             .active
     clubs.each do |club|
-      (Date.tomorrow...(Date.today + 14.days)).each do |date|
+      (Date.today...(Date.today + 14.days)).each do |date|
+        p "Scraping #{club.name} on #{date}"
+        club.availability(date: date, duration: 90, force_update: false)
+      end
+    end
+  end
+
+  desc "Scap availability near future"
+  task one_week_tpc: :environment do |task, args|
+    clubs = Club
+            .where("third_party_software = ?", 'tpc_matchpoint')
+            .active
+    clubs.each do |club|
+      (Date....(Date.today + 14.days)).each do |date|
         p "Scraping #{club.name} on #{date}"
         club.availability(date: date, duration: 90, force_update: false)
       end

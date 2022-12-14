@@ -16,13 +16,16 @@ class Availability < ApplicationRecord
 
   scope :updated_within, -> (time = 10.minutes) { where("created_at > ?", Time.now - time) }
 
-  def self.availabilities(date: ,clubs: ,duration: 90)
+  def self.availabilities(date: ,clubs: ,duration: 90, updated_within: :if_old)
     availabilities = {}
     clubs.each do |club|
-      availabilities[club] = 
+      availability =  
         club.availability(
-          date: date.to_date, duration: duration
+          date: date.to_date, duration: duration, updated_within: updated_within
         )
+      if availability.present?
+        availabilities[club] = availability
+      end
     end
     return availabilities
   end

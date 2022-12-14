@@ -13,46 +13,50 @@
     -# #################################################
     = render "layouts/spinner"
     #contentDiv{"data-spinner-target"=> "contentDiv"}
-      .alert.alert-secondary
-        Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
-        
-      - availabilities_start_times(@availabilities).each do |time|
-        - time = Time.parse time if time.is_a? String
-        .card.mb-3
-          .card-header
-            #{l(time, format: "%l:%M %p")} 
-          .list-group.list-group-flush
-            - @availabilities.each do |club, availability|
-              - slot = availability[time.to_s] if availability
-              
-              - unless slot.nil?
-                .list-group-item 
-                  .row 
-                    .col-8
-                      = club.name
-                      %small
-                        #{club.comuna}
-                      %br
-                      %small.fw-lighter
-                        #{slot["courts"].count} 
-                        #{"cancha".pluralize  slot["courts"].count} 
-                        #{"disponible".pluralize  slot["courts"].count}
-                        
-                    .col-4.text-end
-                      %small.fw-lighter
-                        - price = slot["courts"].map{|c| c["price"]}.min
-                        - if price
-                          Desde #{number_to_currency(price, unit: "")}
+      - if @availabilities.blank?
+        .alert.alert-warning
+          Ups! Algo salió mal. Perdimos 6-0 6-0
+          .float-end 
+            😞
+      - else     
+        .alert.alert-secondary
+          Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}  
+        - availabilities_start_times(@availabilities).each do |time|
+          - time = Time.parse time if time.is_a? String
+          .card.mb-3
+            .card-header
+              #{l(time, format: "%l:%M %p")} 
+            .list-group.list-group-flush
+              - @availabilities.each do |club, availability|
+                - slot = availability.slots[time.to_s] if availability
+                - unless slot.nil?
+                  .list-group-item 
+                    .row 
+                      .col-8
+                        = club.name
+                        %small
+                          #{club.comuna}
                         %br
-                  -# .row
-                  -#   .col-12
-                  -#     %small.fw-lighter
-                  -#       - updated_at = club.availabilities.where(date: @selected_date).maximum(:updated_at)
-                  -#       Actualizado hace #{distance_of_time_in_words_to_now(updated_at, {})}
-                        
--# #################################################
--# - first_slot = [@selected_date.to_time.change(hour: 7).to_i, Time.now.round_off(30.minutes).to_i].max
--# - last_slot = @selected_date.to_time.change(hour: 23).to_i
--# - time_interval = (first_slot...last_slot)
--# - time_interval.step(30.minutes).each do |t|
-  - time = Time.at t
+                        %small.fw-lighter
+                          #{slot["courts"].count} 
+                          #{"cancha".pluralize  slot["courts"].count} 
+                          #{"disponible".pluralize  slot["courts"].count}
+                          
+                      .col-4.text-end
+                        %small.fw-lighter
+                          - price = slot["courts"].map{|c| c["price"]}.min
+                          - if price
+                            Desde #{number_to_currency(price, unit: "")}
+                          %br
+                    -# .row
+                    -#   .col-12
+                    -#     %small.fw-lighter
+                    -#       - updated_at = club.availabilities.where(date: @selected_date).maximum(:updated_at)
+                    -#       Actualizado hace #{distance_of_time_in_words_to_now(updated_at, {})}
+                          
+  -# #################################################
+  -# - first_slot = [@selected_date.to_time.change(hour: 7).to_i, Time.now.round_off(30.minutes).to_i].max
+  -# - last_slot = @selected_date.to_time.change(hour: 23).to_i
+  -# - time_interval = (first_slot...last_slot)
+  -# - time_interval.step(30.minutes).each do |t|
+    - time = Time.at t

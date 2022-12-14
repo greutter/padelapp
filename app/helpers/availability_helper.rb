@@ -7,7 +7,7 @@ module AvailabilityHelper
 
     def availabilities_start_times(availabilities)
         start_times = availabilities.values.map  do |availability| 
-            availability.keys 
+            availability.slots.keys 
         end.flatten.uniq.sort
 
         return start_times.select do |start_time|
