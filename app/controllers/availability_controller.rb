@@ -11,7 +11,6 @@ class AvailabilityController < ApplicationController
     @clubs =
       Club
         .where("comuna IN (?)", @selected_comunas.map(&:name))
-        .where(members_only: nil)
         .order(:name)
         .active
 
