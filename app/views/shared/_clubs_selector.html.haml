@@ -5,7 +5,7 @@
         = cb.check_box class: "form-check-input", checked: @selected_sectors_names.include?(cb.text)
         = cb.label class: "form-check-label"
         %span.badge.text-bg-primary
-          #{Sector.new(cb.text).clubs.count} clubes
+          #{Sector.new(cb.text).clubs.active.count} clubes
         -# .mt-0.form-text= @sectors[cb.text]
   .d-grid.gap-2.d-md-flex.justify-content-md-end
     = form.submit 'Filtrar', class: "btn btn-outline-primary"

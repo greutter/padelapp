@@ -20,7 +20,7 @@ class AvailabilityController < ApplicationController
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
-    updated_within = Rails.env.production? ? 15.minutes : 1.hour
+    updated_within = Rails.env.production? ? 15.minutes : :if_old
     @availabilities =
       Availability.availabilities(
         date: @selected_date,
