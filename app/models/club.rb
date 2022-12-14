@@ -61,8 +61,16 @@ class Club < ApplicationRecord
 
   def availability(date: ,duration: 90, force_update: false, default_to: :any)
     date = date.to_date unless date.is_a? Date
+    t = case self.third_party_software
+    when "easycancha"
+      10.minutes
+    when "tpc_matchpoint"
+      1.hour
+    else
+      10.minutes
+    end
     updated_availability =
-      self.availabilities.updated_within.find_by(
+      self.availabilities.updated_within(t).find_by(
         date: date,
         duration: duration
       )
@@ -71,7 +79,7 @@ class Club < ApplicationRecord
     else
       if third_party_software == "easycancha"
         available_slots = EasycanchaBot.new(self).availability(date)
-      elsif third_party_software == "tpc_matchpoint"
+      elsif third_party_software == "tpc_matchpoint" and force_update
         available_slots = TpcBot.new(self).availability(date)
       else
         available_slots = reservio_available_slots(date, duration)

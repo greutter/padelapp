@@ -128,7 +128,7 @@ class TpcBot
             }
           end
         available_time_slots = to_available_time_slots(ats)
-        return available_time_slots
+        return available_time_slots.to_h.stringify_keys
       end
     end
   end

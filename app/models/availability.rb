@@ -14,7 +14,7 @@ class Availability < ApplicationRecord
   belongs_to :club
   validates :slots, presence: true
 
-  scope :updated_within, -> { where("created_at > ?", 10.minutes.ago) }
+  scope :updated_within, -> (time = 10.minutes) { where("created_at > ?", Time.now - time) }
 
   def self.availabilities(date: ,clubs: ,duration: 90)
     availabilities = {}
