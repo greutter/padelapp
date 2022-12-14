@@ -3,7 +3,7 @@ class TpcBot
 
   attr_accessor :club
 
-  def initialize(club)bot.
+  def initialize(club)
     self.club = club
   end
 
