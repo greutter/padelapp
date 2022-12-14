@@ -119,8 +119,8 @@ class TpcBot
                 "number" => get_court_by(x),
                 "price" => price
               },
-              "starts_at" => date.to_time.change_hour_minutes(h[0]),
-              "ends_at" => date.to_time.change_hour_minutes(h[1]),
+              "starts_at" => date.in_time_zone.change_hour_minutes(h[0]),
+              "ends_at" => date.in_time_zone.change_hour_minutes(h[1]),
               "table_rect_coord" => {
                 "x" => x,
                 "y" => y

@@ -1,11 +1,14 @@
-.container{style: "padding: 12px 0 24px 0"}
+.container
   .row
-    .col-md-5
-      =image_tag "handsome_boy.jpeg", class: "img-fluid"
-    .col-md-7
+    .col-md-7.mt-3
       %h2.fw-lighterlight
         Todas las canchas
         en un solo lugar
       %p.font-monospace
-        Encuentra la cancha que estás buscando.
-      = link_to "Buscar Canchas", availability_path 
+        Más de #{Court.all.count} 
+        canchas. Para que reserves y jueges en el horario que más te acomode.
+      .d-grid.gap-2.col-10.mx-auto
+        = link_to "ENCUENTRA TU CANCHA", availability_path, type: :button, class: "btn btn-primary" 
+    .col-md-5.mt-3
+      =image_tag "handsome_boy.jpeg", class: "img-fluid"
+    

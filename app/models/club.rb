@@ -59,7 +59,7 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, duration: 90, force_update: false, default_to: :any)
+  def availability(date: ,duration: 90, force_update: false, default_to: :any)
     date = date.to_date unless date.is_a? Date
     updated_availability =
       self.availabilities.updated_within.find_by(

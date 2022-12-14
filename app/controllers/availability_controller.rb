@@ -23,9 +23,8 @@ class AvailabilityController < ApplicationController
 
     @availabilities =
       Availability.availabilities(
-        clubs: @clubs,
         date: @selected_date,
-        default_to: :any
+        clubs: @clubs
       )
 
     @updated_at =

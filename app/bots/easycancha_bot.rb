@@ -79,7 +79,7 @@ class EasycanchaBot
         available_timeslots =
           json["alternative_timeslots"].map do |ats|
             a = ats["hour"].split(":")
-            starts_at = date.to_time.change(hour: a[0], min: a[1])
+            starts_at = date.in_time_zone.change(hour: a[0], min: a[1])
             ends_at = starts_at + duration.minutes
             courts =
               ats["timeslots"].map do |ts|
