@@ -44,8 +44,7 @@ class EasycanchaBot
           parse_available_timeslots(
             body,
             date: date,
-            duration: duration,
-            club: club
+            duration: duration
           )
       else
         @driver.get(url)
@@ -54,8 +53,7 @@ class EasycanchaBot
           parse_available_timeslots(
             body,
             date: date,
-            duration: duration,
-            club: club
+            duration: duration
           )
       end
 
@@ -70,7 +68,7 @@ class EasycanchaBot
     end
   end
 
-  def parse_available_timeslots(json, date:, duration:, club:)
+  def parse_available_timeslots(json, date:, duration: )
     # json["alternative_timeslots"][0]["timeslots"][0]["priceInfo"]["amount"]
     json = JSON.parse(json)
     if not(json["alternative_timeslots"].nil?) and
@@ -135,6 +133,7 @@ class EasycanchaBot
         club.region = club_hash["region"]
         club.phone = club_hash["phone"]
         club.longitude = club_hash["longitude"]
+        club.active = true
         club.save
       end
     rescue Exception => e

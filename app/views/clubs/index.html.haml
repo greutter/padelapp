@@ -3,14 +3,15 @@
   %h3.text-center.py-4 Encuentra Clubes
   =render partial: "shared/clubs_selector", locals: {path: clubs_path}
 
-  - @clubs.each do |club|
-    .div.py-2
-      .card
-        .card-header
-          .row
-            .col-8.fw-bolder= club.name
-            .col-4.fw-lighter.text-end= club.comuna
-        .card-body
-          #{club.address}
-          %br
-          = number_to_phone_cl club.phone if club.phone.length > 8
+  - @clubs.each do |club| 
+    =link_to club_path(club), class: "text-decoration-none text-body" do 
+      .div.py-2
+        .card
+          .card-header
+            .row
+              .col-8.fw-bolder= club.name
+              .col-4.fw-lighter.text-end= club.comuna
+          .card-body
+            #{club.address}
+            %br
+            = number_to_phone_cl club.phone if club.phone.length > 8

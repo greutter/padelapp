@@ -29,11 +29,14 @@ class Club < ApplicationRecord
   validates :third_party_id,
             uniqueness: true,
             if: -> { third_party_software == "easycancha" }
-  has_many :courts
-  has_many :schedules
-  has_many :availabilities
+  has_many :courts, dependent: :destroy
+  has_many :schedules, dependent: :destroy
+  has_many :availabilities, dependent: :destroy
 
   scope :active, -> { where("active") }
+
+  before_create :parse_phone
+  before_update :parse_phone
 
   def opens_at(date)
     if self.schedules.custom_default_for(date)
@@ -148,5 +151,9 @@ class Club < ApplicationRecord
         end
       end
     return available_slots
+  end
+
+  def parse_phone
+    self.phone = self.phone.delete(" ")
   end
 end

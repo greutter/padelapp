@@ -109,21 +109,23 @@ class TpcBot
       else 
         ats =
           slots.map do |slot|
-            x = slot.find_element(tag_name: "rect").attribute("x").to_i
-            y = slot.find_element(tag_name: "rect").attribute("y").to_i
+            x_coordinate = slot.find_element(tag_name: "rect").attribute("x").to_i
+            y_coordinate = slot.find_element(tag_name: "rect").attribute("y").to_i
             s = slot.text.split("\n$")
             h = s[0].split "-"
+            court = club.courts.find_or_create_by(number: get_court_by(x_coordinate))
             price = (s[1].tr(".", "").to_i unless s[1].blank?)
             {
               "court" => {
-                "number" => get_court_by(x),
+                "id" => court.id,
+                "number" => court.number,
                 "price" => price
               },
               "starts_at" => date.in_time_zone.change_hour_minutes(h[0]),
               "ends_at" => date.in_time_zone.change_hour_minutes(h[1]),
-              "table_rect_coord" => {
-                "x" => x,
-                "y" => y
+              "table_coordinates" => {
+                "x" => x_coordinate,
+                "y" => y_coordinate
               }
             }
           end

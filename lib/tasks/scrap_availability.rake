@@ -1,7 +1,7 @@
 namespace :scrap_availability do
   desc "Scrap availability for today at Santiago Oriente"
   task today: :environment do
-    comunas = Comuna.where(sector: "Santiago Oriente").pluck("name")
+    comunas = Comuna.where(región: "Región Metropolitana de Santiago").pluck("name")
     clubs = Club.where("comuna in (?)", comunas).active
     clubs.each do |club|
       club.availability(date: Date.today, duration: 90, force_update: true)

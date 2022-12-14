@@ -14,8 +14,8 @@ class ClubsController < ApplicationController
     @clubs =
       Club
         .where("comuna IN (?)", @selected_comunas.map(&:name))
-        .where(members_only: nil)
-        .order(:name)
+        .where(members_only: false)
+        .order(:comuna, :name)
   end
 
   # GET /clubs/1 or /clubs/1.json
