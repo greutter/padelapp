@@ -6,7 +6,7 @@ Club.create!(
   name: "Club Conecta Las Condes",
   phone: "+56 9 74781499",
   region: "Región Metropolitana de Santiago",
-  third_party_software: "tpc_matchpoint",
+  third_party_software: "tpc_matchpoint_1",
   website: "https://www.clubconecta.cl/Pages/17-CLUB_CONECTA_LAS_CONDES",
   active: true,
   members_only: false
@@ -20,7 +20,7 @@ Club.create!(
   name: "Más Padel Club",
   phone: "+569 3752 1150",
   region: "Región Metropolitana de Santiago",
-  third_party_software: "tpc_matchpoint",
+  third_party_software: "tpc_matchpoint_1",
   website: "http://www.maspadel.cl/Booking/Grid.aspx",
   active: true,
   members_only: false

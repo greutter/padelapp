@@ -63,23 +63,25 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date: ,duration: 90, updated_within: :if_old)
+  def availability(date:, duration: 90, updated_within: :if_old)
     date = date.to_date unless date.is_a? Date
     if updated_within.is_a? ActiveSupport::Duration
-      self.availabilities.updated_within(updated_within).where(
-        date: date,
-        duration: duration
-      ).last
+      self
+        .availabilities
+        .updated_within(updated_within)
+        .where(date: date, duration: duration)
+        .last
     else
       case updated_within
       when :force_update
         return update_availability(date: date)
       when :if_old
         persisted_availability =
-          self.availabilities.updated_within(availability_ttl).where(
-            date: date,
-            duration: duration
-          ).last
+          self
+            .availabilities
+            .updated_within(availability_ttl)
+            .where(date: date, duration: duration)
+            .last
         if persisted_availability.present?
           return persisted_availability
         else
@@ -100,10 +102,10 @@ class Club < ApplicationRecord
     end
   end
 
-  def update_availability(date: , duration: 90)
-    if third_party_software == "easycancha"
+  def update_availability(date:, duration: 90)
+    if reservation_software == "easycancha"
       available_slots = EasycanchaBot.new(self).availability(date)
-    elsif third_party_software == "tpc_matchpoint"
+    elsif reservation_software == "tpc_matchpoint"
       available_slots = TpcBot.new(self).availability(date)
     else
       available_slots = reservio_available_slots(date, duration)
@@ -112,13 +114,20 @@ class Club < ApplicationRecord
   end
 
   def persist_available_slots(date, duration, available_slots)
-    availability = Availability.create(
-      club_id: self.id,
-      date: date,
-      duration: duration,
-      slots: available_slots
-    )
+    availability =
+      Availability.create(
+        club_id: self.id,
+        date: date,
+        duration: duration,
+        slots: available_slots
+      )
     availability.persisted? ? availability : nil
+  end
+
+  def reservation_software
+    if read_attribute(:third_party_software)
+      read_attribute(:third_party_software).sub /_\d/, ""
+    end
   end
 
   def reservio_available_slots(date, duration)
