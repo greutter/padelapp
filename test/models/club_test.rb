@@ -7,6 +7,7 @@
 #  address              :string
 #  city                 :string
 #  comuna               :string
+#  email                :string
 #  google_maps_link     :string
 #  latitude             :integer
 #  longitude            :integer

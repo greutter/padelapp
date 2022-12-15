@@ -8,7 +8,8 @@ Club.create!(
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint",
   website: "https://www.clubconecta.cl/Pages/17-CLUB_CONECTA_LAS_CONDES",
-  active: true
+  active: true,
+  members_only: false
 )
 
 Club.create!(
@@ -21,7 +22,21 @@ Club.create!(
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint",
   website: "http://www.maspadel.cl/Booking/Grid.aspx",
-  active: true
+  active: true,
+  members_only: false
 )
 
-Club.where(members_only: nil).update_all members_only: false
+Club.create!(
+  address: "Nueva Bilbao 9495",
+  city: "Santiago",
+  comuna: "Las Condes",
+  google_maps_link: "https://goo.gl/maps/6Ciaa6tnRrHKquPc9",
+  name: "Espacio Padel",
+  phone: "+56962949825",
+  region: "Región Metropolitana de Santiago",
+  third_party_software: "tpc_matchpoint_2",
+  website: "https://espaciopadelcl.matchpoint.com.es/Booking/Grid.aspx",
+  active: true,
+  members_only: false
+)
+
