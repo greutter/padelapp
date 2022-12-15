@@ -11,7 +11,7 @@ task detect_active_clubs: :environment do |task, args|
                 puts "ACTIVATING: #{club.name}"
             else 
                 club.update active: false
-                puts "INACTIVE #{club.name}"
+                puts "INACTIVE: #{club.name}"
             end
         end
     end
