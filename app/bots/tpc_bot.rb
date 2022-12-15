@@ -31,10 +31,11 @@ class TpcBot
       if current_selected_date_match? date
         case club.third_party_software
         when "tpc_matchpoint_1"
+          p "Scraping #{club.name} Tcp type 1"
           return parse_available_timeslots_type1(date: date, duration: duration)
         else
-          p "Scraping #{club.name}} Tcp type 2"
-          # return parse_available_timeslots_type2(date: date, duration: duration)
+          p "Scraping #{club.name} Tcp type 2"
+          return parse_available_timeslots_type2(date: date, duration: duration)
         end
       else
         return nil
@@ -43,7 +44,7 @@ class TpcBot
       p e
       return nil
     ensure
-      @driver.quit if @driver
+      # @driver.quit if @driver
     end
   end
 
