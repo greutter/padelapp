@@ -71,7 +71,7 @@ class Club < ApplicationRecord
       ).last
     else
       case updated_within
-      when :force 
+      when :force_update
         return update_availability(date: date)
       when :if_old
         persisted_availability =

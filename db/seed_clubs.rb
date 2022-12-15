@@ -23,3 +23,5 @@ Club.create!(
   website: "http://www.maspadel.cl/Booking/Grid.aspx",
   active: true
 )
+
+Club.where(members_only: nil).update_all members_only: false
