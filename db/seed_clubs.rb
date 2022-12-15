@@ -7,7 +7,7 @@ Club.create!(
   phone: "+56 9 74781499",
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint",
-  website: "https://www.clubconecta.cl/Pages/17-CLUB_CONECTA_LAS_CONDES"
+  website: "https://www.clubconecta.cl/Pages/17-CLUB_CONECTA_LAS_CONDES",
   active: true
 )
 

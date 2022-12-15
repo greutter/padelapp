@@ -26,7 +26,7 @@ sectors = [
   { name: "Providencia", sector: "Santiago Oriente" },
   { name: "La Reina", sector: "Santiago Oriente" },
   { name: "Buin", sector: "Santiago Poniente" },
-  { name: "Peñalolén", sector: "Santiago Oriente" },
+  { name: "Peñalolén", sector: "Santiago Sur" },
   { name: "Vitacura", sector: "Santiago Oriente" }
 ]
 sectors.each { |s| Comuna.find_by(name: s[:name])&.update(sector: s[:sector]) }
