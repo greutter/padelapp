@@ -19,7 +19,7 @@ class TpcBot
           @driver.find_element(css: "#ctl00_ButtonPermitirNecesarios")
         end
       accept_cokies.click unless accept_cokies.nil?
-      sleep 2
+      sleep 1
     end
     return @driver
   end

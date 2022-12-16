@@ -29,7 +29,7 @@
             .list-group.list-group-flush
               - @availabilities.each do |club, availability|
                 - slot = availability.slots[time.to_s] if availability
-                - unless slot.nil?
+                - if slot.present?
                   .list-group-item 
                     .row 
                       .col-8
