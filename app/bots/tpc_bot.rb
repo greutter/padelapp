@@ -32,9 +32,11 @@ class TpcBot
         case club.third_party_software
         when "tpc_matchpoint_1"
           p "Scraping #{club.name} Tcp type 1"
+          p Time.now
           return parse_available_timeslots_type1(date: date, duration: duration)
         else
           p "Scraping #{club.name} Tcp type 2"
+          p Time.now
           return parse_available_timeslots_type2(date: date, duration: duration)
         end
       else
@@ -44,7 +46,8 @@ class TpcBot
       p e
       return nil
     ensure
-      # @driver.quit if @driver
+      @driver.quit if @driver
+      p Time.now
     end
   end
 
@@ -90,25 +93,26 @@ class TpcBot
             club.courts.find_or_create_by(number: get_court_by(x_coordinate))
           price = (s[1].tr(".", "").to_i unless s[1].blank?)
           {
-            "court" => {
-              "id" => court.id,
-              "number" => court.number,
-              "price" => price
-            },
             "starts_at" => date.in_time_zone.change_hour_minutes(h[0]),
             "ends_at" => date.in_time_zone.change_hour_minutes(h[1]),
             "table_coordinates" => {
               "x" => x_coordinate,
               "y" => y_coordinate
+            },
+            "court" => {
+              "id" => court.id,
+              "number" => court.number,
+              "price" => price
             }
           }
         end
-      available_time_slots = to_available_time_slots(ats)
+      return ats
+      available_time_slots = to_availability_by_start_time_type1(ats)
       return available_time_slots.to_h.stringify_keys
     end
   end
 
-  def to_available_time_slots(ats)
+  def to_availability_by_start_time_type1(ats)
     start_times = start_times_of(ats)
     available_time_slots = {}
     start_times.each do |start_time|
@@ -127,7 +131,7 @@ class TpcBot
     (x_coordinate - 50) / 120 + 1
   end
 
-  def get_and_create_courts()
+  def create_courts()
     initialize_driver if @driver.nil?
     begin
       ths = @driver.find_elements(tag_name: "g").first
@@ -149,7 +153,7 @@ class TpcBot
   end
 
   def start_times_of(ats)
-    ats.map { |a| a["starts_at"] }.uniq!
+    (ats.map { |a| a["starts_at"] }).uniq
   end
 
   def select_date(date)
