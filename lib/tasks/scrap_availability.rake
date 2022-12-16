@@ -32,7 +32,7 @@ namespace :scrap_availability do
     to = from + 4.days
     clubs = Club.where("third_party_software = ?", "tpc_matchpoint_1").active
     clubs.each do |club|
-      (Date.today...(Date.today + 14.days)).each do |date|
+      (from..to).each do |date|
         p "Scraping #{club.name} on #{date}"
         club.availability(date: date, duration: 90, updated_within: :if_old)
       end
@@ -45,7 +45,7 @@ namespace :scrap_availability do
     to = from + 4.days
     clubs = Club.where("third_party_software = ?", "tpc_matchpoint_2").active
     clubs.each do |club|
-      (Date.today...(Date.today + 14.days)).each do |date|
+      (from..to).each do |date|
         p "Scraping #{club.name} on #{date}"
         club.availability(date: date, duration: 90, updated_within: :if_old)
       end
