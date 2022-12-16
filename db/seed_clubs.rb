@@ -53,4 +53,21 @@ Club.create!(
   active: false,
   members_only: false
 )
+TpcBot.new(club).create_courts
+
+club = Club.create!(
+  name: "Padel Estoril",
+  phone: "+569 88237776",
+  email: "padelestoril@gmail.com",
+  website: "https://padelestorilcl.matchpoint.com.es/Booking/Grid.aspx",
+  address: "Av Las Condes 10480",
+  city: "Santiago",
+  comuna: "Vitacura",
+  region: "Región Metropolitana de Santiago",
+  google_maps_link: "https://goo.gl/maps/ndT1ZqqdXePp7zPy6",
+  third_party_software: "tpc_matchpoint_2",
+  active: false,
+  members_only: false
+)
+TpcBot.new(club).create_courts
 
