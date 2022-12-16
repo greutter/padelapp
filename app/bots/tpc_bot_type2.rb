@@ -24,19 +24,20 @@ module TpcBotType2
             clickable_slots.first.click
             sleep 0.75
           rescue Exception => e
-            p "Slot click failed"
             next
           end
           reservation_dialog = @driver.find_element(css: "#dialogReserva")
           if reservation_dialog and
                duration_available?(reservation_dialog, duration)
             if available_slots[start_time].blank?
+              p "Adding slot start_time: #{start_time}, court: #{court.number}"
               available_slots[start_time] = {
                 starts_at: start_time,
                 ends_at: start_time + duration.minutes,
                 courts: [court_to_json(court)]
               }.stringify_keys
             else
+              p "Adding court to slot start_time: #{start_time}, court: #{court.number}"
               available_slots[start_time]["courts"] << court_to_json(court)
             end
           end

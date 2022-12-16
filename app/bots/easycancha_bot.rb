@@ -54,7 +54,6 @@ class EasycanchaBot
       puts e.message
     ensure
       if @driver
-        @driver.close()
         @driver.quit()
       end
     end
