@@ -83,7 +83,10 @@ class ClubDashboard < Administrate::BaseDashboard
   #   COLLECTION_FILTERS = {
   #     open: ->(resources) { resources.where(open: true) }
   #   }.freeze
-  COLLECTION_FILTERS = {}.freeze
+  COLLECTION_FILTERS = {
+    active: ->(resources) { resources.where(active: true) },
+    inactive: ->(resources) { resources.where(active: false) }
+  }.freeze
 
   # Overwrite this method to customize how clubs are displayed
   # across all pages of the admin dashboard.

@@ -31,7 +31,7 @@ Club.create(
   address: "Camino San Francisco De Asis 199",
   city: "Santiago",
   comuna: "Las Condes",
-  google_maps_link:,
+  google_maps_link: "https://goo.gl/maps/MQT2fWh8vobF3cTk9",
   phone: "+569 3752 1150",
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint_1",
@@ -92,7 +92,6 @@ Club
   .where("third_party_software like 'tpc_matchpoint%'")
   .each do |club|
     TpcBot.new(club).create_courts
-    te_courts
   end
 
 club =
@@ -110,4 +109,5 @@ club =
     active: false,
     members_only: false
   )
-TpcBot.new(club).create_courts
+  
+
