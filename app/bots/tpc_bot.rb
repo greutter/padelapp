@@ -82,17 +82,15 @@ class TpcBot
   def create_courts()
     initialize_driver
     begin
-      ths = @driver.find_elements(tag_name: "g").first
-      p text = ths.text #primera fila de la tabla
-      courts = text.split("\n-\n").map { |court| court.tr("-\n", "") }.compact
-      courts.map! do |court|
-        court.slice! "Padel"
-        {
-          number: court.scan(/\d+/).first.to_i,
-          name: court.tr("0-9", "").strip
+      courts = driver.find_elements(css: "g[nombre]")
+      courts.each do |court_node|
+        court_h = {
+          number: court_node.text.scan(/\d+/).first.to_i,
+          name: court_node.text
         }
+        court = club.courts.find_or_create_by(number: court_h[:number])
+        court.update name: court_h[:name]
       end
-      courts.each { |court| club.courts.create(court) }
     rescue Exception => e
       p e
     ensure
