@@ -63,6 +63,22 @@ class Club < ApplicationRecord
     end
   end
 
+  def demand_level(start_time)
+    hour = start_time.hour + start_time.min
+    case hour
+    when (4...7)
+      "low"
+    when (7...9)
+      "medium"
+    when (9...18.5)
+      "low"
+    when (18.5...21)
+      "high"
+    when (21..24)
+      "medium"
+    end
+  end
+
   def availability(date:, duration: 90, updated_within: :if_old)
     date = date.to_date unless date.is_a? Date
     if updated_within.is_a? ActiveSupport::Duration

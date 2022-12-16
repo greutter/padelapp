@@ -2,7 +2,7 @@ class TpcBot
   include SeleniumDriver
   include TpcBotType1
   include TpcBotType2
-  
+
   attr_accessor :club
 
   def initialize(club)
@@ -28,17 +28,18 @@ class TpcBot
     initialize_driver
     begin
       select_date(date)
-      sleep 2
       if current_selected_date_match? date
         case club.third_party_software
         when "tpc_matchpoint_1"
           p "Scraping #{club.name} Tcp type 1"
           p Time.now
           return parse_available_timeslots_type1(date: date, duration: duration)
-        else
+        when "tpc_matchpoint_2"
           p "Scraping #{club.name} Tcp type 2"
           p Time.now
           return parse_available_timeslots_type2(date: date, duration: duration)
+        else
+          raise StandardError.new "Third party software #{club.third_party_software} not found."
         end
       else
         return nil
@@ -79,7 +80,7 @@ class TpcBot
   end
 
   def create_courts()
-    initialize_driver if @driver.nil?
+    initialize_driver
     begin
       ths = @driver.find_elements(tag_name: "g").first
       p text = ths.text #primera fila de la tabla
@@ -104,10 +105,8 @@ class TpcBot
     month = date.month
     day = date.day
     @driver.find_element(css: "#fechaTabla").click
-    sleep 3
     selector = "td[data-month=\"#{month - 1}\"]"
     data_month = wait.until { @driver.find_elements(css: selector) }
-
     if data_month.blank?
       return nil
     else
@@ -115,11 +114,13 @@ class TpcBot
         data_month.find do |element|
           element.find_element(css: "a").attribute("innerHTML") == day.to_s
         end
-
       if day_link.nil?
         return nil
       else
         day_link.click
+        # TODO: make it work:
+        # wait.until { @driver.find_element(css: "g[y='#{1}'][x='#{1}']") }
+        sleep 3
         return true
       end
     end

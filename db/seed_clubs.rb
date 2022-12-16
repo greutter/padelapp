@@ -34,7 +34,7 @@ Club.create!(
   name: "Club Conecta La Dehesa",
   phone: "+56974781499",
   region: "Región Metropolitana de Santiago",
-  third_party_software: "tpc_matchpoint",
+  third_party_software: "tpc_matchpoint_1",
   website: "https://www.clubconecta.cl/Pages/15-CLUB_CONECTA_LA_DEHESA_PADEL",
   active: true,
   members_only: false

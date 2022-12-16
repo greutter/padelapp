@@ -3,7 +3,7 @@ module TpcBotType1
   def parse_available_timeslots_type1(date:, duration: 90)
     gs = @driver.find_elements(tag_name: "g")
     slots = gs.filter { |g| g.attribute("id").match /ocupacion_/ }
-    available_time_slots = Availability.new_availability_json date
+    available_slots = Availability.new_availability_json date
     if slots.blank?
       return {}
     else
@@ -13,18 +13,18 @@ module TpcBotType1
         court = parse_court_type1(slot)
         starts_at = date.in_time_zone.change_hour_minutes(h[0])
         ends_at = starts_at + duration.minutes
-        if available_time_slots[starts_at].blank?
-          available_time_slots[starts_at] = {
+        if available_slots[starts_at].blank?
+          available_slots[starts_at] = {
             "starts_at" => starts_at,
             "ends_at" => ends_at,
             "y" => y_coordinate,
             "courts" => [court]
           }
         else
-          available_time_slots[starts_at]["courts"] << court
+          available_slots[starts_at]["courts"] << court
         end
       end
-      return available_time_slots
+      return available_slots
     end
   end
 
