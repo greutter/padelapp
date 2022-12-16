@@ -1,7 +1,8 @@
 class TpcBot
   include SeleniumDriver
+  include TpcBotType1
   include TpcBotType2
-
+  
   attr_accessor :club
 
   def initialize(club)
@@ -77,60 +78,6 @@ class TpcBot
     end
   end
 
-  def parse_available_timeslots_type1(date:, duration: 90)
-    gs = @driver.find_elements(tag_name: "g")
-    slots = gs.filter { |g| g.attribute("id").match /ocupacion_/ }
-    if slots.blank?
-      return nil
-    else
-      ats =
-        slots.map do |slot|
-          x_coordinate = slot.find_element(tag_name: "rect").attribute("x").to_i
-          y_coordinate = slot.find_element(tag_name: "rect").attribute("y").to_i
-          s = slot.text.split("\n$")
-          h = s[0].split "-"
-          court =
-            club.courts.find_or_create_by(number: get_court_by(x_coordinate))
-          price = (s[1].tr(".", "").to_i unless s[1].blank?)
-          {
-            "starts_at" => date.in_time_zone.change_hour_minutes(h[0]),
-            "ends_at" => date.in_time_zone.change_hour_minutes(h[1]),
-            "table_coordinates" => {
-              "x" => x_coordinate,
-              "y" => y_coordinate
-            },
-            "court" => {
-              "id" => court.id,
-              "number" => court.number,
-              "price" => price
-            }
-          }
-        end
-      return ats
-      available_time_slots = to_availability_by_start_time_type1(ats)
-      return available_time_slots.to_h.stringify_keys
-    end
-  end
-
-  def to_availability_by_start_time_type1(ats)
-    start_times = start_times_of(ats)
-    available_time_slots = {}
-    start_times.each do |start_time|
-      slots = ats.filter { |slot| slot["starts_at"] == start_time }
-      courts = slots.map { |slot| slot["court"] }
-      available_time_slots[start_time] = {
-        "starts_at" => slots.first["starts_at"],
-        "ends_at" => slots.first["ends_at"],
-        "courts" => courts
-      }
-    end
-    return available_time_slots.stringify_keys
-  end
-
-  def get_court_by(x_coordinate)
-    (x_coordinate - 50) / 120 + 1
-  end
-
   def create_courts()
     initialize_driver if @driver.nil?
     begin
@@ -150,10 +97,6 @@ class TpcBot
     ensure
       @driver.quit() if @driver
     end
-  end
-
-  def start_times_of(ats)
-    (ats.map { |a| a["starts_at"] }).uniq
   end
 
   def select_date(date)

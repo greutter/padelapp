@@ -15,7 +15,7 @@ sectors = [
   { name: "La Florida", sector: "Santiago Sur" },
   { name: "Melipilla", sector: "Santiago Poniente" },
   { name: "Colina", sector: "Santiago Norte" },
-  { name: "Lampa ", sector: "Santiago Norte" },
+  { name: "Lampa", sector: "Santiago Norte" },
   { name: "Talagante", sector: "Santiago Poniente" },
   { name: "Maipú", sector: "Santiago Poniente" },
   { name: "San Bernardo", sector: "Santiago Sur" },
@@ -27,6 +27,7 @@ sectors = [
   { name: "La Reina", sector: "Santiago Oriente" },
   { name: "Buin", sector: "Santiago Poniente" },
   { name: "Peñalolén", sector: "Santiago Sur" },
-  { name: "Vitacura", sector: "Santiago Oriente" }
+  { name: "Vitacura", sector: "Santiago Oriente" },
+  { name: "Lo Barnechea", sector: "Santiago Oriente" }
 ]
 sectors.each { |s| Comuna.find_by(name: s[:name])&.update(sector: s[:sector]) }

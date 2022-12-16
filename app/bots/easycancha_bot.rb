@@ -41,20 +41,12 @@ class EasycanchaBot
         @driver.get(url)
         body = @driver.find_element(tag_name: "pre").text
         available_timeslots =
-          parse_available_timeslots(
-            body,
-            date: date,
-            duration: duration
-          )
+          parse_available_timeslots(body, date: date, duration: duration)
       else
         @driver.get(url)
         body = @driver.find_element(tag_name: "pre").text
         available_timeslots =
-          parse_available_timeslots(
-            body,
-            date: date,
-            duration: duration
-          )
+          parse_available_timeslots(body, date: date, duration: duration)
       end
 
       return available_timeslots
@@ -68,38 +60,34 @@ class EasycanchaBot
     end
   end
 
-  def parse_available_timeslots(json, date:, duration: )
-    # json["alternative_timeslots"][0]["timeslots"][0]["priceInfo"]["amount"]
+  def parse_available_timeslots(json, date:, duration:)
     json = JSON.parse(json)
-    if not(json["alternative_timeslots"].nil?) and
-         json["alternative_timeslots"].any?
-      hours =
-        available_timeslots =
-          json["alternative_timeslots"].map do |ats|
-            a = ats["hour"].split(":")
-            starts_at = date.in_time_zone.change(hour: a[0], min: a[1])
-            ends_at = starts_at + duration.minutes
-            courts =
-              ats["timeslots"].map do |ts|
-                court = club.courts.find_or_create_by(number: ts["courtNumber"])
-                {
-                  "court_id" => court.id,
-                  "number" => ts["courtNumber"],
-                  "price" => ts["priceInfo"]["amount"]
-                }.stringify_keys
-              end
-            [
-              starts_at,
-              {
-                starts_at: starts_at,
-                duration: duration,
-                ends_at: ends_at,
-                courts: courts
-              }.stringify_keys
-            ]
-          end
+    available_time_slots = {}
+    if json["alternative_timeslots"].present?
+      json["alternative_timeslots"].each do |ats|
+        a = ats["hour"].split(":")
+        starts_at = date.in_time_zone.change(hour: a[0], min: a[1])
+        ends_at = starts_at + duration.minutes
+        courts = find_courts ats
+        available_time_slots[starts_at] = {
+          starts_at: starts_at,
+          ends_at: ends_at,
+          courts: courts
+        }.stringify_keys
+      end
     end
-    return available_timeslots.to_h.stringify_keys
+    return available_time_slots.stringify_keys
+  end
+
+  def find_courts(ats)
+    ats["timeslots"].map do |ts|
+      court = club.courts.find_or_create_by(number: ts["courtNumber"])
+      {
+        "number" => ts["courtNumber"],
+        "price" => ts["priceInfo"]["amount"],
+        "court_id" => court.id
+      }.stringify_keys
+    end
   end
 
   def create_clubs
@@ -151,5 +139,4 @@ class EasycanchaBot
     puts "****************"
     puts "****************"
   end
-
 end

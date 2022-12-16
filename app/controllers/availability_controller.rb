@@ -15,7 +15,11 @@ class AvailabilityController < ApplicationController
         .active
 
     @from_date =
-      params[:from_date].blank? ? Date.today : Date.parse(params[:from_date])
+      if params[:from_date].blank?
+        Time.now.in_time_zone.hour > 21 ? Date.tomorrow : Date.today
+      else
+        Date.parse(params[:from_date])
+      end
     @selected_date =
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
@@ -29,10 +33,12 @@ class AvailabilityController < ApplicationController
       )
 
     @updated_at =
-      @availabilities.values.map do |availability|
-        availability.created_at
-      end.compact.min
+      @availabilities
+        .values
+        .map { |availability| availability.created_at }
+        .compact
+        .min
 
-      @params = request.parameters.merge
+    @params = request.parameters.merge
   end
 end

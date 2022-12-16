@@ -73,7 +73,7 @@ class Club < ApplicationRecord
         .last
     else
       case updated_within
-      when :force_update
+      when :force_update || :force
         return update_availability(date: date)
       when :if_old
         persisted_availability =
@@ -132,12 +132,12 @@ class Club < ApplicationRecord
 
   def reservio_available_slots(date, duration)
     available_slots = {}
-    from = [opens_at(date), Time.now.round_off(30.minutes)].max
+    from = [opens_at(date), Time.now.in_time_zone.round_off(30.minutes)].max
     to = closes_at(date) - duration.minutes
     (from.to_i...to.to_i)
       .step(30.minutes)
       .each do |time|
-        starts_at = Time.at time
+        starts_at = Time.at(time).in_time_zone
         # break if starts_at <= DateTime.now.in_time_zone - 15.minutes
         self.courts.each do |court|
           ends_at = starts_at + duration.minutes

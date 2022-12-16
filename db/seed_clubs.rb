@@ -27,6 +27,20 @@ Club.create!(
 )
 
 Club.create!(
+  address: "Luis Bascuñan 1858",
+  city: "Santiago",
+  comuna: "Lo Barnechea",
+  google_maps_link: "https://goo.gl/maps/oXfS3C4TCzgdMJ3K9",
+  name: "Club Conecta La Dehesa",
+  phone: "+56974781499",
+  region: "Región Metropolitana de Santiago",
+  third_party_software: "tpc_matchpoint",
+  website: "https://www.clubconecta.cl/Pages/15-CLUB_CONECTA_LA_DEHESA_PADEL",
+  active: true,
+  members_only: false
+)
+
+Club.create!(
   address: "Nueva Bilbao 9495",
   city: "Santiago",
   comuna: "Las Condes",
@@ -36,7 +50,7 @@ Club.create!(
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint_2",
   website: "https://espaciopadelcl.matchpoint.com.es/Booking/Grid.aspx",
-  active: true,
+  active: false,
   members_only: false
 )
 

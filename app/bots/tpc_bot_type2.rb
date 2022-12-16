@@ -1,4 +1,5 @@
 module TpcBotType2
+  
   def parse_available_timeslots_type2(date:, duration: 90, courts: [])
     table_body = @driver.find_element css: "#CuerpoTabla"
     ats = []
