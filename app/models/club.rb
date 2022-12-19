@@ -26,10 +26,12 @@
 #  updated_at       :datetime         not null
 #
 class Club < ApplicationRecord
+  include ActiveModel::AttributeMethods
+
+  alias_attribute :tps, :third_party_software
+  alias_attribute :tps_id, :third_party_id
+
   validates :name, presence: true, uniqueness: true
-  validates :third_party_id,
-            uniqueness: true,
-            if: -> { third_party_software == "easycancha" }
   has_many :courts, dependent: :destroy
   has_many :schedules, dependent: :destroy
   has_many :availabilities, dependent: :destroy
@@ -38,6 +40,11 @@ class Club < ApplicationRecord
 
   before_create :parse_phone
   before_update :parse_phone
+  after_create :create_courts
+
+  def create_courts
+    TpcBot.new(self).create_courts if reservation_software == "tpc_matchpoint"
+  end
 
   def opens_at(date)
     if self.schedules.custom_default_for(date)
@@ -89,7 +96,7 @@ class Club < ApplicationRecord
         .last
     else
       case updated_within
-      when :force_update || :force
+      when :force_update
         return update_availability(date: date)
       when :if_old
         persisted_availability =
@@ -108,7 +115,7 @@ class Club < ApplicationRecord
   end
 
   def availability_ttl
-    case self.third_party_software
+    case self.reservation_software
     when "easycancha"
       10.minutes
     when "tpc_matchpoint"
@@ -138,7 +145,6 @@ class Club < ApplicationRecord
         duration: duration,
         slots: available_slots
       )
-    availability.persisted? ? availability : nil
   end
 
   def reservation_software

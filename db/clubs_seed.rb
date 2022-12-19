@@ -9,7 +9,8 @@ Club.create(
   third_party_software: "tpc_matchpoint_1",
   website: "https://www.clubconecta.cl/Pages/15-CLUB_CONECTA_LA_DEHESA_PADEL",
   active: true,
-  members_only: false
+  members_only: false,
+  tps_id: 9001
 )
 
 Club.create(
@@ -23,7 +24,8 @@ Club.create(
   third_party_software: "tpc_matchpoint_1",
   website: "https://www.clubconecta.cl/Pages/17-CLUB_CONECTA_LAS_CONDES",
   active: true,
-  members_only: false
+  members_only: false,
+  tps_id: 9001
 )
 
 Club.create(
@@ -37,7 +39,8 @@ Club.create(
   third_party_software: "tpc_matchpoint_1",
   website: "http://www.maspadel.cl/Booking/Grid.aspx",
   active: true,
-  members_only: false
+  members_only: false,
+  tps_id: 9003
 )
 
 Club.create(
@@ -51,7 +54,8 @@ Club.create(
   third_party_software: "tpc_matchpoint_2",
   website: "https://espaciopadelcl.matchpoint.com.es/Booking/Grid.aspx",
   active: false,
-  members_only: false
+  members_only: false,
+  tps_id: 9101
 )
 
 
@@ -68,7 +72,8 @@ Club.create(
   google_maps_link: "https://goo.gl/maps/ndT1ZqqdXePp7zPy6",
   third_party_software: "tpc_matchpoint_2",
   active: false,
-  members_only: false
+  members_only: false,
+  tps_id: 9102
 )
 
 
@@ -85,7 +90,8 @@ Club.create(
     "https://padelcerrocalancl.matchpoint.com.es/Booking/Grid.aspx",
   third_party_software: "tpc_matchpoint_2",
   active: false,
-  members_only: false
+  members_only: false,
+  tps_id: 9103
 )
 
 Club
@@ -107,7 +113,9 @@ club =
     google_maps_link:,
     third_party_software:,
     active: false,
-    members_only: false
+    members_only: false,
+    tps_id: 9104
   )
   
 
+  
