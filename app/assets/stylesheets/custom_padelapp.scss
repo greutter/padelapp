@@ -1,5 +1,9 @@
-.container {
-    max-width: 600px;
+.root-container {
+    max-width: 660px;
+}
+
+.nav-container {
+  max-width: 660+60px;
 }
 
 html, body, .tooltip, .popover {

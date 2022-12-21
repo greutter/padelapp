@@ -2,22 +2,22 @@
 #
 
 Rails.application.routes.draw do
-  namespace :admin do
-    # resources :schedules
-    # resources :reservations
-    # resources :payments
-    # resources :courts
-    # resources :comunas
-    resources :clubs
-    # resources :availabilities
-    resources :users
+  authenticate :user do
+    namespace :admin do
+      # resources :schedules
+      # resources :reservations
+      # resources :payments
+      # resources :courts
+      # resources :comunas
+      resources :clubs
+      # resources :availabilities
+      resources :users
 
-    root to: "clubs#index"
+      root to: "clubs#index"
+    end
   end
 
-  resources :schedules
-  resources :courts
-  resources :clubs
+  resources :clubs, only: %i[show index]
 
   devise_for :users,
              controllers: {
@@ -26,13 +26,10 @@ Rails.application.routes.draw do
                registrations: "users/registrations"
              }
 
-  resources :reservations, only: %i[new create] do
+  resources :reservations do
     collection { get "availability" }
   end
-
-  authenticate :user do
-    resources :reservations, only: %i[show edit update destroy index]
-  end
+  
 
   root "pages#home"
   get "debug" => "pages#debug"

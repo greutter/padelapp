@@ -22,6 +22,7 @@ class ClubsController < ApplicationController
   def show
     @selected_date = Date.today
     @from_date = Date.today
+    @params = request.parameters.merge
   end
 
   # GET /clubs/new

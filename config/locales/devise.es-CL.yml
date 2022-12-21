@@ -125,7 +125,7 @@ es-CL:
         forgot_your_password: "Olvidé mi contraseña"
         sign_in: Iniciar sesión
         sign_in_with_provider: Iniciar sesión con %{provider}
-        sign_up: Crea una cuenta.
+        sign_up: Crea una cuenta
       minimum_password_length:
         one: "(%{count} caracter como mínimo)"
         other: "(%{count} caracteres como mínimo)"

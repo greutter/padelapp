@@ -1,4 +1,6 @@
 class AvailabilityController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @region = "Metropolitana"
     @sectors_names = Sector.all.map(&:name).uniq.reject(&:blank?)
@@ -24,7 +26,7 @@ class AvailabilityController < ApplicationController
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
-    updated_within = Rails.env.production? ? 15.minutes : :if_old
+    updated_within = Rails.env.production? ? 20.minutes : :if_old
     @availabilities =
       Availability.availabilities(
         date: @selected_date,

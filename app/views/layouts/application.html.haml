@@ -2,24 +2,28 @@
 !!!
 %html
   %head
-    %title Padelapp
+    %title Padel64.com
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
     %script{:src => "https://sdk.mercadopago.com/js/v2"}
-  %body
+  %body.d-flex.flex-column.min-vh-100
     = render "layouts/navbar"
-    .container{style: "padding-top: 18px;  padding-bottom: 96px"}
-      .container
-        .row
-          - if alert
-            .alert.alert-warning{:role => "alert"}
-              = alert
-          - if notice
-            .alert.alert-primary{:role => "alert"}
-              = notice
+    .root-container.container.pt-2
+      .row
+        - if alert
+          .alert.alert-warning{:role => "alert"}
+            = alert
+        - if notice
+          .alert.alert-primary{:role => "alert"}
+            = notice
       = yield
-      = render "layouts/footer"
-      
+    - if Rails.env.development?
+      .container-lg.border-top.mt-4
+        %ul
+          %li= link_to "Mis Reservas", reservations_path
+          %li= link_to ""
+    .mt-auto
+    = render "layouts/footer"

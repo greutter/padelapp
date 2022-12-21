@@ -1,14 +1,14 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
   skip_before_action :verify_authenticity_token
 
   def google_oauth2
     user = User.from_omniauth(auth)
-
+    
     if user.present?
       sign_out_all_scopes
-      flash[:success] = t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect user, event: :authentication
+      flash[:success] = t "devise.omniauth_callbacks.success", kind: "Google"
+      sign_in user, event: :authentication
+      redirect_to request.env["omniauth.params"]["redirect_path"] || root_path
     else
       flash[:alert] = "Algo falló al intentar iniciar sesión con Google :("
       redirect_to new_user_session_path
@@ -21,13 +21,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     new_user_session_path
   end
 
-  def after_sign_in_path_for(resource_or_scope)
-    stored_location_for(resource_or_scope) || root_path
-  end
-
   private
 
   def auth
-    @auth ||= request.env['omniauth.auth']
+    @auth ||= request.env["omniauth.auth"]
   end
 end

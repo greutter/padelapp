@@ -1,3 +1,5 @@
+Club.where("third_party_software LIKE '%tpc%'")
+
 Club.create(
   name: "Club Conecta La Dehesa",
   address: "Luis Bascuñan 1858",

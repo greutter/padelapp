@@ -7,8 +7,9 @@
         .pt-1
           =render partial: "shared/clubs_selector", locals: {path: availability_path}
     
-    #cuando.pt-3
-    =render partial: "shared/date_selector", locals: {path: availability_path}
+    #cuando
+      .pt-3
+        =render partial: "shared/date_selector", locals: {path: availability_path}
       
     -# #################################################
     = render "layouts/spinner"
@@ -33,17 +34,17 @@
                   .list-group-item 
                     .row 
                       .col-8
-                        = club.name
-                        %small
-                          #{club.comuna}
+                        = link_to club_path(club), class: "text-decoration-none link-secondary"  do
+                          = club.name
+                          %small.fw-lighter
+                            #{club.comuna}
                         %br
                         %small.fw-lighter
-                          #{slot["courts"].count} 
-                          #{"cancha".pluralize  slot["courts"].count} 
-                          #{"disponible".pluralize  slot["courts"].count}
+                          - if slot["courts"].count == 1
+                            ¡Queda 1 cancha!
                           
                       .col-4.text-end
                         %small.fw-lighter
                           - price = slot["courts"].map{|c| c["price"]}.min
-                          - if price
+                          - if price.present?
                             Desde #{number_to_currency(price, unit: "")}

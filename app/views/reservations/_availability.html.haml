@@ -1,5 +1,5 @@
 =turbo_frame_tag "availability" do
-  = render partial: "shared/date_selector"
+  = render partial: "shared/date_selector", locals: {path: club_path(@club)}
   %p.fw-lighter
     -# .small.fw-lighter.texxt-center Disponibilidad actualizada a las: #{DateTime.now.strftime "%H:%M"}
   #availableSlotsAccordion.accordion.accordion-flush
@@ -14,7 +14,7 @@
           .accordion-body
             - availability = club.availability(date: @selected_date, duration: duration)
             - unless availability.nil?
-              - availability.values.in_groups_of(4, nil) do |slots|
+              - availability.slots.values.in_groups_of(4, nil) do |slots|
                 .row.row{style: "padding-top: 8px"}
                   - slots.each do |slot|
                     .col-3

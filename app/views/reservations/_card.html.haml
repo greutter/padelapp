@@ -7,7 +7,6 @@
           .row
             .col-6.text-start
               -if !reservation.persisted?
-
               - elsif reservation.paid?
                 CONFIRMADA
               - else
@@ -25,7 +24,7 @@
             %br
             %small.fw-light
               Cancha #{reservation.court.number}
-          = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
+          = link_to reservation.club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
             %span{class: "bi bi-geo-alt-fill"}
             = reservation.club.address
         .card-footer

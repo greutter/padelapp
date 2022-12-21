@@ -1,9 +1,30 @@
-%footer.py-3.my-4
-  %ul.nav.justify-content-center.border-bottom.pb-3.mb-3
-    %li.nav-item
-      %a.nav-link.px-2.text-muted{:href => "#"}
-         
-    %li.nav-item
-      = link_to "Clubes", clubs_path, class: "nav-link px-2 text-muted"
-    %li.nav-item
-  %p.text-center.text-muted © 2022 Unpickle, Inc
+.div{style: "background-color: #EBEBEB;"}
+  .container.nav-container  
+    %footer
+      .row.row-cols-1.row-cols-sm-2.row-cols-md-5.py-3.mt-3
+        .col.mb-6
+          %h5 Encuentra
+          %ul.nav.flex-column
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#{clubs_path}")
+                Clubes
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#{availability_path}")
+                Canchas
+            -# %li.nav-item.mb-2
+            -#   %a.nav-link.p-0.text-muted(href="#") Partidos
+            -# %li.nav-item.mb-2
+            -#   %a.nav-link.p-0.text-muted(href="#") Campeonatos
+            -# %li.nav-item.mb-2
+            -#   %a.nav-link.p-0.text-muted(href="#") Sobre Padel64
+        .col.mb-2
+        .col.mb-2
+        .col.mb-6
+          %h5 Tu Espacio
+          %ul.nav.flex-column
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#{reservations_path}")
+                Mis Reservas
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#")
+                Mis Partidos

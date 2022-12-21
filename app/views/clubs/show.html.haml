@@ -1,41 +1,31 @@
-.container{style: "padding: 12px 0 24px 0"}
+.container.mt-5
   .row
-    .col-md-5
-      =image_tag "handsome_boy.jpeg", class: "img-fluid"
-    .col-md-7
-      %h2= @club.name
+    .col-md-1
+      .row
+        -# %iframe(allowfullscreen="" height="300" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1666.008791960096!2d-70.51604403570263!3d-33.37060516764107!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cbfa99ad8199%3A0x56663b3881a5236c!2sAv.%20las%20Condes%2012560%2C%207710162%20Lo%20Barnechea%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1671467066030!5m2!1ses!2scl" style="border:0;" width="400")
+    .col-md-10
+      %h3= @club.name
       .mt-3
-        = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-primary" do
-          %span{class: "bi bi-geo-alt-fill"}
+        = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
+          %span{class: "bi bi-geo-alt-fill text-danger"}
           #{@club.address}, #{@club.comuna}
       .mt-1
         - if number_to_phone_cl(@club.phone)[4] == "9"
           = link_to "https://api.whatsapp.com/send?phone=#{@club.phone}&text=Hola!", |
-                      class: "text-decoration-none link-primary", target: :blank do
-            %i{class: "bi bi-whatsapp"}
-              = number_to_phone_cl(@club.phone)
+                      class: "text-decoration-none", target: :blank do
+            %i{class: "bi bi-whatsapp text-success"}
+            %i.text-secondary= number_to_phone_cl(@club.phone)
         - else
           = link_to number_to_phone_cl(@club.phone), "tel:#{number_to_phone_cl(@club.phone)}"
+      .mt-1
+        %i.text-secondary
+          #{pluralize @club.courts.count, "cancha", plural: "canchas"}
+
 .container
   .row
-    .col-12
-      .fs-4.fw-lighter.lh-base.text-center{style: "padding-bottom: 12px;"}
-        %b Reservas
-        -# %small Invita amigos y a jugar
+    .col-md-12
+      .text-center
+        =link_to "BUSCAR CANCHA", "#", type: :button, class: "btn btn-fill btn-warning my-4"
 
--# .container
--#   .row
--#     .col-md-12
--#       .text-center
-        -# =link_to "RESERVAR CANCHA", "#", style: "background-color: #E7EB70",class: "btn btn-fill btn-lg"
--# %hr
--# .container
--#   .row
--#     %h2
--#       = @club.name
--#       .fs-5.fw-lighter= @club.address
--#     %h4
--#       #{l(@date, format: "%A %e de %B").capitalize}
--# %br
 = turbo_frame_tag "availability" do
   =render partial: "reservations/availability", locals: {club: @club}
