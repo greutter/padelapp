@@ -1,7 +1,16 @@
-.div{style: "background-color: #EBEBEB;"}
+.div.mt-4{style: "background-color: #EBEBEB;"}
   .container.nav-container  
     %footer
       .row.row-cols-1.row-cols-sm-2.row-cols-md-5.py-3.mt-3
+        .col.mb-3
+          %h5 Tu Espacio
+          %ul.nav.flex-column
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#{reservations_path}")
+                Reservas
+            %li.nav-item.mb-2
+              %a.nav-link.p-0.text-muted(href="#")
+                Partidos
         .col.mb-3
           %h5 Encuentra
           %ul.nav.flex-column
@@ -17,18 +26,10 @@
             -#   %a.nav-link.p-0.text-muted(href="#") Campeonatos
             -# %li.nav-item.mb-2
             -#   %a.nav-link.p-0.text-muted(href="#") Sobre Padel64
+
         .col.mb-3
           %h5 Sobre
           %ul.nav.flex-column
             %li.nav-item.mb-2
               %a.nav-link.p-0.text-muted(href="#{privacidad_path}")
                 Privacidad
-        .col.mb-3
-          %h5 Tu Espacio
-          %ul.nav.flex-column
-            %li.nav-item.mb-2
-              %a.nav-link.p-0.text-muted(href="#{reservations_path}")
-                Mis Reservas
-            %li.nav-item.mb-2
-              %a.nav-link.p-0.text-muted(href="#")
-                Mis Partidos

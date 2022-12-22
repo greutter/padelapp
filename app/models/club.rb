@@ -114,11 +114,20 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability_ttl
-    return 5.hours if Rails.env.development?
+  def reservation_url
     case self.reservation_software
     when "easycancha"
-      10.minutes
+      "https://www.easycancha.com/book/clubs/#{self.tps_id}/sports"
+    when "tpc_matchpoint"
+      self.website
+    end
+  end
+
+  def availability_ttl
+    case self.reservation_software
+    when "easycancha"
+      return 1200.minutes if Rails.env.development?
+      15.minutes
     when "tpc_matchpoint"
       30.minutes
     else

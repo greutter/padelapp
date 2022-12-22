@@ -4,7 +4,7 @@ module SeleniumDriver
     options.add_argument("--no-sandbox")
     options.add_argument("--window-size=600,1200")
     options.add_argument("disable-dev-shm-usage")
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     caps = Selenium::WebDriver::Remote::Capabilities.chrome
     caps.accept_insecure_certs = true
     @driver =

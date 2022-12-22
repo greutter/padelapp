@@ -18,14 +18,12 @@
         - else
           = link_to number_to_phone_cl(@club.phone), "tel:#{number_to_phone_cl(@club.phone)}"
       .mt-1
+        = link_to  @club.reservation_url, |
+            class: "text-decoration-none", target: :blank do
+          %i{class: "bi bi-laptop"} 
+          %i.text-secondary sitio del club
+      .mt-1
         %i.text-secondary
           #{pluralize @club.courts.count, "cancha", plural: "canchas"}
 
-.container
-  .row
-    .col-md-12
-      .text-center
-        =link_to "BUSCAR CANCHA", "#", type: :button, class: "btn btn-fill btn-warning my-4"
-
-= turbo_frame_tag "availability" do
-  =render partial: "reservations/availability", locals: {club: @club}
+  =render partial: "reservations/availability", locals: {club: @club, availability: @availability}

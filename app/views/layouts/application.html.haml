@@ -21,10 +21,14 @@
           .alert.alert-primary{:role => "alert"}
             = notice
       = yield
-    - if Rails.env.development?
-      .container-lg.border-top.mt-4
-        %ul
-          %li= link_to "Mis Reservas", reservations_path
+    - #########
+    - if Rails.env.development? and false
+      .root-container.container.border-top.mt-4
+        .row.mt-5
+          %h5.text-center Development Zone
+          %ul.mt-2
+            %li.nav= link_to "Mis Reservas", reservations_path
           -# %li= link_to ""
+    - ##########
     .mt-auto
     = render "layouts/footer"
