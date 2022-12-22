@@ -20,8 +20,8 @@
           .float-end 
             😞
       - else     
-        .alert.alert-secondary
-          Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+        -# .alert.alert-secondary
+        -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
         - availabilities_start_times(@availabilities).each do |time|
           - time = Time.parse time if time.is_a? String
           .card.mb-3

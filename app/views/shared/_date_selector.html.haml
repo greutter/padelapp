@@ -10,7 +10,6 @@
           - par[:from_date] = @from_date - 5.day
           - par[:date] = @from_date - 5.days
           = link_to url_for("#{path}?#{par.to_query}#cuando"), class: "nav-link px-1", "data-action" =>"spinner#show" do
-            
             %i.fs-3.fw-bold.align-middle{class: "bi bi-chevron-left"}
       - to_date = @from_date + 4.days
       -(@from_date..to_date).each do |date|
