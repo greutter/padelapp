@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
   get "mp_payment_success" => "payments#mp_payment_success"
   get "mp_payment_failiure" => "payments#mp_payment_failiure"
+  get "privacidad" => "pages#privacidad"
 
   get "privio" => "pages#privio"
+
 end

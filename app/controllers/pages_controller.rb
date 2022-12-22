@@ -8,6 +8,9 @@ class PagesController < ApplicationController
     # EasycanchaBot.reserve
   end
 
+  def privacidad
+  end
+
   def debug 
     #Put code here.
   end

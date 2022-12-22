@@ -3,6 +3,7 @@
 %html
   %head
     %title Padel64.com
+    %meta{name: "description", content: "Encuentra canchas y rivales para jugar más partidos, más peleados."}
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     = csrf_meta_tags
     = csp_meta_tag
@@ -24,6 +25,6 @@
       .container-lg.border-top.mt-4
         %ul
           %li= link_to "Mis Reservas", reservations_path
-          %li= link_to ""
+          -# %li= link_to ""
     .mt-auto
     = render "layouts/footer"
