@@ -1,2 +1,10 @@
-%h1 Subscriptions#new
-%p Find me in app/views/subscriptions/new.html.haml
+- @subscription = Subscription.new
+= form_for @subscription do |form|
+    .mb-3.form-floating
+        = form.email_field :email, class: "form-control", placeholder: ""
+        = form.label :email, class: "form-label fw-lighter"
+    .mb-3
+        .d-grid.gap-2
+            = form.submit "Avisenme Por Favor", class: "btn btn-outline-warning"
+
+  

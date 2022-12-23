@@ -2,8 +2,6 @@
 #
 
 Rails.application.routes.draw do
-  get 'subscriptions/new'
-  get 'subscriptions/create'
   authenticate :user do
     namespace :admin do
       # resources :schedules
@@ -20,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :clubs, only: %i[show index]
+  resources :subscriptions, only: %i[new create]
 
   devise_for :users,
              controllers: {
@@ -31,7 +30,6 @@ Rails.application.routes.draw do
   resources :reservations do
     collection { get "availability" }
   end
-  
 
   root "pages#home"
   get "debug" => "pages#debug"
@@ -42,5 +40,4 @@ Rails.application.routes.draw do
   get "privacidad" => "pages#privacidad"
 
   get "privio" => "pages#privio"
-
 end

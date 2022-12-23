@@ -27,12 +27,24 @@
           #{pluralize @club.courts.count, "cancha", plural: "canchas"}
 
   - if Rails.env.development?
-    =render partial: "reservations/availability", locals: {club: @club, availability: @availability}
-  - else 
-    .row 
-      .col
-        Estamos trabajando para que puedas reservar 
-        de la manera más fácil, sin salir de Padel64 :)
-      .col
-        Dejanos tu mail y te avisaremos cuando lancemos cada nueva funcionalidad.
-
+    .pb-3
+      =render partial: "reservations/availability", locals: {club: @club, availability: @availability}
+  .row 
+    - unless session[:suscribed]
+      .col-sm-6
+        .p-2.text-secondary
+          Pronto podrás reservar directamente 
+          en PADEL64 🙂
+      .col-sm-6
+        .p-2
+          .pb-3.text-secondary
+            ¿Te avisamos cuando lancemos? 👇🏼
+          - @subscription = Subscription.new
+          = form_for @subscription do |form|
+            .mb-3.form-floating
+              = form.email_field :email, class: "form-control", placeholder: "Email"
+              = form.label :email, class: "form-label fw-lighter"
+            = form.hidden_field :info, value: "reservas_en_padel64"
+            .mb-3
+              .d-grid.gap-2
+                = form.submit "Avisenme Por Favor", class: "btn btn-info"
