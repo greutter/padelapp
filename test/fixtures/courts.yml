@@ -3,6 +3,7 @@
 # Table name: courts
 #
 #  id         :bigint           not null, primary key
+#  active     :boolean
 #  name       :string
 #  number     :integer
 #  created_at :datetime         not null

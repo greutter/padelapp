@@ -1,9 +1,9 @@
 %div{"data-controller" => "spinner"}
   .mt-3
-    = render "layouts/spinner"
     = render partial: "shared/date_selector", locals: {path: club_path(@club)}
+    = render "layouts/spinner"
     #contentDiv{"data-spinner-target"=> "contentDiv"}
-      .text-dark.text-center.py-3.fs-6
+      .text-dark.py-3.fs-6
         #{@duration} Minutos
       - unless availability.blank?
         - availability.slots.values.in_groups_of(4, nil) do |slots|

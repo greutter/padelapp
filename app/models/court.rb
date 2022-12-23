@@ -3,6 +3,7 @@
 # Table name: courts
 #
 #  id         :bigint           not null, primary key
+#  active     :boolean
 #  name       :string
 #  number     :integer
 #  created_at :datetime         not null
@@ -13,6 +14,9 @@ class Court < ApplicationRecord
   belongs_to :club
   has_many :reservations
   validates :number, presence: true, uniqueness: { scope: :club }
+  attribute :active, :boolean, default: true
+
+  scope :active, -> { where("active") }
 
   def get_availabel_slots(date:, duration: 90)
     available_slots = []

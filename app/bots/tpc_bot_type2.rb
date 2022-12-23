@@ -4,7 +4,7 @@ module TpcBotType2
     table_body = scrap_table_body
     available_slots = Availability.new_availability_json current_selected_date
     scraped_sts = scrap_start_times(table_body)
-    courts = club.courts
+    courts = club.courts.active
     available_slots.each do |start_time, slot_info|
       if scraped_sts.keys.exclude? start_time
         next

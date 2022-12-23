@@ -26,4 +26,13 @@
         %i.text-secondary
           #{pluralize @club.courts.count, "cancha", plural: "canchas"}
 
-  =render partial: "reservations/availability", locals: {club: @club, availability: @availability}
+  - if Rails.env.development?
+    =render partial: "reservations/availability", locals: {club: @club, availability: @availability}
+  - else 
+    .row 
+      .col
+        Estamos trabajando para que puedas reservar 
+        de la manera más fácil, sin salir de Padel64 :)
+      .col
+        Dejanos tu mail y te avisaremos cuando lancemos cada nueva funcionalidad.
+

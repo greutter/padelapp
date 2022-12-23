@@ -2,6 +2,8 @@
 #
 
 Rails.application.routes.draw do
+  get 'subscriptions/new'
+  get 'subscriptions/create'
   authenticate :user do
     namespace :admin do
       # resources :schedules

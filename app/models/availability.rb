@@ -45,3 +45,5 @@ class Availability < ApplicationRecord
     return availability_json
   end
 end
+
+

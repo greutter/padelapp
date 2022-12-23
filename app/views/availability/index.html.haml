@@ -6,7 +6,6 @@
         %h4.pt-2 ¿Dónde quieres jugar?
         .pt-1
           =render partial: "shared/clubs_selector", locals: {path: availability_path}
-    
     #cuando
       .pt-3
         =render partial: "shared/date_selector", locals: {path: availability_path}
@@ -14,6 +13,8 @@
     -# #################################################
     = render "layouts/spinner"
     #contentDiv{"data-spinner-target"=> "contentDiv"}
+      .text-dark.py-3.fs-6
+        Disponibilidad canchas #{@duration} minutos
       - if @availabilities.blank?
         .alert.alert-warning
           Parece que no hay canchas publicadas para este día.
@@ -22,6 +23,7 @@
       - else     
         -# .alert.alert-secondary
         -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+        
         - availabilities_start_times(@availabilities).each do |time|
           - time = Time.parse time if time.is_a? String
           .card.mb-3
@@ -30,7 +32,7 @@
             .list-group.list-group-flush
               - @availabilities.each do |club, availability|
                 - slot = availability.slots[time.to_s] if availability
-                - if slot.present?
+                - if slot.present? and slot["courts"].present?
                   .list-group-item 
                     .row 
                       .col-8
@@ -47,4 +49,4 @@
                         %small.fw-lighter
                           - price = slot["courts"].map{|c| c["price"]}.min
                           - if price.present?
-                            Desde #{number_to_currency(price, unit: "")}
+                            -# Desde #{number_to_currency(price, unit: "")}
