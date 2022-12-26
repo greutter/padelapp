@@ -149,7 +149,7 @@ class Club < ApplicationRecord
   end
 
   def persist_available_slots(date, duration, available_slots)
-    available_slots.select! { |k, v| v.present? }
+    available_slots.select! { |k, v| v.present? } unless available_slots.blank?
     availability =
       Availability.create(
         club_id: self.id,
