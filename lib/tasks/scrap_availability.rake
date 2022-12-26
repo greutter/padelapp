@@ -24,6 +24,12 @@ namespace :scrap_availability do
         club.availability(date: date, duration: 90, updated_within: :if_old)
       end
     end
+
+    (Date.today...(Date.today + 10.days)).each do |date|
+      Club.find_by("name LIKE '%lba%'").availability date: date,
+                     duration: 60,
+                     updated_within: :force_update
+    end
   end
 
   desc "Scrap availability tpc_matchpoint_1"

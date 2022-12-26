@@ -97,7 +97,7 @@ class Club < ApplicationRecord
     else
       case updated_within
       when :force_update
-        return update_availability(date: date)
+        return update_availability(date: date, duration: duration)
       when :if_old
         persisted_availability =
           self
@@ -108,7 +108,7 @@ class Club < ApplicationRecord
         if persisted_availability.present?
           return persisted_availability
         else
-          return update_availability(date: date)
+          return update_availability(date: date, duration: duration)
         end
       end
     end
@@ -138,7 +138,8 @@ class Club < ApplicationRecord
 
   def update_availability(date:, duration: 90)
     if reservation_software == "easycancha"
-      available_slots = EasycanchaBot.new(self).availability(date)
+      available_slots =
+        EasycanchaBot.new(self).availability(date, duration: duration)
     elsif reservation_software == "tpc_matchpoint"
       available_slots = TpcBot.new(self).availability(date)
     else

@@ -29,8 +29,9 @@
   - if Rails.env.development?
     .pb-3
       =render partial: "reservations/availability", locals: {club: @club, availability: @availability}
-  .row 
+  .row.pt-2 
     - unless session[:suscribed]
+      %hr
       .col-sm-6
         .p-2.text-secondary
           Pronto podrás reservar directamente 
