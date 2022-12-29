@@ -1,0 +1,27 @@
+- start_times = start_times_in_time_range(@availabilities, range)
+- start_times.each do |time|
+  - time = Time.parse time if time.is_a? String
+  .card.mb-3
+    .card-header
+      #{l(time, format: "%l:%M %p")} 
+    .list-group.list-group-flush
+      - @availabilities.each do |club, availability|
+        - slot = availability.slots[time.to_s] if availability
+        - if slot.present? and slot["courts"].present?
+          .list-group-item 
+            .row 
+              .col-8
+                = link_to club_path(club), class: "text-decoration-none link-secondary"  do
+                  = club.name
+                  %small.fw-lighter
+                    #{club.comuna}
+                %br
+                %small.fw-lighter
+                  - if slot["courts"].count == 1
+                    ¡Queda 1 cancha!
+                  
+              .col-4.text-end
+                %small.fw-lighter
+                  - price = slot["courts"].map{|c| c["price"]}.min
+                  - if price.present?
+                    -# Desde #{number_to_currency(price, unit: "")}

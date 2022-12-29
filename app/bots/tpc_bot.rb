@@ -89,7 +89,7 @@ class TpcBot
           name: court_node.text
         }
         court = club.courts.find_or_create_by(number: court_h[:number])
-        court.update name: court_h[:name]
+        court.update name: court_h[:name], active: true
       end
     rescue Exception => e
       p e

@@ -2,10 +2,9 @@
   .container    
     .row
       %h3.text-center.pt-4 Encuentra tu Cancha 
-      .pt-2
-        %h4.pt-2 ¿Dónde quieres jugar?
-        .pt-1
-          =render partial: "shared/clubs_selector", locals: {path: availability_path}
+    #donde
+      .pt-1
+        =render partial: "shared/clubs_selector", locals: {path: availability_path}
     #cuando
       .pt-3
         =render partial: "shared/date_selector", locals: {path: availability_path}
@@ -23,30 +22,14 @@
       - else     
         -# .alert.alert-secondary
         -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
-        
-        - availabilities_start_times(@availabilities).each do |time|
-          - time = Time.parse time if time.is_a? String
-          .card.mb-3
-            .card-header
-              #{l(time, format: "%l:%M %p")} 
-            .list-group.list-group-flush
-              - @availabilities.each do |club, availability|
-                - slot = availability.slots[time.to_s] if availability
-                - if slot.present? and slot["courts"].present?
-                  .list-group-item 
-                    .row 
-                      .col-8
-                        = link_to club_path(club), class: "text-decoration-none link-secondary"  do
-                          = club.name
-                          %small.fw-lighter
-                            #{club.comuna}
-                        %br
-                        %small.fw-lighter
-                          - if slot["courts"].count == 1
-                            ¡Queda 1 cancha!
-                          
-                      .col-4.text-end
-                        %small.fw-lighter
-                          - price = slot["courts"].map{|c| c["price"]}.min
-                          - if price.present?
-                            -# Desde #{number_to_currency(price, unit: "")}
+
+.accordion.accordion-flush
+  - @time_ranges.each do |name, range|
+    .accordion-item
+      %h2.accordion-header
+        %button.accordion-button{class: "#{'collapsed' unless name == :tarde}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"}
+          .fw-bolder= name.to_s.humanize
+      .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde}"}
+        .accordion-body
+          = render partial: "time_range_availabilities", locals: {range: (range)}
+       

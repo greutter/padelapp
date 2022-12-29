@@ -40,7 +40,12 @@ class AvailabilityController < ApplicationController
         .map { |availability| availability.created_at }
         .compact
         .min
-
+    
+    @time_ranges = {
+      temprano: (5..8),
+      durante_el_dia: (8.5..17.5),
+      tarde: (18..24)
+    }
     @params = request.parameters.merge
   end
 end

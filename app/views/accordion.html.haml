@@ -1,0 +1,18 @@
+#accordionPanelsStayOpenExample.accordion
+  .accordion-item
+    %h2#panelsStayOpen-headingOne.accordion-header
+      %button.accordion-button{"aria-controls" => "panelsStayOpen-collapseOne", "aria-expanded" => "true", "data-bs-target" => "#panelsStayOpen-collapseOne", "data-bs-toggle" => "collapse", :type => "button"}
+        Accordion Item #1
+    #panelsStayOpen-collapseOne.accordion-collapse.collapse.show{"aria-labelledby" => "panelsStayOpen-headingOne"}
+      .accordion-body
+  .accordion-item
+    %h2#panelsStayOpen-headingTwo.accordion-header
+      %button.accordion-button.collapsed{"aria-controls" => "panelsStayOpen-collapseTwo", "aria-expanded" => "false", "data-bs-target" => "#panelsStayOpen-collapseTwo", "data-bs-toggle" => "collapse", :type => "button"}
+        Accordion Item #2
+    #panelsStayOpen-collapseTwo.accordion-collapse.collapse{"aria-labelledby" => "panelsStayOpen-headingTwo"}
+      .accordion-body
+        %strong This is the second item's accordion body.
+        It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
+        = succeed "," do
+          %code .accordion-body
+

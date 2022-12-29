@@ -6,7 +6,7 @@
     .col-md-10
       %h3= @club.name
       .mt-3
-        = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
+        = link_to url: @club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
           %span{class: "bi bi-geo-alt-fill text-danger"}
           #{@club.address}, #{@club.comuna}
       .mt-1
@@ -15,7 +15,7 @@
                       class: "text-decoration-none", target: :blank do
             %i{class: "bi bi-whatsapp text-success"}
             %i.text-secondary= number_to_phone_cl(@club.phone)
-        - else
+        - elsif @club.phone[3] == "2"
           = link_to number_to_phone_cl(@club.phone), "tel:#{number_to_phone_cl(@club.phone)}"
       .mt-1
         = link_to  @club.reservation_url, |

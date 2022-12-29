@@ -9,8 +9,8 @@
 #  comuna               :string
 #  email                :string
 #  google_maps_link     :string
-#  latitude             :integer
-#  longitude            :integer
+#  latitude             :decimal(, )
+#  longitude            :decimal(, )
 #  members_only         :boolean
 #  name                 :string
 #  phone                :string
@@ -124,14 +124,13 @@ class Club < ApplicationRecord
   end
 
   def availability_ttl
+    return 1.year if Rails.env.development?
     case self.reservation_software
     when "easycancha"
       15.minutes
     when "tpc_matchpoint"
-      return 1200.minutes if Rails.env.development?
       30.minutes
     else
-      return 1200.minutes if Rails.env.development?
       10.minutes
     end
   end
@@ -196,6 +195,14 @@ class Club < ApplicationRecord
         end
       end
     return available_slots
+  end
+
+  def google_maps_link
+    if (read_attribute :google_maps_link).present?
+      read_attribute :google_maps_link
+    else
+      "http://www.google.com/maps/place/#{latitude},#{longitude}"
+    end
   end
 
   def parse_phone

@@ -81,6 +81,7 @@ class EasycanchaBot
   def find_courts(ats)
     ats["timeslots"].map do |ts|
       court = club.courts.find_or_create_by(number: ts["courtNumber"])
+      court.update active: true unless court.active?
       {
         "number" => ts["courtNumber"],
         "price" => ts["priceInfo"]["amount"],

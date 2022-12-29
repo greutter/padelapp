@@ -9,8 +9,8 @@
 #  comuna               :string
 #  email                :string
 #  google_maps_link     :string
-#  latitude             :integer
-#  longitude            :integer
+#  latitude             :decimal(, )
+#  longitude            :decimal(, )
 #  members_only         :boolean
 #  name                 :string
 #  phone                :string
