@@ -6,7 +6,7 @@
     .col-md-10
       %h3= @club.name
       .mt-3
-        = link_to url: @club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
+        = link_to @club.google_maps_link, target: :blank, class: "text-decoration-none link-secondary" do
           %span{class: "bi bi-geo-alt-fill text-danger"}
           #{@club.address}, #{@club.comuna}
       .mt-1

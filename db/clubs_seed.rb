@@ -55,7 +55,7 @@ Club.create(
   region: "Región Metropolitana de Santiago",
   third_party_software: "tpc_matchpoint_2",
   website: "https://espaciopadelcl.matchpoint.com.es/Booking/Grid.aspx",
-  active: false,
+  active: true,
   members_only: false,
   tps_id: 9101
 )
@@ -73,7 +73,7 @@ Club.create(
   region: "Región Metropolitana de Santiago",
   google_maps_link: "https://goo.gl/maps/ndT1ZqqdXePp7zPy6",
   third_party_software: "tpc_matchpoint_2",
-  active: false,
+  active: true,
   members_only: false,
   tps_id: 9102
 )
@@ -91,16 +91,10 @@ Club.create(
   google_maps_link:
     "https://padelcerrocalancl.matchpoint.com.es/Booking/Grid.aspx",
   third_party_software: "tpc_matchpoint_2",
-  active: false,
+  active: true,
   members_only: false,
   tps_id: 9103
 )
-
-Club
-  .where("third_party_software like 'tpc_matchpoint%'")
-  .each do |club|
-    TpcBot.new(club).create_courts
-  end
 
 club =
   Club.create(
@@ -114,9 +108,33 @@ club =
     region:,
     google_maps_link:,
     third_party_software:,
-    active: false,
+    active: true,
     members_only: false,
     tps_id: 9104
+  )
+
+
+Club
+  .where("third_party_software like 'tpc_matchpoint%'")
+  .each do |club|
+    TpcBot.new(club).create_courts
+  end
+
+club =
+  Club.create(
+    name: "Padel Rinconada",
+    phone: "+56 9 6776 3963",
+    email: "padelrinconada@gmail.com",
+    website: "https://padelrinconadacl.matchpoint.com.es/Booking/Grid.aspx",
+    address: "La Rinconada 535",
+    city: "Santiago",
+    comuna: "Huechuraba",
+    region: "Región Metropolitana de Santiago",
+    google_maps_link: "https://goo.gl/maps/WAwg9ZfGczcoduPp7",
+    third_party_software: "tpc_matchpoint_2",
+    active: true,
+    members_only: false,
+    tps_id: 9105
   )
   
 

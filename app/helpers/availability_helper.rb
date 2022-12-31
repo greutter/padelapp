@@ -10,7 +10,7 @@ module AvailabilityHelper
     start_times =
       availabilities
         .values
-        .map { |availability| availability.slots.keys }
+        .map { |availability| availability.slots&.keys }
         .flatten
         .uniq
         .sort
