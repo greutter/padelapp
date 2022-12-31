@@ -98,30 +98,6 @@ Club.create(
 
 club =
   Club.create(
-    name:,
-    phone:,
-    email:,
-    website:,
-    address:,
-    city:,
-    comuna:,
-    region:,
-    google_maps_link:,
-    third_party_software:,
-    active: true,
-    members_only: false,
-    tps_id: 9104
-  )
-
-
-Club
-  .where("third_party_software like 'tpc_matchpoint%'")
-  .each do |club|
-    TpcBot.new(club).create_courts
-  end
-
-club =
-  Club.create(
     name: "Padel Rinconada",
     phone: "+56 9 6776 3963",
     email: "padelrinconada@gmail.com",
@@ -136,6 +112,39 @@ club =
     members_only: false,
     tps_id: 9105
   )
+
+  club =
+  Club.create(
+    name: "Red Padel",
+    phone: "+56 9 9005 6171",
+    email: "redpadelclub@gmail.com",
+    website: "http://www.redpadel.cl/Booking/Grid.aspx",
+    address: "Av. Vitacura 8751",
+    city: "Santiago",
+    comuna: "Vitacura",
+    region: "Región Metropolitana de Santiago",
+    google_maps_link: "https://goo.gl/maps/1doA9izDdY6g6tW58",
+    third_party_software: "tpc_matchpoint_2",
+    active: true,
+    members_only: false,
+    tps_id: 9106
+  )
   
+  # club =
+  # Club.create(
+  #   name:,
+  #   phone:,
+  #   email:,
+  #   website:,
+  #   address:,
+  #   city:,
+  #   comuna:,
+  #   region:,
+  #   google_maps_link:,
+  #   third_party_software:,
+  #   active: true,
+  #   members_only: false,
+  #   tps_id: 9104
+  # )
 
   

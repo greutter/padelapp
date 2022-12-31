@@ -11,17 +11,35 @@ class TpcBot
 
   def initialize_driver
     if @driver.nil?
+      # begin
       create_driver
       url = self.club.website
       @driver.get url
-      accept_cokies =
-        wait.until do
-          @driver.find_element(css: "#ctl00_ButtonPermitirNecesarios")
-        end
-      accept_cokies.click unless accept_cokies.nil?
+      accept_cokies
       sleep 1
+      # rescue StandardError => e
+      # p e
+      # end
     end
     return @driver
+  end
+
+  def accept_cokies
+    wait_2 =
+      Selenium::WebDriver::Wait.new(
+        timeout: 3,
+        message: "Timed out cookies acceptance",
+        ignore: Selenium::WebDriver::Error::NoSuchElementError
+      )
+    begin
+      accept_cokies_btn =
+        wait_2.until do
+          @driver.find_element(css: "#ctl00_ButtonPermitirNecesarios")
+        end
+      accept_cokies_btn.click if accept_cokies_btn.present?
+    rescue Exception => e
+      p e
+    end  
   end
 
   def availability(date, duration: 90)
