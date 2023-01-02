@@ -26,7 +26,7 @@ class AvailabilityController < ApplicationController
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
-    updated_within = Rails.env.production? ? 20.minutes : :if_old
+    updated_within = Rails.env.production? ? 60.minutes : :if_old
     @availabilities =
       Availability.availabilities(
         date: @selected_date,
@@ -40,7 +40,7 @@ class AvailabilityController < ApplicationController
         .map { |availability| availability.created_at }
         .compact
         .min
-    
+
     @time_ranges = {
       temprano: (5..8),
       durante_el_dia: (8.5..17.5),
