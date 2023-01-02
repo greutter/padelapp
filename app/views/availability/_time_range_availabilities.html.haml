@@ -1,6 +1,7 @@
 - start_times = start_times_in_time_range(@availabilities, range)
 - start_times.each do |time|
   - time = Time.parse time if time.is_a? String
+  - next if time < Time.now.in_time_zone + 6.minutes
   .card.mb-3
     .card-header
       #{l(time, format: "%l:%M %p")} 
