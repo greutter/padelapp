@@ -17,3 +17,8 @@ task detect_active_clubs: :environment do |task, args|
     end
   end
 end
+
+desc "Delete old availabilities"
+task delete_old_availabilities: :environment do |task, args|
+  Availability.where("date < ?", 7.days.ago).delete_all
+end

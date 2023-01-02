@@ -11,6 +11,7 @@ module AvailabilityHelper
       availabilities
         .values
         .map { |availability| availability.slots&.keys }
+        .compact
         .flatten
         .uniq
         .sort
