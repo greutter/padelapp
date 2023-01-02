@@ -12,7 +12,8 @@ module TpcBotType1
         court = parse_court_type1(slot)
         next if court.nil?
         starts_at = date.in_time_zone.change_hour_minutes(h[0])
-        ends_at = starts_at + duration.minutes
+        ends_at = date.in_time_zone.change_hour_minutes(h[1])
+        next if ends_at != starts_at + duration.minutes
         if available_slots[starts_at].blank?
           available_slots[starts_at] = {
             "starts_at" => starts_at,
@@ -30,7 +31,8 @@ module TpcBotType1
 
   def parse_court_type1(slot)
     x_coordinate = slot.find_element(tag_name: "rect").attribute("x").to_i
-    court_number = (x_coordinate - 50) / 120 + 1
+    width = slot.find_element(tag_name: "rect").attribute("width").to_i
+    court_number = (x_coordinate - 50) / width + 1
     court = club.courts.find_or_create_by(number: court_number)
     s = slot.text.split("\n$")
     price = s[1].blank? ? "" : s[1].tr(".", "").to_i
