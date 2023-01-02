@@ -39,7 +39,7 @@ class TpcBot
       accept_cokies_btn.click if accept_cokies_btn.present?
     rescue Exception => e
       p e
-    end  
+    end
   end
 
   def availability(date, duration: 90)
@@ -49,11 +49,11 @@ class TpcBot
       if current_selected_date_match? date
         case club.third_party_software
         when "tpc_matchpoint_1"
-          p "Scraping #{club.name} Tcp type 1"
+          p "Scraping #{club.name} Tpc type 1"
           p Time.now
           return parse_available_timeslots_type1(date: date, duration: duration)
         when "tpc_matchpoint_2"
-          p "Scraping #{club.name} Tcp type 2"
+          p "Scraping #{club.name} Tpc type 2"
           p Time.now
           return parse_available_timeslots_type2(date: date, duration: duration)
         else
