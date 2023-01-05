@@ -2,16 +2,10 @@
   .row{style: "padding: 12px 0 24px 0;"}
     .col-6.text-start
       .fs-4
-        - if @reservation.paid?
-          ¡Ya tienes la cancha!
-        - else
-          Solo falta pagar.
-    .col-6.text-end
-      %fs-4
+        Reserva ##{@reservation.id}
   .div-text-center
     = render partial: 'card', |
         locals: {reservation: @reservation}
-
   .row{style: "padding: 12px 0 24px 0;"}
     .col-6.text-start
       = button_to "Ver todas mis reservas", reservations_path, method: :get, class: "btn btn-link"

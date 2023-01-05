@@ -9,13 +9,13 @@
           %i{class: "bi bi-plus"}
           Nueva Reserva
 
-  -# .div-text-center
-  -#   - pending_payment = @reservations.select{|r| not r.paid?}
-  -#   - if pending_payment.any?
-  -#     - pending_payment.each do |reservation|
-  -#       =render partial: 'card', locals: {reservation: reservation}
+  .div-text-center
+    - pending_payment = @reservations.select{|r| not r.paid?}
+    - if pending_payment.any?
+      - pending_payment.each do |reservation|
+        =render partial: 'card', locals: {reservation: reservation}
 
-  -#   - paid = @reservations.select{|r| r.paid?}
-  -#   - if paid.any?
-  -#     - paid.each do |reservation|
-  -#       =render partial: 'card', locals: {reservation: reservation}
+    - paid = @reservations.select{|r| r.paid?}
+    - if paid.any?
+      - paid.each do |reservation|
+        =render partial: 'card', locals: {reservation: reservation}

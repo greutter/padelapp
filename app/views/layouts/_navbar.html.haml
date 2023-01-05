@@ -6,10 +6,9 @@
     - if not(current_page? reservations_path) and current_user
       %a.nav-link{:href => reservations_path} Mis Reservas
     - if user_signed_in?
-      - if Rails.env == "development"
-        %a.nav-link{:href => destroy_user_session_path, data: {"turbo-method": :delete}} Cerrar Sesión
       %a.nav-link{:href => edit_user_registration_path}
         %i{class: "bi bi-person"}
     - else
-      %a.nav-link{:href => new_user_session_path} Iniciar Sesión
-      -# %button.btn.btn-secondary{:href => new_user_registration_path} Crear Cuenta
+      .d-grid.gap-1.d-md-flex.justify-content-sm-end
+        %button.btn.me-md-2.btn-link.text-decoration-none{:href => new_user_session_path} Entrar
+        %button.btn.btn-primary{:href => new_user_registration_path} Empezar

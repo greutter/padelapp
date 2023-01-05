@@ -14,6 +14,7 @@
               .col-8
                 = link_to club_path(club), class: "text-decoration-none link-secondary"  do
                   = club.name
+                  #{club.id if Rails.env.development?}
                   %small.fw-lighter
                     #{club.comuna}
                 %br

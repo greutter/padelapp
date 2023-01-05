@@ -13,7 +13,7 @@
                 - if slot
                   - if current_user
                     .d-grid.gap-2
-                      - reservation = Reservation.new(starts_at: slot["starts_at"], ends_at: slot["ends_at"], court_id: slot["courts"].first["id"])
+                      - reservation = Reservation.new(starts_at: slot["starts_at"], ends_at: slot["ends_at"], court_id: slot["courts"].first["court_id"])
                       - reservation.user = current_user
                       = form_with model: reservation, html: {data: {turbo: false}} do |form|
                         = form.hidden_field "user_id"

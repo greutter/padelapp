@@ -23,8 +23,8 @@ class ClubsController < ApplicationController
     @duration = 90
     @selected_date = params[:date]&.to_date || Date.today
     @from_date = params[:from_date]&.to_date || Date.today
-    @availability =
-      @club.availability date: @selected_date, updated_within: :if_old
+    # @availability = 
+      # @club.availability date: @selected_date, updated_within: :if_old
     @params = request.parameters.merge
   end
 
