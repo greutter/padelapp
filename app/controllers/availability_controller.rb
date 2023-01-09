@@ -25,16 +25,17 @@ class AvailabilityController < ApplicationController
     @selected_date =
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @selected_date = Date.today if @selected_date < Date.today
-    @selected_date = Date.tomorrow if @selected_date = Date.today and Time.now.in_time_zone.hour > 22 
+    if Date.today and Time.now.in_time_zone.hour > 22
+      @selected_date = Date.tomorrow
+    end
      
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
-    updated_within = Rails.env.production? ? 60.minutes : :if_old
     @availabilities =
       Availability.availabilities(
         date: @selected_date,
         clubs: @clubs,
-        updated_within: updated_within
+        update: false
       )
 
     @updated_at =

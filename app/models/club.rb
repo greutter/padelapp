@@ -87,32 +87,33 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, duration: 90, updated_within: :if_old)
+  def availability(date:, duration: 90, update: false, updated_within: )
     date = date.to_date unless date.is_a? Date
-    if updated_within.is_a? ActiveSupport::Duration
-      self
-        .availabilities
-        .updated_within(updated_within)
-        .where(date: date, duration: duration)
-        .last
-    else
-      case updated_within
-      when :force_update
-        return update_availability(date: date, duration: duration)
-      when :if_old
-        persisted_availability =
-          self
-            .availabilities
-            .updated_within(availability_ttl)
-            .where(date: date, duration: duration)
-            .last
-        if persisted_availability.present?
-          return persisted_availability
-        else
-          return update_availability(date: date, duration: duration)
-        end
+    if updated_within.blank? 
+      updated_within = availability_ttl
+    end
+
+    last_persisted_availability = self
+      .availabilities
+      .where(date: date, duration: duration)
+      .order(updated_at: :desc)
+      .last
+
+    case update 
+    when :force
+      update_availability(date: date, duration: duration)
+    when :is_old
+      if last_persisted_availability.updated_at < updated_within.ago
+        update_availability(date: date, duration: duration)
       end
     end
+
+    return self
+      .availabilities
+      .where(date: date, duration: duration)
+      .updated_within(updated_within)
+      .order(updated_at: :desc)
+      .last
   end
 
   def reservation_url

@@ -5,7 +5,7 @@ namespace :scrap_availability do
       Comuna.where(región: "Región Metropolitana de Santiago").pluck("name")
     clubs = Club.where("comuna in (?)", comunas).active
     clubs.each do |club|
-      club.availability(date: Date.today, duration: 90, force_update: :if_old)
+      club.availability(date: Date.today, duration: 90, update: :if_old)
     end
   end
 
@@ -21,14 +21,14 @@ namespace :scrap_availability do
     clubs.each do |club|
       (Date.today...(Date.today + 14.days)).each do |date|
         p "Scraping #{club.name} on #{date}"
-        club.availability(date: date, duration: 90, updated_within: :if_old)
+        club.availability(date: date, duration: 90, update: :if_old)
       end
     end
 
     (Date.today...(Date.today + 10.days)).each do |date|
       Club.find_by("name LIKE '%lba%'").availability date: date,
                      duration: 60,
-                     updated_within: :force_update
+                     update: :if_old
     end
   end
 

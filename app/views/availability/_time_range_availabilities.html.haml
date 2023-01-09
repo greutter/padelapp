@@ -14,9 +14,11 @@
               .col-8
                 = link_to club_path(club), class: "text-decoration-none link-secondary"  do
                   = club.name
-                  #{club.id if Rails.env.development?}
                   %small.fw-lighter
                     #{club.comuna}
+                %hr
+                  #{"club_id: " + club.id.to_s if Rails.env.development?}
+                  #{"updated_at: " + availability.updated_at.to_s if Rails.env.development?}
                 %br
                 %small.fw-lighter
                   - if slot["courts"].count == 1

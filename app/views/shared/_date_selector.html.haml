@@ -1,34 +1,33 @@
-.div
-  %fs-6.text-left
-    .mb-2 #{l(@selected_date, format: "%B").capitalize}
-  %div
-    %ul.nav.nav-pills.nav-fill
-      %li.nav-item    
-        - if @from_date != Date.today
-          - par = @params 
-          - par[:from_date] = @from_date - 5.day
-          - par[:date] = @from_date - 5.days
-          = link_to url_for("#{path}?#{par.to_query}#cuando"), class: "nav-link px-1", "data-action" =>"spinner#show" do
-            %i.fs-3.fw-bold.align-middle{class: "bi bi-chevron-left"}
-      - to_date = @from_date + 4.days
-      -(@from_date..to_date).each do |date|
-        %li.nav-item
-          - par = @params
-          - par[:date] = date
-          - c = "nav-link rounded-0 px-2 #{'active' if date == @selected_date}"
-          %small  
-            = link_to url_for("#{path}?#{par.to_query}#cuando"), class: c, "data-action" => "spinner#show" do
-              - if date.today?
-                Hoy
-                %br
-                🔥
-              - else
-                = l(date, format: "%a").capitalize
-                %br
-                .text-center= l(date, format: "%d")
-      %li.nav-item
+%fs-6.text-left#cuando
+  .mb-2 #{l(@selected_date, format: "%B").capitalize}
+%div
+  %ul.nav.nav-pills.nav-fill
+    %li.nav-item    
+      - if @from_date != Date.today
         - par = @params 
-        - par[:from_date] = to_date + 1.day
-        - par[:date] = to_date + 1.day 
+        - par[:from_date] = @from_date - 5.day
+        - par[:date] = @from_date - 5.days
         = link_to url_for("#{path}?#{par.to_query}#cuando"), class: "nav-link px-1", "data-action" =>"spinner#show" do
-          %i.fs-3.fw-bold{class: "bi bi-chevron-right"}
+          %i.fs-3.fw-bold.align-middle{class: "bi bi-chevron-left"}
+    - to_date = @from_date + 4.days
+    -(@from_date..to_date).each do |date|
+      %li.nav-item
+        - par = @params
+        - par[:date] = date
+        - c = "nav-link rounded-0 px-2 #{'active' if date == @selected_date}"
+        %small  
+          = link_to url_for("#{path}?#{par.to_query}#cuando"), class: c, "data-action" => "spinner#show" do
+            - if date.today?
+              Hoy
+              %br
+              🔥
+            - else
+              = l(date, format: "%a").capitalize
+              %br
+              .text-center= l(date, format: "%d")
+    %li.nav-item
+      - par = @params 
+      - par[:from_date] = to_date + 1.day
+      - par[:date] = to_date + 1.day 
+      = link_to url_for("#{path}?#{par.to_query}#cuando"), class: "nav-link px-1", "data-action" =>"spinner#show" do
+        %i.fs-3.fw-bold{class: "bi bi-chevron-right"}
