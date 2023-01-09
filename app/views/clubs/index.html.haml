@@ -12,6 +12,4 @@
               .col-8.fw-bolder= club.name
               .col-4.fw-lighter.text-end= club.comuna
           .card-body
-            #{club.address}
-            %br
-            = number_to_phone_cl club.phone if club.phone.length > 8
+            = render partial: "club_info", locals: {club: club}
