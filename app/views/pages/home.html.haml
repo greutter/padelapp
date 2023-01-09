@@ -3,12 +3,11 @@
     .col-md-7.mt-3
       %h2.fw-lighterlight
         Todas las canchas
-        en un solo lugar
       %p.font-monospace
-        Más de #{Court.all.count} 
-        canchas. Para que reserves y jueges en el horario que más te acomode.
-      .d-grid.gap-2.col-10.mx-auto
-        = link_to "Busca Cancha", availability_path, type: :button, class: "btn btn-outline-primary" 
+        Más de #{Court.all.count.floor(-1)} 
+        canchas, para que busques, encuentres y jueges en el horario que más te acomode.
+      .d-grid.gap-2.col-md-10.mx-auto
+        = link_to "Buscar Cancha", availability_path, type: :button, class: "btn btn-outline-primary btn-lg" 
     .col-md-5.mt-3
       =image_tag "handsome_boy.jpeg", class: "img-fluid"
     
