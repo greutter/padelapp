@@ -1,5 +1,5 @@
 = form_with(url: path, method: :get, data: {turbo: false}) do |form|
-  .mb-3
+  .mb-2
     = form.collection_check_boxes :selected_sectors_names, @sectors_names, :itself, :itself do |cb|
       .form-check
         = cb.check_box class: "form-check-input", checked: @selected_sectors_names.include?(cb.text)

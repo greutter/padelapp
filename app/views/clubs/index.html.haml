@@ -2,7 +2,7 @@
 
   %h3.text-center.py-4 Encuentra Clubes
   =render partial: "shared/clubs_selector", locals: {path: clubs_path}
-
+  .mb-3
   - @clubs.each do |club| 
     =link_to club_path(club), class: "text-decoration-none text-body" do 
       .div.py-2

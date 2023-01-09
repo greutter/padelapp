@@ -87,19 +87,18 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, duration: 90, update: false, updated_within: )
+  def availability(date:, duration: 90, update: false, updated_within:)
     date = date.to_date unless date.is_a? Date
-    if updated_within.blank? 
-      updated_within = availability_ttl
-    end
+    updated_within = availability_ttl if updated_within.blank?
 
-    last_persisted_availability = self
-      .availabilities
-      .where(date: date, duration: duration)
-      .order(updated_at: :desc)
-      .last
+    last_persisted_availability =
+      self
+        .availabilities
+        .where(date: date, duration: duration)
+        .order(updated_at: :desc)
+        .last
 
-    case update 
+    case update
     when :force
       update_availability(date: date, duration: duration)
     when :is_old
@@ -108,19 +107,21 @@ class Club < ApplicationRecord
       end
     end
 
-    return self
-      .availabilities
-      .where(date: date, duration: duration)
-      .updated_within(updated_within)
-      .order(updated_at: :desc)
-      .last
+    return(
+      self
+        .availabilities
+        .where(date: date, duration: duration)
+        .updated_within(updated_within)
+        .order(updated_at: :desc)
+        .last
+    )
   end
 
   def reservation_url
     case self.reservation_software
     when "easycancha"
       "https://www.easycancha.com/book/clubs/#{self.tps_id}/sports"
-    when "tpc_matchpoint"
+    else
       self.website
     end
   end
