@@ -6,6 +6,7 @@
 #  active               :boolean
 #  address              :string
 #  city                 :string
+#  club_json            :json
 #  comuna               :string
 #  email                :string
 #  google_maps_link     :string
@@ -19,7 +20,7 @@
 #  website              :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  third_party_id       :integer
+#  third_party_id       :string
 #
 
 #  created_at       :datetime         not null
@@ -206,6 +207,6 @@ class Club < ApplicationRecord
   end
 
   def parse_phone
-    self.phone = self.phone.delete(" ")
+    self.phone = self.phone.delete(" ") if self.phone.present?
   end
 end

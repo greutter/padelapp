@@ -6,6 +6,7 @@
 #  active               :boolean
 #  address              :string
 #  city                 :string
+#  club_json            :json
 #  comuna               :string
 #  email                :string
 #  google_maps_link     :string
@@ -19,7 +20,7 @@
 #  website              :string
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  third_party_id       :integer
+#  third_party_id       :string
 #
 
 one:
