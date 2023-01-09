@@ -29,10 +29,41 @@ class Comuna < ApplicationRecord
     { name: "Región de Los Ríos", ns_order: 12 },
     { name: "Región de Los Lagos", ns_order: 13 }
   ]
+
+  def self.create_comunas_from_clubs  
+    comunas = Club.all.map { |c| { name: c.comuna, region: c.region } }
+    Comuna.create(comunas)
+    Sector.update_sectors
+  end
+
 end
 
 class Sector
+
   attr_accessor :name, :comunas, :clubs
+
+  SECTORS = [
+    { name: "Padre Hurtado", sector: "Santiago Poniente" },
+    { name: "Huechuraba", sector: "Santiago Norte" },
+    { name: "Las Condes", sector: "Santiago Oriente" },
+    { name: "La Florida", sector: "Santiago Sur" },
+    { name: "Melipilla", sector: "Santiago Poniente" },
+    { name: "Colina", sector: "Santiago Norte" },
+    { name: "Lampa", sector: "Santiago Norte" },
+    { name: "Talagante", sector: "Santiago Poniente" },
+    { name: "Maipú", sector: "Santiago Poniente" },
+    { name: "San Bernardo", sector: "Santiago Sur" },
+    { name: "Calera de Tango", sector: "Santiago Poniente" },
+    { name: "Estación Central", sector: "Santiago Poniente" },
+    { name: "Paine", sector: "Santiago Poniente" },
+    { name: "Puente Alto", sector: "Santiago Sur" },
+    { name: "Providencia", sector: "Santiago Oriente" },
+    { name: "La Reina", sector: "Santiago Oriente" },
+    { name: "Buin", sector: "Santiago Poniente" },
+    { name: "Peñalolén", sector: "Santiago Sur" },
+    { name: "Vitacura", sector: "Santiago Oriente" },
+    { name: "Lo Barnechea", sector: "Santiago Oriente" }
+  ]
 
   def initialize(name = nil)
     self.name = name
@@ -52,4 +83,10 @@ class Sector
     sectors_names = Comuna.all.map(&:sector).uniq.reject(&:blank?)
     sectors = sectors_names.map { |sector_name| self.new(sector_name) }
   end
+
+  def self.update_sectors
+    SECTORS.each { |s| Comuna.find_by(name: s[:name])&.update(sector: s[:sector]) }
+  end
 end
+
+

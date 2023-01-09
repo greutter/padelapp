@@ -18,7 +18,7 @@ class PlaytomicBot
       website: "",
       address: "#{club_json["address"]["street"].strip}, #{club_json["address"]["city"]}",
       city: "Santiago",
-      comuna: club_json["address"]["city"],
+      comuna: "Colina",
       latitude: club_json["address"]["coordinate"]["lat"],
       longitude: club_json["address"]["coordinate"]["lon"],
       region: "Región Metropolitana de Santiago",
@@ -29,8 +29,8 @@ class PlaytomicBot
       }
       club = Club.find_or_create_by(third_party_id: properties[:third_party_id])
       club.update(properties)
-      guiones_name = properties["name"].gsub(/[^\w\s]/,"").gsub("  "," ").gsub(" ","-").downcase
-      url = "https://playtomic.io/#{guiones_name}/#{properties["third_party_id"]}]"
+      guiones_name = properties[:name].gsub(/[^\w\s]/,"").gsub("  "," ").gsub(" ","-").downcase
+      url = "https://playtomic.io/#{guiones_name}/#{properties[:third_party_id]}"
       club.update(website: url)
     end
 
