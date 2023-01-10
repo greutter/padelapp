@@ -1,17 +1,17 @@
 .container{style: "max-width: 360px;"}
   .card
-    .card-header.text-center.fw-bold
-      PADEL64
+    .card-header.text-center.fw-bold.mb-3
+      Crea tu cuenta
     .card-body
-      -# .mt-3
-      -#   = render partial: "devise/shared/social_login"
-      -# .row.align-items-center.my-3
-      -#   .col-5.border-top
-      -#   .col-2.text-center
-      -#     %small.fw-lighter.fs-6.text-secondary
-      -#       o
-      -#   .col-5.col-5.border-top
-      %h5.card-title Crea tu cuenta
+      .mb-3
+        = render partial: "devise/shared/social_login"
+      .row.align-items-center.my-3
+        .col-5.border-top
+        .col-2.text-center
+          %small.fw-lighter.fs-6.text-secondary
+            o
+        .col-5.col-5.border-top
+
       = simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f|
         .form-inputs
           = f.input :email,

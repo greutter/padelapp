@@ -3,8 +3,9 @@
     %a.navbar-brand.fw-bolder.text-dark{:href => root_path}
       -# = @club ? @club.name.gsub(" ", "_").camelize :   "TodoPadel"
       Padel64
-    - if not(current_page? reservations_path) and current_user
-      %a.nav-link{:href => reservations_path} Mis Reservas
+    - if Rails.env.development?
+      - if not(current_page? reservations_path) and current_user
+        %a.nav-link{:href => reservations_path} Mis Reservas
     - if user_signed_in?
       %a.nav-link{:href => edit_user_registration_path}
         %i{class: "bi bi-person"}

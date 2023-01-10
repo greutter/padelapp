@@ -4,7 +4,7 @@
     .card-header.text-center.fw-bold
       PADEL64
     .card-body
-      -if Rails.env.development?
+      -if Rails.env.development? or true
         .mt-3
           = render partial: "devise/shared/social_login"
         .row.align-items-center.my-3

@@ -123,7 +123,7 @@ es-CL:
         didn_t_receive_confirmation_instructions: "¿No ha recibido las instrucciones de confirmación?"
         didn_t_receive_unlock_instructions: "¿No ha recibido instrucciones para desbloquear?"
         forgot_your_password: "Olvidé mi contraseña"
-        sign_in: Iniciar sesión
+        sign_in: Ya tengo cuenta
         sign_in_with_provider: Iniciar sesión con %{provider}
         sign_up: Crea una cuenta
       minimum_password_length:
