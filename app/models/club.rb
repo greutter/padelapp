@@ -87,12 +87,7 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(
-    date:,
-    duration: 90,
-    update: false,
-    ttl: default_ttl
-  )
+  def availability(date:, duration: 90, update: false, ttl: default_ttl)
     last_persisted_availability =
       self
         .availabilities
@@ -104,12 +99,13 @@ class Club < ApplicationRecord
     case update
     when :if_old
       if last_persisted_availability.blank? or
-        last_persisted_availability.updated_at < (ttl.ago + ttl / 2)
+           last_persisted_availability.updated_at < 8.minutes.ago
         update_availability(date: date, duration: duration)
       end
     when :force
       update_availability(date: date, duration: duration)
     end
+    return last_persisted_availability
   end
 
   def reservation_url
