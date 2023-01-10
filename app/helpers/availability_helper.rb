@@ -6,6 +6,13 @@ module AvailabilityHelper
   #     end
   # end
 
+  def decimal_hour_to_hhmm(decimal_hour)
+    Time
+      .now
+      .change(hour: decimal_hour.floor, min: decimal_hour.modulo(1) * 60)
+      .strftime("%k:%M")
+  end
+
   def availabilities_start_times(availabilities)
     start_times =
       availabilities

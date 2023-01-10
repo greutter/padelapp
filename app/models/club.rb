@@ -131,7 +131,7 @@ class Club < ApplicationRecord
   end
 
   def availability_ttl
-    # return 1.year if Rails.env.development?
+    return 1.day if Rails.env.development?
     case self.reservation_software
     when "easycancha"
       15.minutes
@@ -155,9 +155,8 @@ class Club < ApplicationRecord
   end
 
   def persist_available_slots(date, duration, available_slots)
-    unless available_slots.blank?
-      p available_slots.select! { |k, v| v.present? }
-    end
+    return false if available_slots.blank?
+    available_slots.select! { |k, v| v.present? }
     range = (55.minutes.ago.in_time_zone..(Time.now.in_time_zone + 1.minute))
     availability =
       Availability
@@ -169,17 +168,15 @@ class Club < ApplicationRecord
         )
         .order(:updated_at)
         .last
-    if availability.present? and available_slots.present?
+    if availability.present?
       availability.touch
-      return availability.update(slots: available_slots)
+      availability.update(slots: available_slots)
     else
-      return(
-        Availability.create(
-          club_id: self.id,
-          date: date,
-          duration: duration,
-          slots: available_slots
-        )
+      Availability.create(
+        club_id: self.id,
+        date: date,
+        duration: duration,
+        slots: available_slots
       )
     end
   end
