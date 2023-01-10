@@ -16,7 +16,7 @@ class Availability < ApplicationRecord
   validates :duration, presence: true
 
   scope :updated_within,
-        ->(time = 10.minutes) { where("updated_at > ?", time.ago) }
+        ->(time = 15.minutes) { where("updated_at > ?", time.ago) }
 
   def self.availabilities(date:, clubs:, duration: 90, update: false)
     availabilities = {}
