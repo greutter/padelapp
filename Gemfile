@@ -103,3 +103,7 @@ gem "selenium-webdriver"
 gem "webdrivers"
 
 gem "administrate"
+
+gem "loofah", ">= 2.19.1"
+gem "rails-html-sanitizer", ">= 1.4.4"
+

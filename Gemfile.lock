@@ -210,7 +210,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     local_time (2.1.0)
-    loofah (2.19.0)
+    loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
@@ -320,8 +320,8 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.3)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.4.4)
+      loofah (~> 2.19, >= 2.19.1)
     rails-i18n (7.0.5)
       i18n (>= 0.7, < 2)
       railties (>= 6.0.0, < 8)
@@ -449,6 +449,7 @@ DEPENDENCIES
   jsbundling-rails
   letter_opener
   local_time
+  loofah (>= 2.19.1)
   mechanize
   mercadopago-sdk
   omniauth
@@ -458,6 +459,7 @@ DEPENDENCIES
   phonelib
   puma (~> 5.0)
   rails (~> 7.0.3, >= 7.0.3.1)
+  rails-html-sanitizer (>= 1.4.4)
   rails-i18n (~> 7.0.0)
   ruby-lsp (~> 0.3.4)
   selenium-webdriver
