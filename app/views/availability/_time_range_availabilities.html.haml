@@ -1,4 +1,3 @@
-- start_times = start_times_in_time_range(@availabilities, range)
 - if start_times.blank?
   .alert.alert-primary
     No encontramos canchas para este horario.
@@ -16,7 +15,7 @@
             .row 
               .col-8
                 = link_to club_path(club), class: "text-decoration-none link-secondary"  do
-                  = club.name
+                  = club.name.titlecase
                   %small.fw-lighter
                     #{club.comuna}
                 %br

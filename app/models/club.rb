@@ -156,13 +156,14 @@ class Club < ApplicationRecord
 
   def persist_available_slots(date, duration, available_slots)
     available_slots.select! { |k, v| v.present? } unless available_slots.blank?
+    s_time = Time.now - 55.minutes
     availability =
-      Availability.create(
+      Availability.find_or_create_by(
         club_id: self.id,
         date: date,
-        duration: duration,
-        slots: available_slots
+        duration: duration
       )
+    availability.update(slots: available_slots)
   end
 
   def reservation_software

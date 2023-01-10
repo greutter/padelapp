@@ -1,0 +1,6 @@
+
+# To run use:  $ ./update_local_db (Falta un paso para no se que)
+rm latest.dump
+heroku pg:backups:capture
+heroku pg:backups:download
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -d padelapp_development latest.dump

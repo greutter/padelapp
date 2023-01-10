@@ -1,7 +1,7 @@
 *Si la bd se cerró mal:*
 
 brew services stop postgresql
-rm /usr/local/var/postgresql@14/ postmaster.pid
+rm /usr/local/var/postgresql@14/postmaster.pid
 brew services start postgresql
 
 brew services list | grep postgresql
