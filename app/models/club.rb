@@ -91,34 +91,25 @@ class Club < ApplicationRecord
     date:,
     duration: 90,
     update: false,
-    updated_within: availability_ttl
+    ttl: default_ttl
   )
     last_persisted_availability =
       self
         .availabilities
         .where(date: date, duration: duration)
-        .updated_within(updated_within)
+        .updated_within(ttl)
         .order(updated_at: :desc)
         .last
 
     case update
-    when :force
-      update_availability(date: date, duration: duration)
     when :if_old
       if last_persisted_availability.blank? or
-           last_persisted_availability.updated_at < updated_within.ago
+        last_persisted_availability.updated_at < (ttl.ago + ttl / 2)
         update_availability(date: date, duration: duration)
       end
+    when :force
+      update_availability(date: date, duration: duration)
     end
-
-    return(
-      self
-        .availabilities
-        .where(date: date, duration: duration)
-        .updated_within(updated_within)
-        .order(updated_at: :desc)
-        .last
-    )
   end
 
   def reservation_url
@@ -130,15 +121,15 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability_ttl
+  def default_ttl
     return 1.day if Rails.env.development?
     case self.reservation_software
     when "easycancha"
-      15.minutes
+      24.minutes
     when "tpc_matchpoint"
-      30.minutes
+      36.minutes
     else
-      10.minutes
+      24.minutes
     end
   end
 
