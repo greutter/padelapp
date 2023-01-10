@@ -23,9 +23,9 @@
         - @time_ranges.each do |name, range|
           .accordion-item
             %h2.accordion-header
-              %button.accordion-button{class: "#{'collapsed' unless name == :tarde}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"}
+              %button.accordion-button{class: "#{'collapsed' unless (name == :tarde or name == :temprano)}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"}
                 .fw-bolder= name.to_s.humanize
-            .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde}"}
+            .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde or name == :temprano}"}
               .accordion-body.px-0
                 = render partial: "time_range_availabilities", locals: {range: (range)}
             

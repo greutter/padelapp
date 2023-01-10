@@ -131,6 +131,7 @@ class Club < ApplicationRecord
   end
 
   def availability_ttl
+    return 1.year if Rails.env.development?
     case self.reservation_software
     when "easycancha"
       15.minutes
