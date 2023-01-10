@@ -39,7 +39,7 @@ class AvailabilityController < ApplicationController
         .min
 
     @time_ranges = {
-      temprano: (5..8),
+      temprano: (6..8),
       durante_el_dia: (8.5..17.5),
       tarde: (18..23)
     }

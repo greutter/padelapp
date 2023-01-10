@@ -24,12 +24,12 @@
           - unless @selected_date.today? and Time.now.in_time_zone.decimal_hour > range.last
             .accordion-item
               %h2.accordion-header
-                %button.accordion-button{class: "#{'collapsed' unless (name == :tarde or name == :temprano)}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"} 
+                %button.accordion-button{class: "#{'collapsed' unless name == :tarde}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"} 
                   .fw-bolder #{name.to_s.humanize}
                   %span.text-end
                     =":  "
                     #{decimal_hour_to_hhmm(range.first)} - #{decimal_hour_to_hhmm(range.last)}
-              .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde or name == :temprano}"}
+              .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde}"}
                 .accordion-body.px-0
                   - start_times = start_times_in_time_range(@availabilities, range)
                   = render partial: "time_range_availabilities", locals: {start_times: start_times}
