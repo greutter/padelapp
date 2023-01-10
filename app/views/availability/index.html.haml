@@ -12,7 +12,8 @@
   = render "layouts/spinner"
   #contentDiv{"data-spinner-target"=> "contentDiv"}
     .text-dark.py-3.fs-6
-      Disponibilidad canchas #{@duration} minutos
+      Disponibilidad de canchas 
+      %span.fw-bolder #{@duration} minutos
     - if @availabilities.blank?
       .alert.alert-warning
         😞 No encontramos canchas para este día.
