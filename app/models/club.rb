@@ -87,21 +87,26 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, duration: 90, update: false, updated_within: self.availability_ttl)
-    date = date.to_date unless date.is_a? Date
-    
+  def availability(
+    date:,
+    duration: 90,
+    update: false,
+    updated_within: availability_ttl
+  )
     last_persisted_availability =
       self
         .availabilities
         .where(date: date, duration: duration)
+        .updated_within(updated_within)
         .order(updated_at: :desc)
         .last
 
     case update
     when :force
       update_availability(date: date, duration: duration)
-    when :is_old
-      if last_persisted_availability.updated_at < updated_within.ago
+    when :if_old
+      if last_persisted_availability.blank? or
+           last_persisted_availability.updated_at < updated_within.ago
         update_availability(date: date, duration: duration)
       end
     end
@@ -126,7 +131,6 @@ class Club < ApplicationRecord
   end
 
   def availability_ttl
-    return 1.year if Rails.env.development?
     case self.reservation_software
     when "easycancha"
       15.minutes

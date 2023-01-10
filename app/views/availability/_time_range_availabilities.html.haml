@@ -16,9 +16,6 @@
                   = club.name
                   %small.fw-lighter
                     #{club.comuna}
-                %hr
-                  #{"club_id: " + club.id.to_s if Rails.env.development?}
-                  #{"updated_at: " + availability.updated_at.to_s if Rails.env.development?}
                 %br
                 %small.fw-lighter
                   - if slot["courts"].count == 1

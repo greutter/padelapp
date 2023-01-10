@@ -17,18 +17,11 @@ class AvailabilityController < ApplicationController
         .active
 
     @from_date =
-      if params[:from_date].blank?
-        Time.now.in_time_zone.hour > 22 ? Date.tomorrow : Date.today
-      else
-        Date.parse(params[:from_date])
-      end
+      (params[:from_date].blank? ? Date.today : Date.parse(params[:from_date]))
     @selected_date =
       params[:date].blank? ? @from_date : Date.parse(params[:date])
     @selected_date = Date.today if @selected_date < Date.today
-    if Date.today and Time.now.in_time_zone.hour > 22
-      @selected_date = Date.tomorrow
-    end
-     
+
     @duration = params[:duration].blank? ? 90 : params[:duration].to_i
 
     @availabilities =

@@ -21,12 +21,7 @@ class Availability < ApplicationRecord
   def self.availabilities(date:, clubs:, duration: 90, update: false)
     availabilities = {}
     clubs.each do |club|
-      availability =
-        club.availability(
-          date: date.to_date,
-          duration: duration,
-          updated_within: updated_within
-        )
+      availability = club.availability(date: date.to_date, duration: duration)
       availabilities[club] = availability if availability.present?
     end
     return availabilities
@@ -45,5 +40,3 @@ class Availability < ApplicationRecord
     return availability_json
   end
 end
-
-

@@ -15,9 +15,7 @@
       Disponibilidad canchas #{@duration} minutos
     - if @availabilities.blank?
       .alert.alert-warning
-        Parece que no hay canchas publicadas para este día.
-        .float-end 
-          😞
+        😞 No encontramos canchas para este día.
     - else     
       -# .alert.alert-secondary
       -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}

@@ -33,7 +33,7 @@ class EasycanchaBot
 
   def availability(date, duration: 90)
     url =
-      "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=05:00:00&timespan=#{duration}"
+      "https://www.easycancha.com/api/sports/7/clubs/#{club.third_party_id}/timeslots?date=#{date.strftime "%Y-%m-%d"}&time=22:00:00&timespan=#{duration}"
     begin
       create_driver
       if club.members_only?
@@ -53,9 +53,7 @@ class EasycanchaBot
     rescue Exception => e
       puts e.message
     ensure
-      if @driver
-        @driver.quit()
-      end
+      @driver.quit() if @driver
     end
   end
 
