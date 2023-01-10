@@ -40,7 +40,7 @@ namespace :scrap_availability do
     clubs.each do |club|
       (from..to).each do |date|
         p "Scraping #{club.name} on #{date}"
-        club.availability(date: date, duration: 90, updated_within: :if_old)
+        club.availability(date: date, duration: 90, update: :if_old)
       end
     end
   end
@@ -53,7 +53,7 @@ namespace :scrap_availability do
     clubs.each do |club|
       (from..to).each do |date|
         p "Scraping #{club.name} on #{date}"
-        club.availability(date: date, duration: 90, updated_within: :if_old)
+        club.availability(date: date, duration: 90, update: :if_old)
       end
     end
   end
