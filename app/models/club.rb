@@ -87,10 +87,9 @@ class Club < ApplicationRecord
     end
   end
 
-  def availability(date:, duration: 90, update: false, updated_within:)
+  def availability(date:, duration: 90, update: false, updated_within: self.availability_ttl)
     date = date.to_date unless date.is_a? Date
-    updated_within = availability_ttl if updated_within.blank?
-
+    
     last_persisted_availability =
       self
         .availabilities

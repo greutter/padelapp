@@ -1,34 +1,33 @@
 %div{"data-controller" => "spinner"}
-  .container    
-    .row
-      %h4.pt-4 Encuentra tu Cancha 
-    #donde
-      .pt-1
-        =render partial: "shared/clubs_selector", locals: {path: availability_path}
+  .row
+    %h4.pt-4 Encuentra tu Cancha 
+  #donde
+    .pt-1
+      =render partial: "shared/clubs_selector", locals: {path: availability_path}
+  
+  .pt-3
+    =render partial: "shared/date_selector", locals: {path: availability_path}
     
-    .pt-3
-      =render partial: "shared/date_selector", locals: {path: availability_path}
-      
-    -# #################################################
-    = render "layouts/spinner"
-    #contentDiv{"data-spinner-target"=> "contentDiv"}
-      .text-dark.py-3.fs-6
-        Disponibilidad canchas #{@duration} minutos
-      - if @availabilities.blank?
-        .alert.alert-warning
-          Parece que no hay canchas publicadas para este día.
-          .float-end 
-            😞
-      - else     
-        -# .alert.alert-secondary
-        -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
-        .accordion.accordion-flush
-          - @time_ranges.each do |name, range|
-            .accordion-item
-              %h2.accordion-header
-                %button.accordion-button{class: "#{'collapsed' unless name == :tarde}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"}
-                  .fw-bolder= name.to_s.humanize
-              .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde}"}
-                .accordion-body
-                  = render partial: "time_range_availabilities", locals: {range: (range)}
-              
+  -# #################################################
+  = render "layouts/spinner"
+  #contentDiv{"data-spinner-target"=> "contentDiv"}
+    .text-dark.py-3.fs-6
+      Disponibilidad canchas #{@duration} minutos
+    - if @availabilities.blank?
+      .alert.alert-warning
+        Parece que no hay canchas publicadas para este día.
+        .float-end 
+          😞
+    - else     
+      -# .alert.alert-secondary
+      -#   Actualizado hace #{distance_of_time_in_words_to_now(@updated_at, {})}
+      .accordion.accordion-flush
+        - @time_ranges.each do |name, range|
+          .accordion-item
+            %h2.accordion-header
+              %button.accordion-button{class: "#{'collapsed' unless name == :tarde}", "data-bs-target" => "##{name}", "data-bs-toggle" => "collapse", :type => "button"}
+                .fw-bolder= name.to_s.humanize
+            .accordion-collapse.collapse{id: name, class: "#{'show' if name == :tarde}"}
+              .accordion-body.px-0
+                = render partial: "time_range_availabilities", locals: {range: (range)}
+            

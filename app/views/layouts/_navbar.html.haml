@@ -1,5 +1,5 @@
 %nav.navbar.navbar-expand-md.navbar-dark{style: "background-color: #EBEBEB;"}
-  .container.nav-container
+  .container
     %a.navbar-brand.fw-bolder.text-dark{:href => root_path}
       -# = @club ? @club.name.gsub(" ", "_").camelize :   "TodoPadel"
       Padel64
@@ -10,5 +10,5 @@
         %i{class: "bi bi-person"}
     - else
       .div
-      %button.btn.btn-link.text-decoration-none{:href => new_user_session_path} Entrar
-      %button.btn.btn-primary{:href => new_user_registration_path} Empezar
+      = link_to "Entrar", new_user_session_path, type: :button, class: "btn btn-link text-decoration-none"
+      = link_to "Empezar", new_user_registration_path, type: :button, class: "btn btn-primary text-decoration-none"

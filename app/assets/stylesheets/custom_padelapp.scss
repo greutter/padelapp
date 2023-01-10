@@ -1,5 +1,7 @@
 .root-container {
     max-width: 660px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .nav-container {
@@ -7,11 +9,11 @@
 }
 
 html, body, .tooltip, .popover {
-    font-family: sans-serif
+    font-family: sans-serif;
   }
   code, kbd, pre, samp, .text-monospace {
-    font-family: monospace
+    font-family: monospace;
   }
   button, input, optgroup, select, textarea {
-    font-family: inherit
+    font-family: inherit;
   }
